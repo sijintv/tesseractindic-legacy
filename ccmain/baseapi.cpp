@@ -578,91 +578,89 @@ line.init(width);
 int count,count1=0,blackpixels[height-1][2],arr_row=0,maxbp=0,maxy=0,matras[100][3],char_height;
 //cout<<"Connected Script="<<connected_script<<"\n";
 	
-	for(int y=0; y<height-1;y++){
-	  count=0;	  
-	  for(int x=0;x<width-1;x++){
-            if(page_image.pixel(x,y)==0)
-	      {count++;}
-          }
+for(int y=0; y<height-1;y++){
+  count=0;	  
+  for(int x=0;x<width-1;x++){
+   if(page_image.pixel(x,y)==0)
+     {count++;}
+  }
           
-	  if(count>=.05*width){
-	    
-            blackpixels[arr_row][0]=y;
-            blackpixels[arr_row][1]=count;
-	    arr_row++;
-	  }
-	}
-	blackpixels[arr_row][0]=blackpixels[arr_row][1]='\0';
-	
-	for(int x=0;x<width-1;x++){  //Black Line
-              line.pixels[x]=0;
-        }
+  if(count>=.05*width){
+    blackpixels[arr_row][0]=y;
+    blackpixels[arr_row][1]=count;
+    arr_row++;
+  }
+}
+blackpixels[arr_row][0]=blackpixels[arr_row][1]='\0';
 
-	////////////line_through_matra() begins//////////////////////
-	count=1; 
-	//cout<<"\nHeight="<<height<<" arr_row="<<arr_row<<"\n";
-	char_height=blackpixels[0][0]; //max character height per sentence
-	//cout<<"Char Height Init="<<char_height;
-	while(count<=arr_row){
-          //if(count==0){max=blackpixels[count][0];}
-	  if((blackpixels[count][0]-blackpixels[count-1][0]==1) && (blackpixels[count][1]>=maxbp)){
-            maxbp=blackpixels[count][1];
-	    maxy=blackpixels[count][0];
-	    //cout<<"\nMax="<<maxy<<" bpc="<<maxbp;
-	  }
+for(int x=0;x<width-1;x++){  //Black Line
+  line.pixels[x]=0;
+}
+
+////////////line_through_matra() begins//////////////////////
+count=1; 
+//cout<<"\nHeight="<<height<<" arr_row="<<arr_row<<"\n";
+char_height=blackpixels[0][0]; //max character height per sentence
+//cout<<"Char Height Init="<<char_height;
+while(count<=arr_row){
+         //if(count==0){max=blackpixels[count][0];}
+  if((blackpixels[count][0]-blackpixels[count-1][0]==1) && (blackpixels[count][1]>=maxbp)){
+           maxbp=blackpixels[count][1];
+    maxy=blackpixels[count][0];
+    //cout<<"\nMax="<<maxy<<" bpc="<<maxbp;
+  }
           
-          if((blackpixels[count][0]-blackpixels[count-1][0])!=1){
-            /////////////drawline(max)//////////////////////
-            
-        //      cout<<"\nmax="<<maxy<<" bpc="<<maxbp;
-	//      page_image.put_line(0,maxy,width,&line,0);
-
+         if((blackpixels[count][0]-blackpixels[count-1][0])!=1){
+           /////////////drawline(max)//////////////////////
+           
+       //      cout<<"\nmax="<<maxy<<" bpc="<<maxbp;
+//      page_image.put_line(0,maxy,width,&line,0);
 	      char_height=blackpixels[count-1][0]-char_height;
-              matras[count1][0]=maxy; matras[count1][1]=maxbp; matras[count1][2]=char_height; count1++;
-	      char_height=blackpixels[count][0];
-	      
-            //////////// drawline(max)/////////////////////
-            maxbp=blackpixels[count][1];
-          } 
-	  count++;
-        }
-	matras[count1][0]=matras[count1][1]=matras[count1][2]='\0';
-	
-	//delete blackpixels;	
-	////////////line_through_matra() ends//////////////////////
-        
-        ////////////clip_matras() begins///////////////////////////
-        for(int i=0;i<100;i++){ //where 100=max number of sentences per page
-	  if(matras[i][0]=='\0'){break;}
-	  //cout<<"\nY="<<matras[i][0]<<" bpc="<<matras[i][1]<<" chheight="<<matras[i][2];
-	  count=i;
-	}
-    	
-	for(int i=0;i<=count;i++){
-	  
-	  for(int x=0;x<width-1;x++){
-	    if(page_image.pixel(x,matras[i][0])==0){
- 	      count1=0;  
-	      for(int y=0;y<matras[i][2] && count1==0;y++){
-  	        if(page_image.pixel(x,matras[i][0]-y)==1){count1++;
-                  for(int z=y+1;z<matras[i][2];z++){
-                    if(page_image.pixel(x,matras[i][0]-z)==1){count1++;}//black pixel encountered... stop counting.
-                    else
-                    {break;}
-                  }
-             }
-	       }
-	      //cout<<"\nWPR @ "<<x<<","<<matras[i][0]<<"="<<count1;  
-	      if(count1>.8*matras[i][2]){
-	        line.init(matras[i][2]+5);
-	        for(int j=0;j<matras[i][2]+5;j++){line.pixels[j]=1;}
-	        page_image.put_column(x,matras[i][0]-matras[i][2],matras[i][2]+5,&line,0);
-	      }
-	    }  
- 	  }
-	  
-	}
-	
+             matras[count1][0]=maxy; matras[count1][1]=maxbp; matras[count1][2]=char_height; count1++;
+      char_height=blackpixels[count][0];
+      
+           //////////// drawline(max)/////////////////////
+           maxbp=blackpixels[count][1];
+         } 
+  count++;
+       }
+matras[count1][0]=matras[count1][1]=matras[count1][2]='\0';
+
+//delete blackpixels;	
+////////////line_through_matra() ends//////////////////////
+       
+       ////////////clip_matras() begins///////////////////////////
+       for(int i=0;i<100;i++){ //where 100=max number of sentences per page
+  if(matras[i][0]=='\0'){break;}
+  //cout<<"\nY="<<matras[i][0]<<" bpc="<<matras[i][1]<<" chheight="<<matras[i][2];
+  count=i;
+}
+   	
+for(int i=0;i<=count;i++){
+  
+  for(int x=0;x<width-1;x++){
+    if(page_image.pixel(x,matras[i][0])==0){
+	      count1=0;  
+      for(int y=0;y<matras[i][2] && count1==0;y++){
+ 	        if(page_image.pixel(x,matras[i][0]-y)==1){count1++;
+                 for(int z=y+1;z<matras[i][2];z++){
+                   if(page_image.pixel(x,matras[i][0]-z)==1){count1++;}//black pixel encountered... stop counting.
+                   else
+                   {break;}
+                 }
+            }
+       }
+      //cout<<"\nWPR @ "<<x<<","<<matras[i][0]<<"="<<count1;  
+      if(count1>.8*matras[i][2]){
+        line.init(matras[i][2]+5);
+        for(int j=0;j<matras[i][2]+5;j++){line.pixels[j]=1;}
+        page_image.put_column(x,matras[i][0]-matras[i][2],matras[i][2]+5,&line,0);
+      }
+    }  
+	  }
+  
+}
+
 page_image.write("bentest.tif");
 
 	////////////clip_matras() ends/////////////////////////////
@@ -708,13 +706,17 @@ void TessBaseAPI::ThresholdRect(const unsigned char* imagedata,
     page_image.put_line(0, y, width, &line, 0);
     data += bytes_per_line;
   }
-page_image.write("benth.tif");
+
+if(connected_script==true){
+//page_image.write("benth.tif");
 float angle=findskew(height,width);
 //cout<<"SKEW ANGLE="<<angle<<"\n";
 if(angle!=0){
 deskew(angle,height,width);
 }
 ClipMaatraa(height,width);
+}
+
 }
 
 // Cut out the requested rectangle of the binary image to the
