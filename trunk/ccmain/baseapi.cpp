@@ -19,9 +19,13 @@
 
 #include "baseapi.h"
 #include <iostream>
+#include <math.h>
+
 
 using namespace std;
 
+#define min(a, b)  (((a) < (b)) ? (a) : (b)) 
+#define max(a, b)  (((a) > (b)) ? (a) : (b))
 
 // Include automatically generated configuration file if running autoconf.
 #ifdef HAVE_CONFIG_H
@@ -401,6 +405,172 @@ int TessBaseAPI::OtsuStats(const int* histogram,
   return best_t;
 }
 
+
+////////////DEBAYAN//Deskew begins//////////////////////
+void deskew(float angle,int srcheight, int srcwidth)
+{
+//angle=4;        //45° for example 
+IMAGE tempimage;
+
+
+IMAGELINE line;
+//Convert degrees to radians 
+float radians=(2*3.1416*angle)/360; 
+
+float cosine=(float)cos(radians); 
+float sine=(float)sin(radians); 
+
+float Point1x=(srcheight*sine); 
+float Point1y=(srcheight*cosine); 
+float Point2x=(srcwidth*cosine-srcheight*sine); 
+float Point2y=(srcheight*cosine+srcwidth*sine); 
+float Point3x=(srcwidth*cosine); 
+float Point3y=(srcwidth*sine); 
+
+float minx=min(0,min(Point1x,min(Point2x,Point3x))); 
+float miny=min(0,min(Point1y,min(Point2y,Point3y))); 
+float maxx=max(Point1x,max(Point2x,Point3x)); 
+float maxy=max(Point1y,max(Point2y,Point3y)); 
+
+int DestWidth=(int)ceil(fabs(maxx)-minx); 
+int DestHeight=(int)ceil(fabs(maxy)-miny); 
+
+tempimage.create(DestWidth,DestHeight,1);
+line.init(DestWidth);
+
+for(int i=0;i<DestWidth;i++){ //A white line of length=DestWidth
+line.pixels[i]=1;
+}
+
+for(int y=0;y<DestHeight;y++){ //Fill the Destination image with white, else clipmatra wont work
+tempimage.put_line(0,y,DestWidth,&line,0);
+}
+line.init(DestWidth);
+
+
+
+for(int y=0;y<DestHeight;y++) //Start filling the destination image pixels with corresponding source image pixels
+{ 
+  for(int x=0;x<DestWidth;x++) 
+  { 
+    int Srcx=(int)((x+minx)*cosine+(y+miny)*sine); 
+    int Srcy=(int)((y+miny)*cosine-(x+minx)*sine); 
+    if(Srcx>=0&&Srcx<srcwidth&&Srcy>=0&& 
+         Srcy<srcheight) 
+    { 
+      line.pixels[x]= 
+          page_image.pixel(Srcx,Srcy); 
+    } 
+  } 
+   tempimage.put_line(0,y,DestWidth,&line,0);	
+} 
+ 
+//tempimage.write("tempimage.tif");
+page_image=tempimage;//Copy deskewed image to global page image, so it can be worked on further
+tempimage.destroy(); 
+//page_image.write("page_image.tif");
+
+}
+/////////////DEBAYAN//Deskew ends/////////////////////
+
+////////////DEBAYAN//Find skew begins/////////////////
+float findskew(int height, int width)
+{
+int topx=0,topy=0,sign,count=0,offset=1,ifcounter=0;
+float slope=-999,avg=0;
+IMAGELINE line;
+line.init(1);
+line.pixels[0]=0;
+///////Find the top most point of the page: begins///////////
+for(int y=height-1;y>0;y--){  
+  for(int x=width-1;x>0;x--){
+    if(page_image.pixel(x,y)==0){
+      topx=x;topy=y;
+      break;
+    }
+    
+  }  
+  
+  if(topx>0){break;};     
+}
+///////Find the top most point of the page: ends///////////
+
+
+///////To find pages with no skew: begins//////////////
+int c1,c2=0;
+for(int x=1;x<.25*width;x++){
+  while(page_image.pixel((width/2)+x,c1++)==1){ }
+  while(page_image.pixel((width/2)-x,c2++)==1){ }
+  if(c1==c2){cout<<"0 ANGLE\n";return (0);}
+  c1=c2=0;
+}
+///////To find pages with no skew: ends//////////////
+
+cout<<"width="<<width;
+if(topx>0 && topx<.5*width){
+  sign=1;
+}
+if(topx>0 && topx>.5*width){
+  sign=-1;
+}
+
+
+if(sign==-1){
+  while((topx-offset)>width/2){  
+    while(page_image.pixel(topx-offset,topy-count)==1){
+    //page_image.put_line(topx-offset,topy-count,1,&line,0);
+    count++;
+    }
+    
+    if((180/3.142)*atan((float)count/offset)<10){
+    slope=(float)count/offset;
+    ifcounter++;
+    avg=(avg+slope);
+    }
+    count=0;
+    offset++;
+  }
+    avg=(float)avg/ifcounter;
+    //cout<<"avg="<<avg<<"\n";
+    page_image.write("findskew.tif");
+    //cout<<"(180/3.142)*atan((float)(count/offset)="<<(180/3.142)*atan(avg)<<"\n";
+    return (sign*(180/3.142)*atan(avg));
+
+}
+if(sign==1){
+  while((topx+offset)<width/2){  
+    while(page_image.pixel(topx+offset,topy-count)==1){
+    //page_image.put_line(topx+offset,topy-count,1,&line,0);
+    count++;
+    }
+    
+    if((180/3.142)*atan((float)count/offset)<10){
+    slope=(float)count/offset;
+    ifcounter++;
+    avg=(avg+slope);
+    }
+    count=0;
+    offset++;
+  }
+    avg=(float)avg/ifcounter;
+    //cout<<"avg="<<avg<<"\n";
+    page_image.write("findskew.tif");
+    //cout<<"(180/3.142)*atan((float)(count/offset)="<<(180/3.142)*atan(avg)<<"\n";
+    return (sign*(180/3.142)*atan(avg));
+
+}
+
+if(sign==0)
+{return 0;}
+cout<<"SHIT";
+return (0);
+}
+////////////DEBAYAN//Find skew ends///////////////////
+
+//Works on the global image page containing devnagri script.
+//Clips the maatraas and then makes the global image ready for the Tesseract engine.
+//Will be executed for all images during training, but during normal operation, will be
+//used only if the language belongs to devnagri, eg, ben, hin etc.
 void TessBaseAPI::ClipMaatraa(int height, int width)
 {
 IMAGELINE line;
@@ -539,9 +709,12 @@ void TessBaseAPI::ThresholdRect(const unsigned char* imagedata,
     data += bytes_per_line;
   }
 page_image.write("benth.tif");
+float angle=findskew(height,width);
+//cout<<"SKEW ANGLE="<<angle<<"\n";
+if(angle!=0){
+deskew(angle,height,width);
+}
 ClipMaatraa(height,width);
-
-	
 }
 
 // Cut out the requested rectangle of the binary image to the
