@@ -499,7 +499,7 @@ s,@DEFS@,-DHAVE_CONFIG_H,;t t
 s,@ECHO_C@,,;t t
 s,@ECHO_N@,-n,;t t
 s,@ECHO_T@,,;t t
-s,@LIBS@,-lpthread -ljpeg -lpng -lz ,;t t
+s,@LIBS@,-ltiff -lpthread -ljpeg -lpng -lz  -lm,;t t
 s,@build@,i686-pc-linux-gnu,;t t
 s,@build_cpu@,i686,;t t
 s,@build_vendor@,pc,;t t
@@ -511,7 +511,7 @@ s,@host_os@,linux-gnu,;t t
 s,@PACKAGE_YEAR@,2008,;t t
 s,@PACKAGE_DATE@,04/22,;t t
 s,@CXX@,g++,;t t
-s,@CXXFLAGS@,-g -O2,;t t
+s,@CXXFLAGS@, -g -O2,;t t
 s,@LDFLAGS@,,;t t
 s,@CPPFLAGS@,,;t t
 s,@ac_ct_CXX@,g++,;t t
@@ -522,9 +522,9 @@ s,@INSTALL_SCRIPT@,${INSTALL},;t t
 s,@INSTALL_DATA@,${INSTALL} -m 644,;t t
 s,@PACKAGE@,,;t t
 s,@VERSION@,,;t t
-s,@ACLOCAL@,/home/debayan/Desktop/tesseract_indic_alpha 0.1/config/missing aclocal-1.4,;t t
+s,@ACLOCAL@,/home/debayan/tesseractindic/config/missing aclocal-1.4,;t t
 s,@AUTOCONF@,autoconf,;t t
-s,@AUTOMAKE@,/home/debayan/Desktop/tesseract_indic_alpha 0.1/config/missing automake-1.4,;t t
+s,@AUTOMAKE@,/home/debayan/tesseractindic/config/missing automake-1.4,;t t
 s,@AUTOHEADER@,autoheader,;t t
 s,@MAKEINFO@,makeinfo,;t t
 s,@SET_MAKE@,,;t t
@@ -534,16 +534,16 @@ s,@MAINT@,#,;t t
 s,@USING_CL_TRUE@,#,;t t
 s,@USING_CL_FALSE@,,;t t
 s,@CC@,gcc,;t t
-s,@CFLAGS@,-g -O2,;t t
+s,@CFLAGS@, -g -O2,;t t
 s,@ac_ct_CC@,gcc,;t t
 s,@RANLIB@,ranlib,;t t
 s,@ac_ct_RANLIB@,ranlib,;t t
 s,@CXXCPP@,g++ -E,;t t
 s,@EGREP@,grep -E,;t t
-s,@LIBTIFF_LIBS@,,;t t
+s,@LIBTIFF_LIBS@,-ltiff,;t t
 s,@LIBTIFF_CFLAGS@,,;t t
-s,@HAVE_LIBTIFF_TRUE@,#,;t t
-s,@HAVE_LIBTIFF_FALSE@,,;t t
+s,@HAVE_LIBTIFF_TRUE@,,;t t
+s,@HAVE_LIBTIFF_FALSE@,#,;t t
 s,@LIBOBJS@,,;t t
 s,@LTLIBOBJS@,,;t t
 CEOF
@@ -916,6 +916,7 @@ ${ac_dA}HAVE_STRCHR${ac_dB}HAVE_STRCHR${ac_dC}1${ac_dD}
 ${ac_dA}HAVE_MEMCPY${ac_dB}HAVE_MEMCPY${ac_dC}1${ac_dD}
 ${ac_dA}HAVE_ACOS${ac_dB}HAVE_ACOS${ac_dC}1${ac_dD}
 ${ac_dA}HAVE_ASIN${ac_dB}HAVE_ASIN${ac_dC}1${ac_dD}
+${ac_dA}HAVE_LIBTIFF${ac_dB}HAVE_LIBTIFF${ac_dC}1${ac_dD}
 CEOF
   sed -f $tmp/defines.sed $tmp/in >$tmp/out
   rm -f $tmp/in
@@ -989,6 +990,7 @@ ${ac_uA}HAVE_STRCHR${ac_uB}HAVE_STRCHR${ac_uC}1${ac_uD}
 ${ac_uA}HAVE_MEMCPY${ac_uB}HAVE_MEMCPY${ac_uC}1${ac_uD}
 ${ac_uA}HAVE_ACOS${ac_uB}HAVE_ACOS${ac_uC}1${ac_uD}
 ${ac_uA}HAVE_ASIN${ac_uB}HAVE_ASIN${ac_uC}1${ac_uD}
+${ac_uA}HAVE_LIBTIFF${ac_uB}HAVE_LIBTIFF${ac_uC}1${ac_uD}
 s,^[	 ]*#[	 ]*undef[	 ][	 ]*[a-zA-Z_][a-zA-Z_0-9]*,/* & */,
 CEOF
   sed -f $tmp/undefs.sed $tmp/in >$tmp/out

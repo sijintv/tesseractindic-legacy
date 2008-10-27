@@ -40,9 +40,9 @@ pkgincludedir = $(includedir)/
 
 top_builddir = ..
 
-ACLOCAL = /home/debayan/Desktop/tesseract_indic_alpha 0.1/config/missing aclocal-1.4
+ACLOCAL = /home/debayan/tesseractindic/config/missing aclocal-1.4
 AUTOCONF = autoconf
-AUTOMAKE = /home/debayan/Desktop/tesseract_indic_alpha 0.1/config/missing automake-1.4
+AUTOMAKE = /home/debayan/tesseractindic/config/missing automake-1.4
 AUTOHEADER = autoheader
 
 INSTALL = /usr/bin/install -c
@@ -93,12 +93,12 @@ LIBRARIES =  $(lib_LIBRARIES)
 DEFS = -DHAVE_CONFIG_H -I. -I$(srcdir) -I..
 CPPFLAGS = 
 LDFLAGS = 
-LIBS = -lpthread -ljpeg -lpng -lz 
+LIBS = -ltiff -lpthread -ljpeg -lpng -lz  -lm
 libtesseract_pageseg_a_LIBADD = 
 libtesseract_pageseg_a_OBJECTS =  leptonica_pageseg.o \
 leptonica_pageseg_interface.o pageseg.o
 AR = ar
-CXXFLAGS = -g -O2
+CXXFLAGS =  -g -O2
 CXXCOMPILE = $(CXX) $(DEFS) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
 CXXLD = $(CXX)
 CXXLINK = $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(LDFLAGS) -o $@

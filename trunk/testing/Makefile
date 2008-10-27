@@ -40,9 +40,9 @@ pkgincludedir = $(includedir)/
 
 top_builddir = ..
 
-ACLOCAL = /home/debayan/Desktop/tesseract_indic_alpha 0.1/config/missing aclocal-1.4
+ACLOCAL = /home/debayan/tesseractindic/config/missing aclocal-1.4
 AUTOCONF = autoconf
-AUTOMAKE = /home/debayan/Desktop/tesseract_indic_alpha 0.1/config/missing automake-1.4
+AUTOMAKE = /home/debayan/tesseractindic/config/missing automake-1.4
 AUTOHEADER = autoheader
 
 INSTALL = /usr/bin/install -c

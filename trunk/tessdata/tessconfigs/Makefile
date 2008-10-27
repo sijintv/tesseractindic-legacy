@@ -14,7 +14,7 @@
 SHELL = /bin/sh
 
 srcdir = .
-top_srcdir = ../..
+top_srcdir = ..
 
 prefix = /usr/local
 exec_prefix = ${prefix}
@@ -37,11 +37,11 @@ pkgdatadir = $(datadir)/
 pkglibdir = $(libdir)/
 pkgincludedir = $(includedir)/
 
-top_builddir = ../..
+top_builddir = ..
 
-ACLOCAL = /home/debayan/Desktop/tesseract_indic_alpha 0.1/config/missing aclocal-1.4
+ACLOCAL = /home/debayan/tesseractindic/config/missing aclocal-1.4
 AUTOCONF = autoconf
-AUTOMAKE = /home/debayan/Desktop/tesseract_indic_alpha 0.1/config/missing automake-1.4
+AUTOMAKE = /home/debayan/tesseractindic/config/missing automake-1.4
 AUTOHEADER = autoheader
 
 INSTALL = /usr/bin/install -c
@@ -73,11 +73,15 @@ PACKAGE_YEAR = 2008
 RANLIB = ranlib
 VERSION = 
 
-datadir = ${prefix}/share/tessdata/tessconfigs
-data_DATA = batch batch.nochop nobatch matdemo segdemo msdemo
-EXTRA_DIST = batch batch.nochop nobatch matdemo segdemo msdemo
+datadir = ${prefix}/share/tessdata
+data_DATA = confsets             fra.DangAmbigs fra.freq-dawg fra.inttemp fra.normproto             fra.pffmtable fra.user-words fra.word-dawg fra.unicharset             ita.DangAmbigs ita.freq-dawg ita.inttemp ita.normproto             ita.pffmtable ita.user-words ita.word-dawg ita.unicharset             deu.DangAmbigs deu.freq-dawg deu.inttemp deu.normproto             deu.pffmtable deu.user-words deu.word-dawg deu.unicharset             spa.DangAmbigs spa.freq-dawg spa.inttemp spa.normproto             spa.pffmtable spa.user-words spa.word-dawg spa.unicharset             nld.DangAmbigs nld.freq-dawg nld.inttemp nld.normproto             nld.pffmtable nld.user-words nld.word-dawg nld.unicharset             eng.DangAmbigs eng.freq-dawg eng.inttemp eng.normproto             eng.pffmtable eng.user-words eng.word-dawg eng.unicharset
+
+
+SUBDIRS = configs tessconfigs
+
+EXTRA_DIST = confsets makedummies
 mkinstalldirs = $(SHELL) $(top_srcdir)/config/mkinstalldirs
-CONFIG_HEADER = ../../config_auto.h
+CONFIG_HEADER = ../config_auto.h
 CONFIG_CLEAN_FILES = 
 DATA =  $(data_DATA)
 
@@ -91,7 +95,7 @@ GZIP_ENV = --best
 all: all-redirect
 .SUFFIXES:
 $(srcdir)/Makefile.in: # Makefile.am $(top_srcdir)/configure.ac $(ACLOCAL_M4) 
-	cd $(top_srcdir) && $(AUTOMAKE) --gnu --include-deps tessdata/tessconfigs/Makefile
+	cd $(top_srcdir) && $(AUTOMAKE) --gnu --include-deps tessdata/Makefile
 
 Makefile: $(srcdir)/Makefile.in  $(top_builddir)/config.status
 	cd $(top_builddir) \
@@ -116,13 +120,99 @@ uninstall-dataDATA:
 	list='$(data_DATA)'; for p in $$list; do \
 	  rm -f $(DESTDIR)$(datadir)/$$p; \
 	done
-tags: TAGS
-TAGS:
 
+# This directory's subdirectories are mostly independent; you can cd
+# into them and run `make' without going through this Makefile.
+# To change the values of `make' variables: instead of editing Makefiles,
+# (1) if the variable is set in `config.status', edit `config.status'
+#     (which will cause the Makefiles to be regenerated when you run `make');
+# (2) otherwise, pass the desired values on the `make' command line.
+
+
+
+all-recursive install-data-recursive install-exec-recursive \
+installdirs-recursive install-recursive uninstall-recursive  \
+check-recursive installcheck-recursive info-recursive dvi-recursive:
+	@set fnord $(MAKEFLAGS); amf=$$2; \
+	dot_seen=no; \
+	target=`echo $@ | sed s/-recursive//`; \
+	list='$(SUBDIRS)'; for subdir in $$list; do \
+	  echo "Making $$target in $$subdir"; \
+	  if test "$$subdir" = "."; then \
+	    dot_seen=yes; \
+	    local_target="$$target-am"; \
+	  else \
+	    local_target="$$target"; \
+	  fi; \
+	  (cd $$subdir && $(MAKE) $(AM_MAKEFLAGS) $$local_target) \
+	   || case "$$amf" in *=*) exit 1;; *k*) fail=yes;; *) exit 1;; esac; \
+	done; \
+	if test "$$dot_seen" = "no"; then \
+	  $(MAKE) $(AM_MAKEFLAGS) "$$target-am" || exit 1; \
+	fi; test -z "$$fail"
+
+mostlyclean-recursive clean-recursive distclean-recursive \
+maintainer-clean-recursive:
+	@set fnord $(MAKEFLAGS); amf=$$2; \
+	dot_seen=no; \
+	rev=''; list='$(SUBDIRS)'; for subdir in $$list; do \
+	  rev="$$subdir $$rev"; \
+	  test "$$subdir" != "." || dot_seen=yes; \
+	done; \
+	test "$$dot_seen" = "no" && rev=". $$rev"; \
+	target=`echo $@ | sed s/-recursive//`; \
+	for subdir in $$rev; do \
+	  echo "Making $$target in $$subdir"; \
+	  if test "$$subdir" = "."; then \
+	    local_target="$$target-am"; \
+	  else \
+	    local_target="$$target"; \
+	  fi; \
+	  (cd $$subdir && $(MAKE) $(AM_MAKEFLAGS) $$local_target) \
+	   || case "$$amf" in *=*) exit 1;; *k*) fail=yes;; *) exit 1;; esac; \
+	done && test -z "$$fail"
+tags-recursive:
+	list='$(SUBDIRS)'; for subdir in $$list; do \
+	  test "$$subdir" = . || (cd $$subdir && $(MAKE) $(AM_MAKEFLAGS) tags); \
+	done
+
+tags: TAGS
+
+ID: $(HEADERS) $(SOURCES) $(LISP)
+	list='$(SOURCES) $(HEADERS)'; \
+	unique=`for i in $$list; do echo $$i; done | \
+	  awk '    { files[$$0] = 1; } \
+	       END { for (i in files) print i; }'`; \
+	here=`pwd` && cd $(srcdir) \
+	  && mkid -f$$here/ID $$unique $(LISP)
+
+TAGS: tags-recursive $(HEADERS) $(SOURCES)  $(TAGS_DEPENDENCIES) $(LISP)
+	tags=; \
+	here=`pwd`; \
+	list='$(SUBDIRS)'; for subdir in $$list; do \
+   if test "$$subdir" = .; then :; else \
+	    test -f $$subdir/TAGS && tags="$$tags -i $$here/$$subdir/TAGS"; \
+   fi; \
+	done; \
+	list='$(SOURCES) $(HEADERS)'; \
+	unique=`for i in $$list; do echo $$i; done | \
+	  awk '    { files[$$0] = 1; } \
+	       END { for (i in files) print i; }'`; \
+	test -z "$(ETAGS_ARGS)$$unique$(LISP)$$tags" \
+	  || (cd $(srcdir) && etags -o $$here/TAGS $(ETAGS_ARGS) $$tags  $$unique $(LISP))
+
+mostlyclean-tags:
+
+clean-tags:
+
+distclean-tags:
+	-rm -f TAGS ID
+
+maintainer-clean-tags:
 
 distdir = $(top_builddir)/$(PACKAGE_NAME)-$(PACKAGE_VERSION)/$(subdir)
 
-subdir = tessdata/tessconfigs
+subdir = tessdata
 
 distdir: $(DISTFILES)
 	@for file in $(DISTFILES); do \
@@ -135,30 +225,41 @@ distdir: $(DISTFILES)
 	    || cp -p $$d/$$file $(distdir)/$$file || :; \
 	  fi; \
 	done
+	for subdir in $(SUBDIRS); do \
+	  if test "$$subdir" = .; then :; else \
+	    test -d $(distdir)/$$subdir \
+	    || mkdir $(distdir)/$$subdir \
+	    || exit 1; \
+	    chmod 777 $(distdir)/$$subdir; \
+	    (cd $$subdir && $(MAKE) $(AM_MAKEFLAGS) top_distdir=../$(top_distdir) distdir=../$(distdir)/$$subdir distdir) \
+	      || exit 1; \
+	  fi; \
+	done
 info-am:
-info: info-am
+info: info-recursive
 dvi-am:
-dvi: dvi-am
+dvi: dvi-recursive
 check-am: all-am
-check: check-am
+check: check-recursive
 installcheck-am:
-installcheck: installcheck-am
+installcheck: installcheck-recursive
 install-exec-am:
-install-exec: install-exec-am
+install-exec: install-exec-recursive
 
 install-data-am: install-dataDATA
-install-data: install-data-am
+install-data: install-data-recursive
 
 install-am: all-am
 	@$(MAKE) $(AM_MAKEFLAGS) install-exec-am install-data-am
-install: install-am
+install: install-recursive
 uninstall-am: uninstall-dataDATA
-uninstall: uninstall-am
+uninstall: uninstall-recursive
 all-am: Makefile $(DATA)
-all-redirect: all-am
+all-redirect: all-recursive
 install-strip:
 	$(MAKE) $(AM_MAKEFLAGS) AM_INSTALL_PROGRAM_FLAGS=-s install
-installdirs:
+installdirs: installdirs-recursive
+installdirs-am:
 	$(mkinstalldirs)  $(DESTDIR)$(datadir)
 
 
@@ -171,31 +272,51 @@ distclean-generic:
 	-rm -f config.cache config.log stamp-h stamp-h[0-9]*
 
 maintainer-clean-generic:
-mostlyclean-am:  mostlyclean-generic
+mostlyclean-am:  mostlyclean-tags mostlyclean-generic
 
-mostlyclean: mostlyclean-am
+mostlyclean: mostlyclean-recursive
 
-clean-am:  clean-generic mostlyclean-am
+clean-am:  clean-tags clean-generic mostlyclean-am
 
-clean: clean-am
+clean: clean-recursive
 
-distclean-am:  distclean-generic clean-am
+distclean-am:  distclean-tags distclean-generic clean-am
 
-distclean: distclean-am
+distclean: distclean-recursive
 
-maintainer-clean-am:  maintainer-clean-generic distclean-am
+maintainer-clean-am:  maintainer-clean-tags maintainer-clean-generic \
+		distclean-am
 	@echo "This command is intended for maintainers to use;"
 	@echo "it deletes files that may require special tools to rebuild."
 
-maintainer-clean: maintainer-clean-am
+maintainer-clean: maintainer-clean-recursive
 
-.PHONY: uninstall-dataDATA install-dataDATA tags distdir info-am info \
+.PHONY: uninstall-dataDATA install-dataDATA install-data-recursive \
+uninstall-data-recursive install-exec-recursive \
+uninstall-exec-recursive installdirs-recursive uninstalldirs-recursive \
+all-recursive check-recursive installcheck-recursive info-recursive \
+dvi-recursive mostlyclean-recursive distclean-recursive clean-recursive \
+maintainer-clean-recursive tags tags-recursive mostlyclean-tags \
+distclean-tags clean-tags maintainer-clean-tags distdir info-am info \
 dvi-am dvi check check-am installcheck-am installcheck install-exec-am \
 install-exec install-data-am install-data install-am install \
-uninstall-am uninstall all-redirect all-am all installdirs \
-mostlyclean-generic distclean-generic clean-generic \
+uninstall-am uninstall all-redirect all-am all installdirs-am \
+installdirs mostlyclean-generic distclean-generic clean-generic \
 maintainer-clean-generic clean mostlyclean distclean maintainer-clean
 
+
+eng.DangAmbigs eng.freq-dawg eng.inttemp eng.normproto eng.pffmtable eng.user-words eng.word-dawg eng.unicharset : makedummies
+	./makedummies eng
+fra.DangAmbigs fra.freq-dawg fra.inttemp fra.normproto fra.pffmtable fra.user-words fra.word-dawg fra.unicharset : makedummies
+	./makedummies fra
+ita.DangAmbigs ita.freq-dawg ita.inttemp ita.normproto ita.pffmtable ita.user-words ita.word-dawg ita.unicharset : makedummies
+	./makedummies ita
+deu.DangAmbigs deu.freq-dawg deu.inttemp deu.normproto deu.pffmtable deu.user-words deu.word-dawg deu.unicharset : makedummies
+	./makedummies deu
+spa.DangAmbigs spa.freq-dawg spa.inttemp spa.normproto spa.pffmtable spa.user-words spa.word-dawg spa.unicharset : makedummies
+	./makedummies spa
+nld.DangAmbigs nld.freq-dawg nld.inttemp nld.normproto nld.pffmtable nld.user-words nld.word-dawg nld.unicharset : makedummies
+	./makedummies nld
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
