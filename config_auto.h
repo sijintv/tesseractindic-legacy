@@ -41,7 +41,7 @@
 #define HAVE_LIBPTHREAD 1
 
 /* Define if you have the www.libtiff.org LIBTIFF library. */
-/* #undef HAVE_LIBTIFF */
+#define HAVE_LIBTIFF 1
 
 /* Define to 1 if you have the `z' library (-lz). */
 #define HAVE_LIBZ 1

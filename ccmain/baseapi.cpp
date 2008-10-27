@@ -709,11 +709,11 @@ void TessBaseAPI::ThresholdRect(const unsigned char* imagedata,
 
 if(connected_script==true){
 //page_image.write("benth.tif");
-float angle=findskew(height,width);
+//float angle=findskew(height,width);
 //cout<<"SKEW ANGLE="<<angle<<"\n";
-if(angle!=0){
+/*if(angle!=0){
 deskew(angle,height,width);
-}
+}*/
 ClipMaatraa(height,width);
 }
 
@@ -1413,3 +1413,4 @@ int TessBaseAPI::TesseractExtractResult(char** string,
 int TessBaseAPI::IsValidWord(const char *string) {
   return valid_word(string);
 }
+

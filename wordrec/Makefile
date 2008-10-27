@@ -40,9 +40,9 @@ pkgincludedir = $(includedir)/
 
 top_builddir = ..
 
-ACLOCAL = /home/debayan/Desktop/tesseract_indic_alpha 0.1/config/missing aclocal-1.4
+ACLOCAL = /home/debayan/tesseractindic/config/missing aclocal-1.4
 AUTOCONF = autoconf
-AUTOMAKE = /home/debayan/Desktop/tesseract_indic_alpha 0.1/config/missing automake-1.4
+AUTOMAKE = /home/debayan/tesseractindic/config/missing automake-1.4
 AUTOHEADER = autoheader
 
 INSTALL = /usr/bin/install -c
@@ -93,7 +93,7 @@ LIBRARIES =  $(lib_LIBRARIES)
 DEFS = -DHAVE_CONFIG_H -I. -I$(srcdir) -I..
 CPPFLAGS = 
 LDFLAGS = 
-LIBS = -lpthread -ljpeg -lpng -lz 
+LIBS = -ltiff -lpthread -ljpeg -lpng -lz  -lm
 libtesseract_wordrec_a_LIBADD = 
 libtesseract_wordrec_a_OBJECTS =  associate.o badwords.o bestfirst.o \
 chop.o chopper.o closed.o djmenus.o drawfx.o findseam.o gradechop.o \
@@ -101,7 +101,7 @@ heuristic.o makechop.o matchtab.o matrix.o metrics.o mfvars.o msmenus.o \
 olutil.o outlines.o pieces.o plotedges.o plotseg.o render.o seam.o \
 split.o tally.o tessinit.o tface.o wordclass.o
 AR = ar
-CXXFLAGS = -g -O2
+CXXFLAGS =  -g -O2
 CXXCOMPILE = $(CXX) $(DEFS) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
 CXXLD = $(CXX)
 CXXLINK = $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(LDFLAGS) -o $@
