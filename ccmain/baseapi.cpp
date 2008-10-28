@@ -660,7 +660,7 @@ void TessBaseAPI::ClipMaatraa(int height, int width)
 		if(count1>.8*matras[i][2]){
 		  line.init(upcount+count1);
 		  for(int j=0;j<matras[i][2]+5;j++){line.pixels[j]=1;}
-		  page_image.put_column(x,matras[i][0]+upcount,upcount+count1,&line,0);
+		  page_image.put_column(x,matras[i][0]-count1,upcount+count1,&line,0);
 		}
 	  }  
 	}
