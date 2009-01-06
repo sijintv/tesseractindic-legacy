@@ -615,7 +615,7 @@ void TessBaseAPI::ClipMaatraa(int height, int width)
 	  /////////////drawline(max)//////////////////////
 		
       //  cout<<"\nmax="<<maxy<<" bpc="<<maxbp;
-	  page_image.put_line(0,maxy,width,&line,0);
+      //  page_image.put_line(0,maxy,width,&line,0);
 	  char_height=blackpixels[count-1][0]-char_height;
 	  matras[count1][0]=maxy; matras[count1][1]=maxbp; matras[count1][2]=char_height; count1++;
 	  char_height=blackpixels[count][0];
@@ -626,7 +626,7 @@ void TessBaseAPI::ClipMaatraa(int height, int width)
 	count++;
   }
   matras[count1][0]=matras[count1][1]=matras[count1][2]='\0';
-  page_image.write("linematra.tif");
+ // page_image.write("linematra.tif");
   
   //delete blackpixels;	
   ////////////line_through_matra() ends//////////////////////
@@ -634,7 +634,7 @@ void TessBaseAPI::ClipMaatraa(int height, int width)
   ////////////clip_matras() begins///////////////////////////
   for(int i=0;i<100;i++){ //where 100=max number of sentences per page
 	if(matras[i][0]=='\0'){break;}
-	cout<<"\nY="<<matras[i][0]<<" bpc="<<matras[i][1]<<" chheight="<<matras[i][2];
+//	cout<<"\nY="<<matras[i][0]<<" bpc="<<matras[i][1]<<" chheight="<<matras[i][2];
 	count=i;
   }
   
