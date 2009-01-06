@@ -5,7 +5,7 @@
  * Created:     Fri Oct 06 15:35:01 PDT 2006
  *
  * (C) Copyright 2006, Google Inc.
- ** Licensed under the Apache License, Version 2.0 (the "License");
+ ** Licensed under the Apache License, Version 2.0 (the "License");upc
  ** you may not use this file except in compliance with the License.
  ** You may obtain a copy of the License at
  ** http://www.apache.org/licenses/LICENSE-2.0
@@ -607,15 +607,16 @@ void TessBaseAPI::ClipMaatraa(int height, int width)
 	if((blackpixels[count][0]-blackpixels[count-1][0]==1) && (blackpixels[count][1]>=maxbp)){
 	  maxbp=blackpixels[count][1];
 	  maxy=blackpixels[count][0];
+	  count++;
 	  //cout<<"\nMax="<<maxy<<" bpc="<<maxbp;
 	}
 	
 	if((blackpixels[count][0]-blackpixels[count-1][0])!=1){
 	  /////////////drawline(max)//////////////////////
 		
-		//      cout<<"\nmax="<<maxy<<" bpc="<<maxbp;
-		//      page_image.put_line(0,maxy,width,&line,0);
-		char_height=blackpixels[count-1][0]-char_height;
+      //  cout<<"\nmax="<<maxy<<" bpc="<<maxbp;
+	  page_image.put_line(0,maxy,width,&line,0);
+	  char_height=blackpixels[count-1][0]-char_height;
 	  matras[count1][0]=maxy; matras[count1][1]=maxbp; matras[count1][2]=char_height; count1++;
 	  char_height=blackpixels[count][0];
 	  
@@ -625,6 +626,7 @@ void TessBaseAPI::ClipMaatraa(int height, int width)
 	count++;
   }
   matras[count1][0]=matras[count1][1]=matras[count1][2]='\0';
+  page_image.write("linematra.tif");
   
   //delete blackpixels;	
   ////////////line_through_matra() ends//////////////////////
@@ -632,14 +634,14 @@ void TessBaseAPI::ClipMaatraa(int height, int width)
   ////////////clip_matras() begins///////////////////////////
   for(int i=0;i<100;i++){ //where 100=max number of sentences per page
 	if(matras[i][0]=='\0'){break;}
-	//cout<<"\nY="<<matras[i][0]<<" bpc="<<matras[i][1]<<" chheight="<<matras[i][2];
+	cout<<"\nY="<<matras[i][0]<<" bpc="<<matras[i][1]<<" chheight="<<matras[i][2];
 	count=i;
   }
   
   for(int i=0;i<=count;i++){
 	
 	for(int x=0;x<width-1;x++){
-	  if(page_image.pixel(x,matras[i][0])==0){
+	  if(page_image.pixel(x,matras[i][0])==0){ // if this point in the matraa is black
 		count1=0;  
 		for(int y=0;y<matras[i][2] && count1==0;y++){
 		  if(page_image.pixel(x,matras[i][0]-y)==1){count1++;
