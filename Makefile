@@ -13,7 +13,7 @@
 # TODO(luc) Add 'doc' to this list when ready
 
 
-SHELL = /bin/sh
+SHELL = /bin/bash
 
 srcdir = .
 top_srcdir = .
@@ -43,9 +43,9 @@ pkgincludedir = $(includedir)/
 top_builddir = .
 
 ACLOCAL = /home/debayan/tesseractindic/config/missing aclocal-1.4
-AUTOCONF = autoconf
+AUTOCONF = /home/debayan/tesseractindic/config/missing autoconf
 AUTOMAKE = /home/debayan/tesseractindic/config/missing automake-1.4
-AUTOHEADER = autoheader
+AUTOHEADER = /home/debayan/tesseractindic/config/missing autoheader
 
 INSTALL = /usr/bin/install -c
 INSTALL_PROGRAM = ${INSTALL} $(AM_INSTALL_PROGRAM_FLAGS)
@@ -67,7 +67,7 @@ HAVE_LIB = @HAVE_LIB@
 LIB = @LIB@
 LTLIB = @LTLIB@
 MAINT = #
-MAKEINFO = makeinfo
+MAKEINFO = /home/debayan/tesseractindic/config/missing makeinfo
 PACKAGE = 
 PACKAGE_DATE = 04/22
 PACKAGE_NAME = tesseract
