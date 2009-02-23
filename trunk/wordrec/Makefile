@@ -11,7 +11,7 @@
 # PARTICULAR PURPOSE.
 
 
-SHELL = /bin/sh
+SHELL = /bin/bash
 
 srcdir = .
 top_srcdir = ..
@@ -41,9 +41,9 @@ pkgincludedir = $(includedir)/
 top_builddir = ..
 
 ACLOCAL = /home/debayan/tesseractindic/config/missing aclocal-1.4
-AUTOCONF = autoconf
+AUTOCONF = /home/debayan/tesseractindic/config/missing autoconf
 AUTOMAKE = /home/debayan/tesseractindic/config/missing automake-1.4
-AUTOHEADER = autoheader
+AUTOHEADER = /home/debayan/tesseractindic/config/missing autoheader
 
 INSTALL = /usr/bin/install -c
 INSTALL_PROGRAM = ${INSTALL} $(AM_INSTALL_PROGRAM_FLAGS)
@@ -65,7 +65,7 @@ HAVE_LIB = @HAVE_LIB@
 LIB = @LIB@
 LTLIB = @LTLIB@
 MAINT = #
-MAKEINFO = makeinfo
+MAKEINFO = /home/debayan/tesseractindic/config/missing makeinfo
 PACKAGE = 
 PACKAGE_DATE = 04/22
 PACKAGE_NAME = tesseract
@@ -93,7 +93,7 @@ LIBRARIES =  $(lib_LIBRARIES)
 DEFS = -DHAVE_CONFIG_H -I. -I$(srcdir) -I..
 CPPFLAGS = 
 LDFLAGS = 
-LIBS = -ltiff -lpthread -ljpeg -lpng -lz  -lm
+LIBS = /usr/lib/libtiff.a -lpthread -ljpeg -lpng -lz  -lm
 libtesseract_wordrec_a_LIBADD = 
 libtesseract_wordrec_a_OBJECTS =  associate.o badwords.o bestfirst.o \
 chop.o chopper.o closed.o djmenus.o drawfx.o findseam.o gradechop.o \
@@ -101,7 +101,7 @@ heuristic.o makechop.o matchtab.o matrix.o metrics.o mfvars.o msmenus.o \
 olutil.o outlines.o pieces.o plotedges.o plotseg.o render.o seam.o \
 split.o tally.o tessinit.o tface.o wordclass.o
 AR = ar
-CXXFLAGS =  -g -O2
+CXXFLAGS = -I/usr/lib -g -O2
 CXXCOMPILE = $(CXX) $(DEFS) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
 CXXLD = $(CXX)
 CXXLINK = $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(LDFLAGS) -o $@
