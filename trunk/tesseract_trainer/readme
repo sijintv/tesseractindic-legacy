@@ -1,0 +1,11 @@
+To run:
+
+Type   python generate.py -fd /usr/share/fonts/truetype/ttf-bengali-fonts/ -l beng -a beng.alphabet/
+
+-fd takes the ttf fonts directory as input
+-l takes the language to be trained as input
+-a takes the alphabet characters folder as input
+
+Contact debayanin@gmail.com for further clarifications.
+
+And yeah, this is work in progress.
