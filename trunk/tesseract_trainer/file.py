@@ -11,14 +11,16 @@ def combine(frest,fc,fpresv,fpostsv):
         rest=rest.strip()
         all_comb.append(rest)
     
-    for c1 in fc:
-        c=c1.strip() #remove special characters
-        all_comb.append(c)
-        for prev in fpresv:
-            txt=prev.strip()+c
+    for c in fc:
+        c=c.strip() #remove special characters
+        c1=c+" "
+        all_comb.append(c1)
+        for prev in fpresv:  # combine consonant+vowel sign
+            txt=prev.rstrip()+c
             all_comb.append(txt)
-        for postv in fpostsv:
+        for postv in fpostsv: # combine vowel sign+consonant
             txt=c+postv.strip()
+            txt=txt+" "
             all_comb.append(txt)
     count=0
     for a in all_comb:

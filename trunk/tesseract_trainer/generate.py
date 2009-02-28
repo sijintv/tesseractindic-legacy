@@ -32,6 +32,7 @@ def draw(lang,font_name,font,fsz,alphabets): # language, font file name, font fu
     
     for akshar in alphabets:
         #print akshar
+        akshar.strip() #remove nasty characters
         big_image=ImageDraw.Draw(im)
         sub_im=Image.new("RGB",(fsz*2,fsz*1.5),"white") #first create a small image for just one set of characters, will later paste it onto a larger image im
         draw = ImageDraw.Draw(sub_im)
@@ -47,7 +48,7 @@ def draw(lang,font_name,font,fsz,alphabets): # language, font file name, font fu
         print bbox_im
         #draw.rectangle((0,0,150,70)) #draw the bounding box
         im.paste(sub_im,box_im)
-        #big_image.rectangle(bbox_im) #draw the bounding box
+        big_image.rectangle(bbox_im) #draw the bounding box
         x+=fsz*3 #fsz*(size of the character(S))
         
         if x>900:
