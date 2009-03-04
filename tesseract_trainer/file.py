@@ -27,7 +27,8 @@ def combine(frest,fc,fpresv,fpostsv):
         print count,
         count+=1
         print a
-        return all_comb
+    #this return being part of for loop wont help much
+    return all_comb
 
 
 
