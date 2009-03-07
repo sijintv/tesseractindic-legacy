@@ -2,7 +2,9 @@
 
 = Introduction =
 
-Add your content here.
+I did some initial Testing of Tesseract engine for Malayalam. I was basically interested in finding out how classifier of Tesseract handles Malayalam. This page will be updated as the work progresses. 
+
+From initial observations, i feel like, there are some small bugs in pre processing and post processing routines of tesseract. Else its working pretty fine. I will soon train it with large data and get back to all. 
 
 
 = Details =
