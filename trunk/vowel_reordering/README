@@ -1,0 +1,13 @@
+This is a sample code for reordering of vowels.
+This handles the postbase and prebase vowel problems and helps in reducing the number of training classes. 
+Soon an implementation in c++ will be released, which can be used for all languages.
+Currently, this works only for Malayalam.
+
+USAGE:
+------
+
+python reorder.py <input filename> <output filename>
+
+This should improve the accuracy of current Malayalam Module by around 10%.
+
+Jinesh K J
