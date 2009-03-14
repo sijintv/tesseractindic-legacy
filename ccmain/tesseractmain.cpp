@@ -163,7 +163,7 @@ int main(int argc, char **argv) {
   }
   
   if(strcmp(lang,"ben")==0 || strcmp(lang,"hin")==0 || strcmp(lang,"asm")==0 || 
-     strcmp(lang,"guj")==0 || strcmp(lang,"pan")==0 || strcmp(lang,"ori")==0 || strcmp(lang,"ban")==0){
+     strcmp(lang,"guj")==0 || strcmp(lang,"pan")==0 || strcmp(lang,"ori")==0 || strcmp(lang,"ban")==0 || strcmp(lang,"beng")==0){
   connected_script=true;
   cout<<"Connected Script Found!!\n";
   }
