@@ -35,6 +35,8 @@ const int kMaxIntPairSize = 45;  // Holds %d,%d, for upto 64 bit.
 #include <algorithm>
 #include <vector>
 #include <string>
+#include<cstring>
+#include<climits>
 
 #include "svutil.h"
 
