@@ -1,3 +1,6 @@
+All examples below have been framed with a the language Bengali and hence the language code "beng".
+
+
 To run:
 1) Create a directory. In the directory you may create a maximum of 4 files:
 		a)consonants- Put all the consonants in your script/language in the file. eg, ক , খ (ka, kha) etc
@@ -15,14 +18,28 @@ Now type (for bengali for example)  python generate.py -fd /usr/share/fonts/true
 -a takes the alphabet characters folder as input
 
 This command will generate many images and corresponding box files in beng.images. In the end it generates 5 files.
-1)unicharset
-2)Microfeat
-3)normproto
-4)pffmtable
-5)inttemp
+1)beng.unicharset
+2)beng.Microfeat
+3)beng.normproto
+4)beng.pffmtable
+5)beng.inttemp
+
+These files will be automatically copied to beng.training_data folder.
+There may be several images which generate FATALITY errors while tesseract processes them for training. These errors may arise for several reasons which can be found at http://code.google.com/p/tesseract-ocr/wiki/TrainingTesseract.
+When an image generates an error, it is moved, along with its box file to a new directory named failure/. The user may analyse the errors and may decide to train these erroneous symbols separately.
+
 
 These 5 files are needed by Tesseract-OCR engine to add a new script support. In addition dawg files are also required, for which you do not require
-this tool.
+this tool. The 5 files along with some other files should comprise of these:
+    * beng.freq-dawg
+    * beng.word-dawg
+    * beng.user-words
+    * beng.inttemp
+    * beng.normproto
+    * beng.pffmtable
+    * beng.unicharset
+    * beng.DangAmbigs 
+Copy these files to /usr/local/share/tessdata and to tessdata/ folder of you tesseract-ocr source code.
 
 Contact debayanin@gmail.com for further clarifications.
 
