@@ -5,6 +5,8 @@ import shutil
 def weedout(img_file_name,image_folder):  
     """ Move the corresponding erroneous image/box-file pair to a faulty directory"""
     if(os.path.exists("failure")):
+        os.rmdir("failure")
+        os.mkdir("failure")
         pass
     else:
         os.mkdir("failure")
@@ -45,7 +47,7 @@ def train(lang):
             o=qpipe[1].readlines() 
             pos=str(o).find('FAILURE') #Look for the word "FAILURE" in tesseract-ocr trainer output.
             #print str(o)
-            print pos
+            print " ok ",
             
             if(pos > 0):
                 #os.chdir("images")                                
