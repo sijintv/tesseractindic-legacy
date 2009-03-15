@@ -8,7 +8,7 @@ To run:
 Now you need to know the directory in your system where all the font files are kept. In Ubuntu the truetype fonts are at /usr/share/fonts/truetype/.
 
 
-Nowt type (for bengali for example)  python generate.py -fd /usr/share/fonts/truetype/ttf-bengali-fonts/ -l beng -a beng.alphabet/
+Now type (for bengali for example)  python generate.py -fd /usr/share/fonts/truetype/ttf-bengali-fonts/ -l beng -a beng.alphabet/
 
 -fd takes the ttf fonts directory as input
 -l takes the language to be trained as input
