@@ -51,7 +51,19 @@ def reorderUnicode(input_text):
 				prebase = 1
 			prev = curr+next
 			index = index+3
-		else:		
+		else:
+			if(curr == "ഇ" and next == "ൗ"):
+				curr = "ഈ"
+				index = index+3;
+			if(curr == "ഉ" and next == "ൗ"):
+				curr = "ഊ"
+				index = index+3;
+			if(curr == "ഒ" and next == "ൗ"):
+				curr = "ഔ"
+				index = index+3;
+			if(curr == "ഒ" and next == "ാ"):
+				curr = "ഓ"
+				index = index+3;		
 			out_text+=curr
 			prev = curr			
 			if(prebase == 1 and curr !="്" and next != "്"):
