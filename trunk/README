@@ -98,6 +98,8 @@ HAVING tesseract and tessdata IN THE SAME DIRECTORY DOES NOT WORK ANY MORE.
 The command line is:
 tesseract <image.tif> <output> [-l langid]
 
+***Please ignore the install error related to java in the end.
+
 All Systems:
 The image file requires a .tif extension for its type to be recognized
 correctly. If a file exists with the .tif extension replaced by .uzn, then it
