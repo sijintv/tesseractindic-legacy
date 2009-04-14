@@ -522,11 +522,11 @@ s,@INSTALL_SCRIPT@,${INSTALL},;t t
 s,@INSTALL_DATA@,${INSTALL} -m 644,;t t
 s,@PACKAGE@,,;t t
 s,@VERSION@,,;t t
-s,@ACLOCAL@,/home/debayan/test/config/missing aclocal-1.4,;t t
-s,@AUTOCONF@,/home/debayan/test/config/missing autoconf,;t t
-s,@AUTOMAKE@,/home/debayan/test/config/missing automake-1.4,;t t
-s,@AUTOHEADER@,/home/debayan/test/config/missing autoheader,;t t
-s,@MAKEINFO@,/home/debayan/test/config/missing makeinfo,;t t
+s,@ACLOCAL@,/home/debayan/tesseractindic/config/missing aclocal-1.4,;t t
+s,@AUTOCONF@,/home/debayan/tesseractindic/config/missing autoconf,;t t
+s,@AUTOMAKE@,/home/debayan/tesseractindic/config/missing automake-1.4,;t t
+s,@AUTOHEADER@,/home/debayan/tesseractindic/config/missing autoheader,;t t
+s,@MAKEINFO@,/home/debayan/tesseractindic/config/missing makeinfo,;t t
 s,@SET_MAKE@,,;t t
 s,@MAINTAINER_MODE_TRUE@,#,;t t
 s,@MAINTAINER_MODE_FALSE@,,;t t
