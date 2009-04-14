@@ -2,7 +2,9 @@
 #-*- coding:utf8 -*-
 #This code generates the training files for tesseract-ocr for bootstrapping a new character set
 import file
+#import distort
 import train
+
 import os
 import sys
 
@@ -11,8 +13,8 @@ import cairo
 import pango
 import pangocairo
 
-#import ImageFont, ImageDraw, ImageChops
-#from PIL import Image
+import ImageFont, ImageDraw, ImageChops
+from PIL import Image
 
 def expand(temp_bbox):
     """expand a bounding box a little bit"""
@@ -33,7 +35,8 @@ def draw(lang,font_name,font,fsz,alphabets): # language, font file name, font fu
     #Using a font
     #font= ImageFont.truetype(font,fsz)
     filecount=0 #for different filenames for the images
-    filename=image_dir+"/"+"image"+font_name.split('.')[0]+str(filecount)+".png"
+    filename1=image_dir+"/"+"image"+font_name.split('.')[0]+str(filecount)+".png"
+    filename2=image_dir+"/"+"image"+font_name.split('.')[0]+str(filecount)+".tif"
     boxfile=image_dir+"/"+"image"+font_name.split('.')[0]+str(filecount)+".box"
     f=open(boxfile,"w")
      
@@ -73,10 +76,27 @@ def draw(lang,font_name,font,fsz,alphabets): # language, font file name, font fu
         w, h = layout.get_pixel_size()
         position = (10,10)#(width/2.0 - w/2.0, height/2.0 - h/2.0)
         context.move_to(*position)
-
         pc.show_layout(layout)
+        surface.write_to_png(filename1)
 
-        surface.write_to_png(filename)
+	#Here we open the generated image using PIL functions
+	temp_image=Image.open(filename1) #black background, white text
+	draw = ImageDraw.Draw(temp_image)
+	bbox = temp_image.getbbox()
+	print bbox
+	inverted_image = ImageChops.invert(temp_image) #White background, black text
+	draw= ImageDraw.Draw(inverted_image)      #Lets transfer "draw" to the new image
+	#draw.rectangle(bbox,None,100) #draw the bounding box
+	inverted_image.save(filename2,"TIFF")#save the symbol to a file
+	os.unlink(filename1) #delete the pango generated png
+
+	line=akshar+" "+str(bbox[0])+" "+str(bbox[1])+" "+str(bbox[2])+" "+str(bbox[3]) # this is the line to be added to the box file
+	f.write(line+'\n')
+	boxfile=image_dir+"/"+"image"+font_name.split('.')[0]+str(filecount)+".box"
+        f.close()
+        f=open(boxfile,"w") #open new file
+
+	#distort.distort(filename2)
         
         
         
@@ -94,7 +114,8 @@ def draw(lang,font_name,font,fsz,alphabets): # language, font file name, font fu
         #symbol_image.save(filename,"TIFF")#save the symbol to a file
         #print filename
         filecount+=1 # give a new name to the file to be created
-        filename=image_dir+"/"+"image"+font_name.split('.')[0]+str(filecount)+".png"
+        filename1=image_dir+"/"+"image"+font_name.split('.')[0]+str(filecount)+".png"
+	filename2=image_dir+"/"+"image"+font_name.split('.')[0]+str(filecount)+".tif"
         #boxfile=image_dir+"/"+"image"+font_name.split('.')[0]+str(filecount)+".box"
         #f.close()
         #f=open(boxfile,"w") #open new file
