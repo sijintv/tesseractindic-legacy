@@ -2,7 +2,7 @@
 #-*- coding:utf8 -*-
 #This code generates the training files for tesseract-ocr for bootstrapping a new character set
 import file
-#import distort
+import distort
 import train
 
 import os
@@ -96,7 +96,7 @@ def draw(lang,font_name,font,fsz,alphabets): # language, font file name, font fu
         f.close()
         f=open(boxfile,"w") #open new file
 
-	#distort.distort(filename2)
+	distort.distort(filename2,bbox,fsz,akshar)
         
         
         
