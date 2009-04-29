@@ -16,6 +16,9 @@ import pangocairo
 import ImageFont, ImageDraw, ImageChops
 from PIL import Image
 
+bigbox=()
+
+
 def expand(temp_bbox):
     """expand a bounding box a little bit"""
     tol=2
@@ -37,10 +40,13 @@ def draw(lang,font_name,font,fsz,alphabets): # language, font file name, font fu
     filecount=0 #for different filenames for the images
     filename1=image_dir+"/"+"image"+font_name.split('.')[0]+str(filecount)+".png"
     filename2=image_dir+"/"+"image"+font_name.split('.')[0]+str(filecount)+".tif"
-    boxfile=image_dir+"/"+"image"+font_name.split('.')[0]+str(filecount)+".box"
+    #boxfile=image_dir+"/"+"image"+font_name.split('.')[0]+str(filecount)+".box"
+    boxfile=image_dir+"/"+"bigimage.box"
     f=open(boxfile,"w")
      
-    
+    bigimage=Image.new("L",(500,500),255)
+    bigdraw=ImageDraw.Draw(bigimage)
+    x=y=10
     
     for akshar in alphabets:
         akshar.strip() #remove nasty characters
@@ -67,7 +73,7 @@ def draw(lang,font_name,font,fsz,alphabets): # language, font file name, font fu
         pc = pangocairo.CairoContext(context)
 
         layout = pc.create_layout()
-        layout.set_font_description(pango.FontDescription('Lohit Bengali Bold 40'))
+        layout.set_font_description(pango.FontDescription('Lohit Bengali 15'))
         layout.set_text(akshar)
         print akshar
 
@@ -83,23 +89,38 @@ def draw(lang,font_name,font,fsz,alphabets): # language, font file name, font fu
 	temp_image=Image.open(filename1) #black background, white text
 	draw = ImageDraw.Draw(temp_image)
 	bbox = temp_image.getbbox()
+	deltax=bbox[2]-bbox[0]
+	deltay=bbox[3]-bbox[1]
+
+	
 	print bbox
-	inverted_image = ImageChops.invert(temp_image) #White background, black text
-	draw= ImageDraw.Draw(inverted_image)      #Lets transfer "draw" to the new image
-	#draw.rectangle(bbox,None,100) #draw the bounding box
-	inverted_image.save(filename2,"TIFF")#save the symbol to a file
+	new_image=temp_image.crop(bbox)
+	#temp_image=temp_image.load()
+	inverted_image = ImageChops.invert(new_image) #White background, black text
+
+	bigimage.paste(inverted_image,(x,y))
+	bigbox=(x,y,x+deltax,y+deltay)
+	print bigbox
+	draw=ImageDraw.Draw(bigimage)
+	#draw.rectangle(bigbox,None,100)
+	x=bigbox[2]+2
+	if x>450:
+            x=10; y=y+35
+
+	#draw= ImageDraw.Draw(inverted_image)      #Lets transfer "draw" to the new image
+	#draw.rectangle(bigbox,None,300) #draw the bounding box
+	#inverted_image.save(filename2,"TIFF")#save the symbol to a file
 	os.unlink(filename1) #delete the pango generated png
 
-	line=akshar+" "+str(bbox[0])+" "+str(bbox[1])+" "+str(bbox[2])+" "+str(bbox[3]) # this is the line to be added to the box file
+	line=akshar+" "+str(bigbox[0])+" "+str(500-(bigbox[1]+deltay))+" "+str(bigbox[2])+" "+str(500-(bigbox[3]-deltay)) # this is the line to be added to the box file
 	f.write(line+'\n')
-	boxfile=image_dir+"/"+"image"+font_name.split('.')[0]+str(filecount)+".box"
-        f.close()
-        f=open(boxfile,"w") #open new file
+	#boxfile=image_dir+"/"+"image"+font_name.split('.')[0]+str(filecount)+".box"
+	#boxfile=image_dir+"/"+"bigimage.box"
+        #f.close()
+        #f=open(boxfile,"w") #open new file
 
-	distort.distort(filename2,bbox,fsz,akshar)
-        
-        
-        
+	#distort.distort(filename2,bbox,fsz,akshar)
+     
         """if(type(original_bbox) != tuple):
             print "NONETYPE ERROR"
             line="Nonetype error"
@@ -119,6 +140,8 @@ def draw(lang,font_name,font,fsz,alphabets): # language, font file name, font fu
         #boxfile=image_dir+"/"+"image"+font_name.split('.')[0]+str(filecount)+".box"
         #f.close()
         #f=open(boxfile,"w") #open new file
+    bigimage.save(image_dir+"/"+"bigimage.tif","TIFF")
+    f.close()
         
             
 if(len(sys.argv)!=7):
@@ -153,7 +176,7 @@ for t in os.walk(font_dir):
                 if(f.split('.')[1]=="ttf"):
                     font_file=font_dir+f
                     #print font_file
-                    draw(lang,f,font_file,40,file.read_file(alphabet_dir))#reads all fonts in the directory font_dir and trains
+                    draw(lang,f,font_file,15,file.read_file(alphabet_dir))#reads all fonts in the directory font_dir and trains
 
 train.train(lang)
 #training ends
