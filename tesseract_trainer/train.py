@@ -58,7 +58,7 @@ def train(lang):
                 print linein, "produced error"
                 filein.close()
                 fileout.close()
-                weedout(img,dir)  #move the faulty image/box-file pair to a new directory
+                #weedout(img,dir)  #move the faulty image/box-file pair to a new directory
             
     #now begins clustering
     
