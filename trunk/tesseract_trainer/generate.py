@@ -16,6 +16,7 @@ import pangocairo
 import ImageFont, ImageDraw, ImageChops
 from PIL import Image
 
+
 bigbox=()
 
 
@@ -26,9 +27,10 @@ def expand(temp_bbox):
     return bbox
 
 
-def draw(lang,font_name,font,fsz,alphabets): # language, font file name, font full path, font size, characters
+def draw(font_string,font_size,lang,alphabets): # language, font file name, font full path, font size, characters
     """ Generates tif images and box files"""
-   
+    
+    
     image_dir=lang+"."+"images"
     if(os.path.exists(image_dir)):
         pass
@@ -40,10 +42,10 @@ def draw(lang,font_name,font,fsz,alphabets): # language, font file name, font fu
     boxfile=image_dir+"/"+"bigimage.box"
     f=open(boxfile,"w")
      
-    bigimage=Image.new("L",(1000,1000),255)
+    bigimage=Image.new("L",(2000,2000),255)
     bigdraw=ImageDraw.Draw(bigimage)
     x=y=10
-   
+    count=0
     for akshar in alphabets:
         akshar.strip() #remove nasty characters
        
@@ -55,13 +57,13 @@ def draw(lang,font_name,font,fsz,alphabets): # language, font file name, font fu
       
        
         #The lines below are pango/cairo code
-        surface = cairo.ImageSurface(cairo.FORMAT_A8, fsz*3, fsz*2)
+        surface = cairo.ImageSurface(cairo.FORMAT_A8, font_size*4, font_size*3)
         context = cairo.Context(surface)
 
         pc = pangocairo.CairoContext(context)
 
         layout = pc.create_layout()
-        layout.set_font_description(pango.FontDescription('Lohit Bengali 15'))
+        layout.set_font_description(pango.FontDescription(font_string))
         layout.set_text(akshar)
         print akshar
 
@@ -72,6 +74,8 @@ def draw(lang,font_name,font,fsz,alphabets): # language, font file name, font fu
         context.move_to(*position)
         pc.show_layout(layout)
         surface.write_to_png("pango.png")
+	#iter=layout.get_iter()
+	#print iter.get_char_extents()
 
         #Here we open the generated image using PIL functions
         temp_image=Image.open("pango.png") #black background, white text
@@ -83,21 +87,26 @@ def draw(lang,font_name,font,fsz,alphabets): # language, font file name, font fu
        
         print bbox
         new_image=temp_image.crop(bbox)
-        #temp_image=temp_image.load()
+        temp_image=temp_image.load()
         inverted_image = ImageChops.invert(new_image) #White background, black text
+	
+	inverted_image.save(image_dir+"/"+str(count)+".png")
+	count=count+1
+	
 
         bigimage.paste(inverted_image,(x,y))
+	#bigimage.load()
         bigbox=(x,y,x+deltax,y+deltay)
         print bigbox
         draw=ImageDraw.Draw(bigimage)
         #draw.rectangle(bigbox,None,100)
         x=bigbox[2]+3
-        if x>950:
-            x=10; y=y+35
+        if x>1950:
+            x=10; y=y+40
 
         os.unlink("pango.png") #delete the pango generated png
 
-        line=akshar+" "+str(bigbox[0])+" "+str(1000-(bigbox[1]+deltay))+" "+str(bigbox[2])+" "+str(1000-(bigbox[3]-deltay)) # this is the line to be added to the box file
+        line=akshar+" "+str(bigbox[0])+" "+str(2000-(bigbox[1]+deltay))+" "+str(bigbox[2])+" "+str(2000-(bigbox[3]-deltay)) # this is the line to be added to the box file
         f.write(line+'\n')
 
 	#degrade code starts
@@ -109,12 +118,12 @@ def draw(lang,font_name,font,fsz,alphabets): # language, font file name, font fu
 				distort2.putpixel((ex,wai),255)
 		bigbox=(x,y,x+deltax,y+deltay)
 		#draw.rectangle(bigbox,None,100)
-		line=akshar+" "+str(bigbox[0])+" "+str(1000-(bigbox[1]+deltay))+" "+str(bigbox[2])+" "+str(1000-(bigbox[3]-deltay)) # this is the line to be added to the box file
+		line=akshar+" "+str(bigbox[0])+" "+str(2000-(bigbox[1]+deltay))+" "+str(bigbox[2])+" "+str(2000-(bigbox[3]-deltay)) # this is the line to be added to the box file
         	f.write(line+'\n')
 		bigimage.paste(distort2,(x,y))
 		x=bigbox[2]+3
-        	if x>950:
-            		x=10; y=y+35
+        	if x>1950:
+            		x=10; y=y+40
 		
 			
 	#degrade code ends
@@ -127,39 +136,39 @@ def draw(lang,font_name,font,fsz,alphabets): # language, font file name, font fu
     f.close()
        
            
-if(len(sys.argv)!=7):
-    print "Usage: python generate.py -fd <font directory> -l <language> -a <input alphabet directory>"
+if(len(sys.argv)!=9):
+    print "Usage: python generate.py -font <font name> -l <language> -s <size> -a <input alphabet directory>"
     exit()
 
-if(sys.argv[1]=="-fd"):
-    font_dir=sys.argv[2]
+if(sys.argv[1]=="-font"):
+    font_name=sys.argv[2]
 else:
-    print "Usage: python generate.py -fd <font directory> -l <language> -a <imput alphabet directory>"
+    print "Usage: python generate.py -font <font name> -l <language> -s <size> -a <input alphabet directory>1"
     exit()
        
 if(sys.argv[3]=="-l"):
     lang=sys.argv[4]
 else:
-    print "Usage: python generate.py -fd <font directory> -l <language> -a <input alphabet directory>"
+    print "Usage: python generate.py -font <font name> -l <language> -s <size> -a <input alphabet directory>2"
     exit()
    
-if(sys.argv[5]=="-a"):
-    alphabet_dir=sys.argv[6]
+if(sys.argv[5]=="-s"):
+    font_size=sys.argv[6]
 else:
-    print "Usage: python generate.py -fd <font directory> -l <language> -a <input alphabet directory>"
+    print "Usage: python generate.py -font <font name> -l <language> -s <size> -a <input alphabet directory>3"
     exit()
-   
+
+if(sys.argv[7]=="-a"):
+    alphabet_dir=sys.argv[8]
+else:
+    print "Usage: python generate.py -font <font name> -l <language> -s <size> -a <input alphabet directory>4"
+    exit()
+
+font_string=font_name+" "+lang+" "+font_size
 
 
 #begin training    
-#font_dir="/usr/share/fonts/truetype/ttf-bengali-fonts/"
-for t in os.walk(font_dir):
-        for f in t[2]:
-            if(os.path.exists(font_dir+f)):
-                if(f.split('.')[1]=="ttf"):
-                    font_file=font_dir+f
-                    #print font_file
-                    draw(lang,f,font_file,15,file.read_file(alphabet_dir))#reads all fonts in the directory font_dir and trains
+draw(font_string,int(font_size),lang,file.read_file(alphabet_dir))#reads all fonts in the directory font_dir and trains
 
 train.train(lang)
 #training ends

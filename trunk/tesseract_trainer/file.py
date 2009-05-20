@@ -27,7 +27,7 @@ def combine(frest,fc,fpresv,fpostsv):
         #print count,
         count+=1
         print a
-        return all_comb
+    return all_comb
 
 
 
@@ -35,15 +35,15 @@ def read_file(alphabet_dir):
     """Reads input alphabet files from alphabet_dir"""
     print "in file.py"
     #file containing vowels
-    if(os.path.exists(alphabet_dir+"consonants")):
-        f=open(alphabet_dir+"consonants",'r')
+    if(os.path.exists(alphabet_dir+"consonants_conjuncts")):
+        f=open(alphabet_dir+"consonants_conjuncts",'r')
         fc=f.readlines()
         f.close()
     else:
         fc=[]
         
     
-    #file containing semivowels of the form consonant+semivowel	
+    #file containing semivowels of the form consonant_conjunct+semivowel	
     if(os.path.exists(alphabet_dir+"pre_semivowels")):
         f=open(alphabet_dir+"pre_semivowels",'r')
         fpresv=f.readlines()
@@ -52,7 +52,7 @@ def read_file(alphabet_dir):
         fpresv=[]
         
 
-    #file containing semivowels of the form semivowel+consonant
+    #file containing semivowels of the form semivowel+consonant_conjunct
     if(os.path.exists(alphabet_dir+"post_semivowels")):
         f=open(alphabet_dir+"post_semivowels",'r')
         fpostsv=f.readlines()
