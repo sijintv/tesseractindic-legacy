@@ -67,7 +67,7 @@ def draw(font_string,font_size,lang,alphabets): # language, font file name, font
         layout.set_text(akshar)
         print akshar
 
-        # Next four lines take care of centering the text. Feel free to ignore ;-)
+        #  lines take care of centering the text.
         width, height = surface.get_width(), surface.get_height()
         w, h = layout.get_pixel_size()
         position = (10,10)#(width/2.0 - w/2.0, height/2.0 - h/2.0)
@@ -143,25 +143,25 @@ if(len(sys.argv)!=9):
 if(sys.argv[1]=="-font"):
     font_name=sys.argv[2]
 else:
-    print "Usage: python generate.py -font <font name> -l <language> -s <size> -a <input alphabet directory>1"
+    print "Usage: python generate.py -font <font name> -l <language> -s <size> -a <input alphabet directory>"
     exit()
        
 if(sys.argv[3]=="-l"):
     lang=sys.argv[4]
 else:
-    print "Usage: python generate.py -font <font name> -l <language> -s <size> -a <input alphabet directory>2"
+    print "Usage: python generate.py -font <font name> -l <language> -s <size> -a <input alphabet directory>"
     exit()
    
 if(sys.argv[5]=="-s"):
     font_size=sys.argv[6]
 else:
-    print "Usage: python generate.py -font <font name> -l <language> -s <size> -a <input alphabet directory>3"
+    print "Usage: python generate.py -font <font name> -l <language> -s <size> -a <input alphabet directory>"
     exit()
 
 if(sys.argv[7]=="-a"):
     alphabet_dir=sys.argv[8]
 else:
-    print "Usage: python generate.py -font <font name> -l <language> -s <size> -a <input alphabet directory>4"
+    print "Usage: python generate.py -font <font name> -l <language> -s <size> -a <input alphabet directory>"
     exit()
 
 font_string=font_name+" "+lang+" "+font_size
