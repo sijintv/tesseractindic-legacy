@@ -99,15 +99,15 @@ def draw(font_string,font_size,lang,alphabets): # language, font file name, font
         bigbox=(x,y,x+deltax,y+deltay)
         print bigbox
         draw=ImageDraw.Draw(bigimage)
-        #draw.rectangle(bigbox,None,100)
-        x=bigbox[2]+3
+	#draw.rectangle(bigbox,None,100)
+        x=bigbox[2]+5
         if x>1950:
             x=10; y=y+40
 
         os.unlink("pango.png") #delete the pango generated png
 
-        line=akshar+" "+str(bigbox[0])+" "+str(2000-(bigbox[1]+deltay))+" "+str(bigbox[2])+" "+str(2000-(bigbox[3]-deltay)) # this is the line to be added to the box file
-        f.write(line+'\n')
+        line=akshar+" "+str(bigbox[0]-1)+" "+str(2000-(bigbox[1]+deltay)-1)+" "+str(bigbox[2]+1)+" "+str(2000-(bigbox[3]-deltay)+1) # this is the line to be added to the box file
+	f.write(line+'\n')
 
 	#degrade code starts
 	strip=[deltax*.2,deltax*.4,deltax*.7]
@@ -117,11 +117,11 @@ def draw(font_string,font_size,lang,alphabets): # language, font file name, font
 			for ex in range(strip[values],strip[values]+1):
 				distort2.putpixel((ex,wai),255)
 		bigbox=(x,y,x+deltax,y+deltay)
-		#draw.rectangle(bigbox,None,100)
-		line=akshar+" "+str(bigbox[0])+" "+str(2000-(bigbox[1]+deltay))+" "+str(bigbox[2])+" "+str(2000-(bigbox[3]-deltay)) # this is the line to be added to the box file
+		#draw.rectangle(bigbox,None,10)
+		line=akshar+" "+str(bigbox[0]-1)+" "+str(2000-(bigbox[1]+deltay)-1)+" "+str(bigbox[2]+1)+" "+str(2000-(bigbox[3]-deltay)+1) # this is the line to be added to the box file
         	f.write(line+'\n')
 		bigimage.paste(distort2,(x,y))
-		x=bigbox[2]+3
+		x=bigbox[2]+5
         	if x>1950:
             		x=10; y=y+40
 		

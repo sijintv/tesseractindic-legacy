@@ -33,33 +33,17 @@ def train(lang):
         os.mkdir(output_dir)
    # os.chdir(output_dir)
     print "in train"
-    for t in os.walk(dir):
-        for f in t[2]:
-            pos=0
-            img=f.split('.')[0]
-            #print img
-            image=img+'.tif'
-            box=img+'.box'
-                                   
-            exec_string1='tesseract '+dir+image+' junk nobatch box.train'
-            #print exec_string1
-            qpipe = os.popen4(exec_string1) #This returns a list.  The second list element is a file object from which you can read the command output.
-            o=qpipe[1].readlines() 
-            pos=str(o).find('FAILURE') #Look for the word "FAILURE" in tesseract-ocr trainer output.
-            #print str(o)
-            print " ok ",
+    image='bigimage.tif'
+    box='bigimage.box'
+    exec_string1='tesseract '+dir+image+' junk nobatch box.train'
+    print exec_string1
+    qpipe = os.popen4(exec_string1) #This returns a list.  The second list element is a file object from which you can read the command output.
+    o=qpipe[1].readlines() 
+    pos=str(o).find('FAILURE') #Look for the word "FAILURE" in tesseract-ocr trainer output.
+    print str(o)
+    print " ok ",
             
-            if(pos > 0):
-                #os.chdir("images")                                
-                fileout=open("error",'a')
-                filein=open(dir+box,'r')
-                linein=filein.readline()
-                fileout.write(linein+"\n")
-                print linein, "produced error"
-                filein.close()
-                fileout.close()
-                #weedout(img,dir)  #move the faulty image/box-file pair to a new directory
-            
+                       
     #now begins clustering
     
     exec_string2="mftraining"
@@ -82,7 +66,7 @@ def train(lang):
         for f in t[2]:
             if(f.split('.')[1]=="box"):
                 exec_string4+=" "+dir+f
-                #print exec_string4
+                print exec_string4
     qpipe4=os.popen4(exec_string4)
     #unicharset_extractor ends
     
@@ -111,11 +95,3 @@ def train(lang):
         os.rename("unicharset",lang+".unicharset")
         shutil.move(lang+".unicharset",lang+".training_data/")
         print "unicharset renamed and moved"
-    
-    
-    
-            
-            
-            
-            
-    
