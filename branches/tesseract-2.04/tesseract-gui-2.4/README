@@ -1,0 +1,42 @@
+###########################################################################
+Tesseract-gui
+###########################################################################
+tesseract-gui.py - Copyright 2009 Juan Ramon Castan <juanramoncastan at yahoo.es>
+Based in the previous work of Filip Domenic "guitesseract.py" 
+### guitesseract.py ### - Copyright 2008 Filip Dominec <filip.dominec at gmail.com>
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.#}}}
+FrontEnd for Tesseract OCR with simple image manipulation thru ImageMagick. 
+
+1.- You need to have installed tesseract and ImageMagick
+
+2.- Installation
+
+   If you want to install it in your system executethe the next commands:
+
+   $ sudo cp tesseract-gui.py /usr/local/bin
+   $ sudo chmod 755 /usr/local/bin/tesseract-gui.py
+
+3.- Use 
+   
+   If you have installed it in your system just run
+   $ tesseract-gui.py
+
+   Alternatively you can run it giving execution permisions and executing from the folder
+   $ cd /path/to/folder
+   $ chmod 755 tesseract-gui.py
+   $ python tesseract-gui.py
+   or
+   $ ./tesseract-gui.py
+
+   
+   
