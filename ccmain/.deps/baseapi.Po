@@ -1,0 +1,628 @@
+baseapi.o: baseapi.cpp baseapi.h /usr/include/c++/4.4/iostream \
+ /usr/include/c++/4.4/i486-linux-gnu/bits/c++config.h \
+ /usr/include/c++/4.4/i486-linux-gnu/bits/os_defines.h \
+ /usr/include/features.h /usr/include/bits/predefs.h \
+ /usr/include/sys/cdefs.h /usr/include/bits/wordsize.h \
+ /usr/include/gnu/stubs.h /usr/include/gnu/stubs-32.h \
+ /usr/include/c++/4.4/i486-linux-gnu/bits/cpu_defines.h \
+ /usr/include/c++/4.4/ostream /usr/include/c++/4.4/ios \
+ /usr/include/c++/4.4/iosfwd /usr/include/c++/4.4/bits/stringfwd.h \
+ /usr/include/c++/4.4/bits/postypes.h /usr/include/c++/4.4/cwchar \
+ /usr/include/c++/4.4/cstddef \
+ /usr/lib/gcc/i486-linux-gnu/4.4.1/include/stddef.h /usr/include/wchar.h \
+ /usr/include/stdio.h /usr/lib/gcc/i486-linux-gnu/4.4.1/include/stdarg.h \
+ /usr/include/bits/wchar.h /usr/include/xlocale.h \
+ /usr/include/bits/wchar2.h /usr/include/c++/4.4/exception \
+ /usr/include/c++/4.4/bits/char_traits.h \
+ /usr/include/c++/4.4/bits/stl_algobase.h \
+ /usr/include/c++/4.4/bits/functexcept.h \
+ /usr/include/c++/4.4/exception_defines.h \
+ /usr/include/c++/4.4/bits/cpp_type_traits.h \
+ /usr/include/c++/4.4/ext/type_traits.h \
+ /usr/include/c++/4.4/ext/numeric_traits.h \
+ /usr/include/c++/4.4/bits/stl_pair.h /usr/include/c++/4.4/bits/move.h \
+ /usr/include/c++/4.4/bits/concept_check.h \
+ /usr/include/c++/4.4/bits/stl_iterator_base_types.h \
+ /usr/include/c++/4.4/bits/stl_iterator_base_funcs.h \
+ /usr/include/c++/4.4/bits/stl_iterator.h \
+ /usr/include/c++/4.4/debug/debug.h /usr/include/c++/4.4/bits/localefwd.h \
+ /usr/include/c++/4.4/i486-linux-gnu/bits/c++locale.h \
+ /usr/include/c++/4.4/clocale /usr/include/locale.h \
+ /usr/include/bits/locale.h /usr/include/c++/4.4/cctype \
+ /usr/include/ctype.h /usr/include/bits/types.h \
+ /usr/include/bits/typesizes.h /usr/include/endian.h \
+ /usr/include/bits/endian.h /usr/include/bits/byteswap.h \
+ /usr/include/c++/4.4/bits/ios_base.h \
+ /usr/include/c++/4.4/ext/atomicity.h \
+ /usr/include/c++/4.4/i486-linux-gnu/bits/gthr.h \
+ /usr/include/c++/4.4/i486-linux-gnu/bits/gthr-default.h \
+ /usr/include/pthread.h /usr/include/sched.h /usr/include/time.h \
+ /usr/include/bits/sched.h /usr/include/bits/time.h /usr/include/signal.h \
+ /usr/include/bits/sigset.h /usr/include/bits/pthreadtypes.h \
+ /usr/include/bits/setjmp.h /usr/include/unistd.h \
+ /usr/include/bits/posix_opt.h /usr/include/bits/environments.h \
+ /usr/include/bits/confname.h /usr/include/getopt.h \
+ /usr/include/bits/unistd.h \
+ /usr/include/c++/4.4/i486-linux-gnu/bits/atomic_word.h \
+ /usr/include/c++/4.4/bits/locale_classes.h /usr/include/c++/4.4/string \
+ /usr/include/c++/4.4/bits/allocator.h \
+ /usr/include/c++/4.4/i486-linux-gnu/bits/c++allocator.h \
+ /usr/include/c++/4.4/ext/new_allocator.h /usr/include/c++/4.4/new \
+ /usr/include/c++/4.4/bits/ostream_insert.h \
+ /usr/include/c++/4.4/cxxabi-forced.h \
+ /usr/include/c++/4.4/bits/stl_function.h \
+ /usr/include/c++/4.4/backward/binders.h \
+ /usr/include/c++/4.4/bits/basic_string.h \
+ /usr/include/c++/4.4/initializer_list \
+ /usr/include/c++/4.4/bits/basic_string.tcc \
+ /usr/include/c++/4.4/bits/locale_classes.tcc \
+ /usr/include/c++/4.4/streambuf /usr/include/c++/4.4/bits/streambuf.tcc \
+ /usr/include/c++/4.4/bits/basic_ios.h \
+ /usr/include/c++/4.4/bits/locale_facets.h /usr/include/c++/4.4/cwctype \
+ /usr/include/wctype.h \
+ /usr/include/c++/4.4/i486-linux-gnu/bits/ctype_base.h \
+ /usr/include/c++/4.4/bits/streambuf_iterator.h \
+ /usr/include/c++/4.4/i486-linux-gnu/bits/ctype_inline.h \
+ /usr/include/c++/4.4/bits/locale_facets.tcc \
+ /usr/include/c++/4.4/bits/basic_ios.tcc \
+ /usr/include/c++/4.4/bits/ostream.tcc /usr/include/c++/4.4/istream \
+ /usr/include/c++/4.4/bits/istream.tcc /usr/include/math.h \
+ /usr/include/bits/huge_val.h /usr/include/bits/huge_valf.h \
+ /usr/include/bits/huge_vall.h /usr/include/bits/inf.h \
+ /usr/include/bits/nan.h /usr/include/bits/mathdef.h \
+ /usr/include/bits/mathcalls.h /usr/include/bits/mathinline.h \
+ ../config_auto.h tessedit.h ../ccutil/tessclas.h ../ccutil/ocrclass.h \
+ ../ccutil/host.h ../ccutil/platform.h \
+ /usr/lib/gcc/i486-linux-gnu/4.4.1/include-fixed/limits.h \
+ /usr/lib/gcc/i486-linux-gnu/4.4.1/include-fixed/syslimits.h \
+ /usr/include/limits.h /usr/include/bits/posix1_lim.h \
+ /usr/include/bits/local_lim.h /usr/include/linux/limits.h \
+ /usr/include/bits/posix2_lim.h /usr/include/bits/xopen_lim.h \
+ /usr/include/bits/stdio_lim.h pgedit.h ../ccstruct/ocrblock.h \
+ ../image/img.h ../ccutil/memry.h ../ccstruct/ocrrow.h \
+ /usr/include/libio.h /usr/include/_G_config.h \
+ /usr/include/bits/sys_errlist.h /usr/include/bits/stdio.h \
+ /usr/include/bits/stdio2.h ../ccstruct/quspline.h ../ccstruct/quadratc.h \
+ ../ccstruct/points.h ../ccutil/elst.h ../ccutil/serialis.h \
+ /usr/include/stdlib.h /usr/include/bits/waitflags.h \
+ /usr/include/bits/waitstatus.h /usr/include/sys/types.h \
+ /usr/include/sys/select.h /usr/include/bits/select.h \
+ /usr/include/sys/sysmacros.h /usr/include/alloca.h \
+ /usr/include/bits/stdlib.h /usr/include/string.h \
+ /usr/include/bits/string3.h ../ccutil/memry.h ../ccutil/errcode.h \
+ ../ccutil/fileerr.h ../ccutil/lsterr.h ../ccstruct/ipoints.h \
+ ../ccutil/serialis.h ../ccstruct/rect.h ../ccutil/ndminx.h \
+ ../ccutil/tprintf.h ../ccutil/varable.h ../ccutil/clst.h \
+ ../ccutil/strngs.h ../viewer/scrollview.h ../ccstruct/werd.h \
+ ../ccutil/varable.h ../ccutil/bits16.h ../ccutil/strngs.h \
+ ../ccstruct/blckerr.h ../ccutil/errcode.h ../ccstruct/stepblob.h \
+ ../ccstruct/coutln.h ../ccstruct/crakedge.h ../ccstruct/mod128.h \
+ ../ccstruct/polyblob.h ../ccstruct/poutline.h ../ccstruct/polyvert.h \
+ ../ccutil/elst2.h ../ccstruct/normalis.h ../ccstruct/pageblk.h \
+ ../ccstruct/txtregn.h ../ccstruct/hpdsizes.h ../ccstruct/polyblk.h \
+ ../ccstruct/hpddef.h ../ccutil/debugwin.h ../ccstruct/pdblock.h \
+ ../ccstruct/ocrrow.h ../ccstruct/werd.h ../ccstruct/rect.h pagewalk.h \
+ ../ccstruct/polyblob.h ../ccstruct/stepblob.h ../ccutil/notdll.h \
+ ../ccstruct/pageres.h ../ccstruct/ocrblock.h ../ccstruct/ratngs.h \
+ ../ccutil/clst.h ../ccutil/unichar.h /usr/include/memory.h \
+ ../ccstruct/rejctmap.h /usr/include/assert.h tessvars.h \
+ ../textord/tordmain.h ../ccstruct/blobbox.h ../ccstruct/statistc.h \
+ ../ccutil/host.h control.h ../ccstruct/ratngs.h ../ccstruct/statistc.h \
+ ../ccutil/ocrshell.h ../ccutil/ocrclass.h ../wordrec/charsample.h \
+ applybox.h varabled.h ../cutil/variables.h ../cutil/cutil.h \
+ ../cutil/general.h ../cutil/oldlist.h output.h ../cutil/globals.h \
+ ../cutil/const.h ../ccutil/unicharset.h ../ccutil/unichar.h \
+ ../ccutil/unicharmap.h ../classify/adaptmatch.h ../cutil/oldlist.h \
+ ../classify/fxdefs.h ../cutil/general.h ../dict/matchdefs.h \
+ ../classify/adaptive.h ../classify/intproto.h ../classify/protos.h \
+ ../cutil/bitvec.h ../cutil/cutil.h ../cutil/callcpp.h \
+ ../classify/ocrfeatures.h ../cutil/funcdefs.h ../textord/edgblob.h \
+ ../ccstruct/coutln.h ../ccstruct/crakedge.h tessbox.h \
+ ../cutil/tordvars.h ../image/imgs.h ../image/img.h ../textord/makerow.h \
+ tstruct.h ../cutil/tessarray.h ../textord/tessout.h ../wordrec/tface.h \
+ ../dict/choicearr.h ../dict/choices.h ../dict/permute.h \
+ ../dict/choicearr.h
+
+baseapi.h:
+
+/usr/include/c++/4.4/iostream:
+
+/usr/include/c++/4.4/i486-linux-gnu/bits/c++config.h:
+
+/usr/include/c++/4.4/i486-linux-gnu/bits/os_defines.h:
+
+/usr/include/features.h:
+
+/usr/include/bits/predefs.h:
+
+/usr/include/sys/cdefs.h:
+
+/usr/include/bits/wordsize.h:
+
+/usr/include/gnu/stubs.h:
+
+/usr/include/gnu/stubs-32.h:
+
+/usr/include/c++/4.4/i486-linux-gnu/bits/cpu_defines.h:
+
+/usr/include/c++/4.4/ostream:
+
+/usr/include/c++/4.4/ios:
+
+/usr/include/c++/4.4/iosfwd:
+
+/usr/include/c++/4.4/bits/stringfwd.h:
+
+/usr/include/c++/4.4/bits/postypes.h:
+
+/usr/include/c++/4.4/cwchar:
+
+/usr/include/c++/4.4/cstddef:
+
+/usr/lib/gcc/i486-linux-gnu/4.4.1/include/stddef.h:
+
+/usr/include/wchar.h:
+
+/usr/include/stdio.h:
+
+/usr/lib/gcc/i486-linux-gnu/4.4.1/include/stdarg.h:
+
+/usr/include/bits/wchar.h:
+
+/usr/include/xlocale.h:
+
+/usr/include/bits/wchar2.h:
+
+/usr/include/c++/4.4/exception:
+
+/usr/include/c++/4.4/bits/char_traits.h:
+
+/usr/include/c++/4.4/bits/stl_algobase.h:
+
+/usr/include/c++/4.4/bits/functexcept.h:
+
+/usr/include/c++/4.4/exception_defines.h:
+
+/usr/include/c++/4.4/bits/cpp_type_traits.h:
+
+/usr/include/c++/4.4/ext/type_traits.h:
+
+/usr/include/c++/4.4/ext/numeric_traits.h:
+
+/usr/include/c++/4.4/bits/stl_pair.h:
+
+/usr/include/c++/4.4/bits/move.h:
+
+/usr/include/c++/4.4/bits/concept_check.h:
+
+/usr/include/c++/4.4/bits/stl_iterator_base_types.h:
+
+/usr/include/c++/4.4/bits/stl_iterator_base_funcs.h:
+
+/usr/include/c++/4.4/bits/stl_iterator.h:
+
+/usr/include/c++/4.4/debug/debug.h:
+
+/usr/include/c++/4.4/bits/localefwd.h:
+
+/usr/include/c++/4.4/i486-linux-gnu/bits/c++locale.h:
+
+/usr/include/c++/4.4/clocale:
+
+/usr/include/locale.h:
+
+/usr/include/bits/locale.h:
+
+/usr/include/c++/4.4/cctype:
+
+/usr/include/ctype.h:
+
+/usr/include/bits/types.h:
+
+/usr/include/bits/typesizes.h:
+
+/usr/include/endian.h:
+
+/usr/include/bits/endian.h:
+
+/usr/include/bits/byteswap.h:
+
+/usr/include/c++/4.4/bits/ios_base.h:
+
+/usr/include/c++/4.4/ext/atomicity.h:
+
+/usr/include/c++/4.4/i486-linux-gnu/bits/gthr.h:
+
+/usr/include/c++/4.4/i486-linux-gnu/bits/gthr-default.h:
+
+/usr/include/pthread.h:
+
+/usr/include/sched.h:
+
+/usr/include/time.h:
+
+/usr/include/bits/sched.h:
+
+/usr/include/bits/time.h:
+
+/usr/include/signal.h:
+
+/usr/include/bits/sigset.h:
+
+/usr/include/bits/pthreadtypes.h:
+
+/usr/include/bits/setjmp.h:
+
+/usr/include/unistd.h:
+
+/usr/include/bits/posix_opt.h:
+
+/usr/include/bits/environments.h:
+
+/usr/include/bits/confname.h:
+
+/usr/include/getopt.h:
+
+/usr/include/bits/unistd.h:
+
+/usr/include/c++/4.4/i486-linux-gnu/bits/atomic_word.h:
+
+/usr/include/c++/4.4/bits/locale_classes.h:
+
+/usr/include/c++/4.4/string:
+
+/usr/include/c++/4.4/bits/allocator.h:
+
+/usr/include/c++/4.4/i486-linux-gnu/bits/c++allocator.h:
+
+/usr/include/c++/4.4/ext/new_allocator.h:
+
+/usr/include/c++/4.4/new:
+
+/usr/include/c++/4.4/bits/ostream_insert.h:
+
+/usr/include/c++/4.4/cxxabi-forced.h:
+
+/usr/include/c++/4.4/bits/stl_function.h:
+
+/usr/include/c++/4.4/backward/binders.h:
+
+/usr/include/c++/4.4/bits/basic_string.h:
+
+/usr/include/c++/4.4/initializer_list:
+
+/usr/include/c++/4.4/bits/basic_string.tcc:
+
+/usr/include/c++/4.4/bits/locale_classes.tcc:
+
+/usr/include/c++/4.4/streambuf:
+
+/usr/include/c++/4.4/bits/streambuf.tcc:
+
+/usr/include/c++/4.4/bits/basic_ios.h:
+
+/usr/include/c++/4.4/bits/locale_facets.h:
+
+/usr/include/c++/4.4/cwctype:
+
+/usr/include/wctype.h:
+
+/usr/include/c++/4.4/i486-linux-gnu/bits/ctype_base.h:
+
+/usr/include/c++/4.4/bits/streambuf_iterator.h:
+
+/usr/include/c++/4.4/i486-linux-gnu/bits/ctype_inline.h:
+
+/usr/include/c++/4.4/bits/locale_facets.tcc:
+
+/usr/include/c++/4.4/bits/basic_ios.tcc:
+
+/usr/include/c++/4.4/bits/ostream.tcc:
+
+/usr/include/c++/4.4/istream:
+
+/usr/include/c++/4.4/bits/istream.tcc:
+
+/usr/include/math.h:
+
+/usr/include/bits/huge_val.h:
+
+/usr/include/bits/huge_valf.h:
+
+/usr/include/bits/huge_vall.h:
+
+/usr/include/bits/inf.h:
+
+/usr/include/bits/nan.h:
+
+/usr/include/bits/mathdef.h:
+
+/usr/include/bits/mathcalls.h:
+
+/usr/include/bits/mathinline.h:
+
+../config_auto.h:
+
+tessedit.h:
+
+../ccutil/tessclas.h:
+
+../ccutil/ocrclass.h:
+
+../ccutil/host.h:
+
+../ccutil/platform.h:
+
+/usr/lib/gcc/i486-linux-gnu/4.4.1/include-fixed/limits.h:
+
+/usr/lib/gcc/i486-linux-gnu/4.4.1/include-fixed/syslimits.h:
+
+/usr/include/limits.h:
+
+/usr/include/bits/posix1_lim.h:
+
+/usr/include/bits/local_lim.h:
+
+/usr/include/linux/limits.h:
+
+/usr/include/bits/posix2_lim.h:
+
+/usr/include/bits/xopen_lim.h:
+
+/usr/include/bits/stdio_lim.h:
+
+pgedit.h:
+
+../ccstruct/ocrblock.h:
+
+../image/img.h:
+
+../ccutil/memry.h:
+
+../ccstruct/ocrrow.h:
+
+/usr/include/libio.h:
+
+/usr/include/_G_config.h:
+
+/usr/include/bits/sys_errlist.h:
+
+/usr/include/bits/stdio.h:
+
+/usr/include/bits/stdio2.h:
+
+../ccstruct/quspline.h:
+
+../ccstruct/quadratc.h:
+
+../ccstruct/points.h:
+
+../ccutil/elst.h:
+
+../ccutil/serialis.h:
+
+/usr/include/stdlib.h:
+
+/usr/include/bits/waitflags.h:
+
+/usr/include/bits/waitstatus.h:
+
+/usr/include/sys/types.h:
+
+/usr/include/sys/select.h:
+
+/usr/include/bits/select.h:
+
+/usr/include/sys/sysmacros.h:
+
+/usr/include/alloca.h:
+
+/usr/include/bits/stdlib.h:
+
+/usr/include/string.h:
+
+/usr/include/bits/string3.h:
+
+../ccutil/memry.h:
+
+../ccutil/errcode.h:
+
+../ccutil/fileerr.h:
+
+../ccutil/lsterr.h:
+
+../ccstruct/ipoints.h:
+
+../ccutil/serialis.h:
+
+../ccstruct/rect.h:
+
+../ccutil/ndminx.h:
+
+../ccutil/tprintf.h:
+
+../ccutil/varable.h:
+
+../ccutil/clst.h:
+
+../ccutil/strngs.h:
+
+../viewer/scrollview.h:
+
+../ccstruct/werd.h:
+
+../ccutil/varable.h:
+
+../ccutil/bits16.h:
+
+../ccutil/strngs.h:
+
+../ccstruct/blckerr.h:
+
+../ccutil/errcode.h:
+
+../ccstruct/stepblob.h:
+
+../ccstruct/coutln.h:
+
+../ccstruct/crakedge.h:
+
+../ccstruct/mod128.h:
+
+../ccstruct/polyblob.h:
+
+../ccstruct/poutline.h:
+
+../ccstruct/polyvert.h:
+
+../ccutil/elst2.h:
+
+../ccstruct/normalis.h:
+
+../ccstruct/pageblk.h:
+
+../ccstruct/txtregn.h:
+
+../ccstruct/hpdsizes.h:
+
+../ccstruct/polyblk.h:
+
+../ccstruct/hpddef.h:
+
+../ccutil/debugwin.h:
+
+../ccstruct/pdblock.h:
+
+../ccstruct/ocrrow.h:
+
+../ccstruct/werd.h:
+
+../ccstruct/rect.h:
+
+pagewalk.h:
+
+../ccstruct/polyblob.h:
+
+../ccstruct/stepblob.h:
+
+../ccutil/notdll.h:
+
+../ccstruct/pageres.h:
+
+../ccstruct/ocrblock.h:
+
+../ccstruct/ratngs.h:
+
+../ccutil/clst.h:
+
+../ccutil/unichar.h:
+
+/usr/include/memory.h:
+
+../ccstruct/rejctmap.h:
+
+/usr/include/assert.h:
+
+tessvars.h:
+
+../textord/tordmain.h:
+
+../ccstruct/blobbox.h:
+
+../ccstruct/statistc.h:
+
+../ccutil/host.h:
+
+control.h:
+
+../ccstruct/ratngs.h:
+
+../ccstruct/statistc.h:
+
+../ccutil/ocrshell.h:
+
+../ccutil/ocrclass.h:
+
+../wordrec/charsample.h:
+
+applybox.h:
+
+varabled.h:
+
+../cutil/variables.h:
+
+../cutil/cutil.h:
+
+../cutil/general.h:
+
+../cutil/oldlist.h:
+
+output.h:
+
+../cutil/globals.h:
+
+../cutil/const.h:
+
+../ccutil/unicharset.h:
+
+../ccutil/unichar.h:
+
+../ccutil/unicharmap.h:
+
+../classify/adaptmatch.h:
+
+../cutil/oldlist.h:
+
+../classify/fxdefs.h:
+
+../cutil/general.h:
+
+../dict/matchdefs.h:
+
+../classify/adaptive.h:
+
+../classify/intproto.h:
+
+../classify/protos.h:
+
+../cutil/bitvec.h:
+
+../cutil/cutil.h:
+
+../cutil/callcpp.h:
+
+../classify/ocrfeatures.h:
+
+../cutil/funcdefs.h:
+
+../textord/edgblob.h:
+
+../ccstruct/coutln.h:
+
+../ccstruct/crakedge.h:
+
+tessbox.h:
+
+../cutil/tordvars.h:
+
+../image/imgs.h:
+
+../image/img.h:
+
+../textord/makerow.h:
+
+tstruct.h:
+
+../cutil/tessarray.h:
+
+../textord/tessout.h:
+
+../wordrec/tface.h:
+
+../dict/choicearr.h:
+
+../dict/choices.h:
+
+../dict/permute.h:
+
+../dict/choicearr.h:
