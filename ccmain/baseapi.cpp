@@ -100,10 +100,10 @@ void TessBaseAPI::SimpleInit(const char* datapath,
 // providing config files for debug/display purposes.
 // TODO(rays) get the facts straight. Is it OK to call
 // it more than once? Make it properly check for errors and return them.
-int TessBaseAPI::Init(const char* datapath, const char* outputbase,
+int TessBaseAPI::Init(const char* datapath, const char* outputbase, const char* language,
                               const char* configfile, bool numeric_mode,
                               int argc, char* argv[]) {
-  return InitWithLanguage(datapath, outputbase, NULL, configfile,
+  return InitWithLanguage(datapath, outputbase, language, configfile,
                           numeric_mode, argc, argv);
 }
 
@@ -114,6 +114,8 @@ int TessBaseAPI::Init(const char* datapath, const char* outputbase,
 int TessBaseAPI::InitWithLanguage(const char* datapath, const char* outputbase,
                               const char* language, const char* configfile,
                               bool numeric_mode, int argc, char* argv[]) {
+  //language="ban";
+  tprintf("%s",language);
   int result = init_tesseract(datapath, outputbase, language,
       configfile, argc, argv);
 

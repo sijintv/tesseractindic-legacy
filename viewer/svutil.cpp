@@ -21,7 +21,7 @@
 // thread/process creation & synchronization and network connection.
 
 #include "svutil.h"
-
+#include "stdio.h"
 #ifdef WIN32
 #include <windows.h>
 #include <winsock.h>
