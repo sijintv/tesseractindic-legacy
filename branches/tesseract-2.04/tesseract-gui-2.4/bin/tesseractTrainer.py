@@ -208,7 +208,8 @@ class MainWindow:
     selectedColumn = None
     buttonUpdateInProgress = None
     boxes = None
-
+    
+    
     def reconnectEntries(self, rowIndex):
         row = self.boxes[rowIndex]
         for col in range(0, len(row)):
@@ -456,6 +457,7 @@ class MainWindow:
     def loadImageAndBoxes(self, dummy, fileChooser):
         (name, extension) = self.imageName.rsplit('.', 1)
         boxName = name + '.box'
+	print self.imageName
 
         # Make sure that the image exists
         try:
@@ -921,6 +923,7 @@ class MainWindow:
         self.setImageControlSensitivity(False)
         self.setSymbolControlSensitivity(False)
         self.window.show()
+	self.loadImageAndBoxes(None,None)
     #enddef
 #endClass
 
@@ -930,7 +933,7 @@ def main():
 #enddef
 
 if __name__ == "__main__":
-    MainWindow()
+    MainWindow(None)
     main()
 
 def mod(imageName):
