@@ -4,6 +4,7 @@ import pygtk
 pygtk.require('2.0')
 import gtk
 import subprocess
+import os
 
 class TopWindow:
 
@@ -68,8 +69,48 @@ class TopWindow:
                 self.combostyle = gtk.combo_box_new_text()
                 self.hboxstyle.pack_start(self.combostyle,True,True,1)
                 self.combostyle.show()
+		#####################
+		self.dlgFiles = gtk.FileChooserDialog("Select File", None,\
+                                                gtk.FILE_CHOOSER_ACTION_OPEN, (gtk.STOCK_CANCEL,\
+                                                gtk.RESPONSE_CANCEL,gtk.STOCK_OPEN,gtk.RESPONSE_OK))
 
+                self.dlgFiles.set_select_multiple(True)
+                self.dlgFiles.set_current_folder(os.getenv('HOME'))
+                #self.filterFiles = gtk.FileFilter()
+                #self.filterFiles.add_mime_type("image/png")
+                #self.filterFiles.add_mime_type("image/tiff")
+                #self.filterFiles.add_mime_type("image/jpeg")
+                #self.filterFiles.add_mime_type("image/bmp")
+                #self.dlgFiles.add_filter(self.filterFiles)
+                self.dlgFiles.connect("response", self.f_load_files)
+
+                self.lblSelectfile = gtk.Label()
+                self.lblSelectfile.set_markup("Select file with characters:")
+                self.vboxtw.pack_start(self.lblSelectfile, True, True, 1)
+                self.lblSelectfile.show()
+
+                self.btnFiles = gtk.FileChooserButton(self.dlgFiles)
+                self.btnFiles.set_current_folder(os.getenv('HOME'))
+                #self.btnFiles.set_title("home")
+                self.btnFiles.set_width_chars(18)
+                self.vboxtw.pack_start(self.btnFiles, True, True, 1)
+                self.btnFiles.set_filename("Open")
+                self.btnFiles.show()
+		
+		self.buttontrain = gtk.Button("Train")
+                self.vboxtw.pack_start(self.buttontrain, True, True, 1)
+		self.buttontrain.show()
+
+		
 		self.mainwindow.show()
+
+
+ 	def f_load_files(self, widget, Data):
+                if Data == -5 :
+                	self.DirectoryIn = self.dlgFiles.get_current_folder() + "/"
+                	self.Files = self.dlgFiles.get_filenames()
+                	print self.Files
+
 
 	def get_active_text(self,combobox):
    		model = combobox.get_model()
@@ -115,8 +156,6 @@ class TopWindow:
 				for style in style_set:
 					self.combostyle.append_text(style)
 		self.combostyle.show()
-                                #print self.code
-
 
 
 	def main(self):
