@@ -6,6 +6,9 @@ import gtk
 import subprocess
 import os
 
+import tesseract_trainer.generate
+import tesseract_trainer.file
+
 class TopWindow:
 
 	def __init__(self):
@@ -100,9 +103,15 @@ class TopWindow:
 		self.buttontrain = gtk.Button("Train")
                 self.vboxtw.pack_start(self.buttontrain, True, True, 1)
 		self.buttontrain.show()
+		self.buttontrain.connect("clicked",self.train)
 
-		
 		self.mainwindow.show()
+
+	def train(self,dummy):
+		print dummy
+		font_string=self.font_selected+" "+self.language+" 15"	
+		alphabet_dir = 'tesseract_trainer/beng.alphabet/'
+		tesseract_trainer.generate.draw(font_string,15,self.language,tesseract_trainer.file.read_file(alphabet_dir))
 
 
  	def f_load_files(self, widget, Data):
@@ -128,6 +137,7 @@ class TopWindow:
 			lang = line.rsplit(':',2)[0]	                        
                         if (lang == lang_selected):
 				self.code = line.rsplit(':',2)[1]
+				self.language = line.rsplit(':',2)[0]
 				#print self.code
 		exec_string = "fc-list :lang="+self.code+" >temp"
 	        output = runBash(exec_string)
