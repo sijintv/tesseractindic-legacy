@@ -1,0 +1,48 @@
+Here is a demonstration of how you can create training data files for an arbitrary language for Tesseract-OCR and subsequently use it to perform OCR.
+
+
+To create data files for , say, Bengali:
+
+1) Create a directory in tesseract_trainer/ and name it arbitrarily. This contains the symbols of the alphabet. I name it 'beng.alphabet'. In the directory you may create a maximum of 4 files:
+		a)consonants- Put all the consonants in your script/language in the file. eg, ক , খ (ka, kha) etc
+		b)pre_semivowels- Put all the semivowels (if any in your script) that come before a consonant. eg,  ি, ে, ৈ  (e kaar, a kaar, oi kaar )
+		c)post_semivowels- Put all the semivowels (if any in your script) that come after a consonant, eg,  া, ী (aa kaar, ee kaar)
+		d)rest- Put everything else here, like digits, punctuation, conjuncts, special characters, vowels. You could also choose not to create the 			  3 files above and put all the symbols in this file.
+		
+You need to have some fonts particular to your script installed on your system. On an Ubuntu system you will find them in /usr/share/fonts/truetype/ttf-bengali-fonts/. You will require the name(s) of the fonts later.
+
+Now change directory to tesseract_trainer/ and execute the following on the shell(for bengali for example):  python generate.py -font Mitra -l Bengali -s 15 -a beng.alphabet/
+
+-font  takes the ttf font name you are trying to train
+-l takes the script name to be trained as input
+-s size of the characters generated in images in Bengali.images/
+
+This command will generate many images and corresponding box files in Bengali.images/. In the end it generates 5 files in Bengali.training_data/.
+1)Bengali.unicharset
+2)Bengali.Microfeat
+3)Bengali.normproto
+4)Bengali.pffmtable
+5)Bengali.inttemp
+
+
+These 5 files are needed by Tesseract-OCR engine to add a new script support. In addition there are 3 more files required that ae to be created by you separately. These are :
+
+    * Bengali.freq-dawg
+    * Bengali.word-dawg
+    * Bengali.user-words
+You do not require the tesseract_trainer tool to create the files above. They can be created by following appropriate instructions at http://code.google.com/p/tesseract-ocr/wiki/TrainingTesseract.
+
+Copy these files to /usr/local/share/tessdata and to tessdata/ folder of you tesseract-ocr source code.
+
+Now lets OCR some image. Lets say the image is image.tif. Here is what you must execute at the terminal:
+
+tesseract image.tif ocr -l Bengali
+
+You get ocr.txt as the output.
+
+Contact debayanin@gmail.com for clarifications.
+
+
+Contact debayanin@gmail.com for further clarifications.
+
+And yeah, this is work in progress.

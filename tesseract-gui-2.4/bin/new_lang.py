@@ -88,7 +88,7 @@ class TopWindow:
                 self.dlgFiles.connect("response", self.f_load_files)
 
                 self.lblSelectfile = gtk.Label()
-                self.lblSelectfile.set_markup("Select file with characters:")
+                self.lblSelectfile.set_markup("Select folder with alphabet:")
                 self.vboxtw.pack_start(self.lblSelectfile, True, True, 1)
                 self.lblSelectfile.show()
 
@@ -110,8 +110,7 @@ class TopWindow:
 	def train(self,dummy):
 		print dummy
 		font_string=self.font_selected+" "+self.language+" 15"	
-		alphabet_dir = 'tesseract_trainer/beng.alphabet/'
-		tesseract_trainer.generate.draw(font_string,15,self.language,tesseract_trainer.file.read_file(alphabet_dir))
+		tesseract_trainer.generate.draw(font_string,15,self.language,tesseract_trainer.file.read_file(self.DirectorIn))
 
 
  	def f_load_files(self, widget, Data):
