@@ -135,11 +135,15 @@ class TopWindow:
                 for line in flines:
 			lang = line.rsplit(':',2)[0]	                        
                         if (lang == lang_selected):
-				self.code = line.rsplit(':',2)[1]
+				self.code = line.rsplit(':',2)[1].lower()
 				self.language = line.rsplit(':',2)[0]
 				#print self.code
-		exec_string = "fc-list :lang="+self.code+" >temp"
+		exec_string = "fc-list :lang="+self.code
 	        output = runBash(exec_string)
+		ftemp = open('temp','w')
+		ftemp.write(output)
+		ftemp.close()
+		#print output
 		ftemp = open('temp','r')
 		lines = ftemp.readlines()
 		ftemp.close()
