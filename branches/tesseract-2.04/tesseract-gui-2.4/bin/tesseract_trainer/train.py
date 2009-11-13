@@ -23,16 +23,16 @@ def weedout(img_file_name,image_folder):
     
     
 
-def train(lang):
+def train(lang,outdir):
     """Generates normproto, inttemp, Microfeat, unicharset and pffmtable"""
-    output_dir=lang+"."+"training_data"
+    output_dir=outdir+lang+"."+"training_data"
     dir=lang+"."+"images"+"/"
     
     if(os.path.exists(output_dir)):
         pass
     else:
         os.mkdir(output_dir)
-   # os.chdir(output_dir)
+    #os.chdir(dir)
     print "in train"
     image='bigimage.tif'
     box='bigimage.box'
@@ -41,6 +41,8 @@ def train(lang):
     p = subprocess.Popen(exec_string1, shell=True, stdout=subprocess.PIPE)
     out = p.stdout.read()#strip()
     print out
+    
+    #shutil.move(dir+box,".")
                       
     #now begins clustering
     
@@ -80,25 +82,25 @@ def train(lang):
     #Now rename the 5 training files so it can be readily used with tesseract
     if(os.path.exists("Microfeat") is True):
         os.rename("Microfeat",lang+".Microfeat")
-        shutil.move(lang+".Microfeat",lang+".training_data/")
+        shutil.move(lang+".Microfeat",outdir+lang+".training_data/")
         print "Microfeat renamed and moved"
         
     if(os.path.exists("inttemp") is True):
         os.rename("inttemp",lang+".inttemp")
-        shutil.move(lang+".inttemp",lang+".training_data/")
+        shutil.move(lang+".inttemp",outdir+lang+".training_data/")
         print "inttemp renamed and moved"
         
     if(os.path.exists("normproto") is True):
         os.rename("normproto",lang+".normproto")
-        shutil.move(lang+".normproto",lang+".training_data/")
+        shutil.move(lang+".normproto",outdir+lang+".training_data/")
         print "normproto renamed and moved"
         
     if(os.path.exists("pffmtable") is True):
         os.rename("pffmtable",lang+".pffmtable")
-        shutil.move(lang+".pffmtable",lang+".training_data/")
+        shutil.move(lang+".pffmtable",outdir+lang+".training_data/")
         print "pffmtable renamed and moved"
         
     if(os.path.exists("unicharset") is True):
         os.rename("unicharset",lang+".unicharset")
-        shutil.move(lang+".unicharset",lang+".training_data/")
+        shutil.move(lang+".unicharset",outdir+lang+".training_data/")
         print "unicharset renamed and moved"

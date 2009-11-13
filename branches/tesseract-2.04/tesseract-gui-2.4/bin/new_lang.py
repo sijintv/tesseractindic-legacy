@@ -73,30 +73,53 @@ class TopWindow:
                 self.hboxstyle.pack_start(self.combostyle,True,True,1)
                 self.combostyle.show()
 		#####################
-		self.dlgFiles = gtk.FileChooserDialog("Select File", None,\
-                                                gtk.FILE_CHOOSER_ACTION_OPEN, (gtk.STOCK_CANCEL,\
+		self.dlgFiles = gtk.FileChooserDialog("Select File", None, 
+                                                gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER, (gtk.STOCK_CANCEL,\
                                                 gtk.RESPONSE_CANCEL,gtk.STOCK_OPEN,gtk.RESPONSE_OK))
 
                 self.dlgFiles.set_select_multiple(True)
                 self.dlgFiles.set_current_folder(os.getenv('HOME'))
-                #self.filterFiles = gtk.FileFilter()
-                #self.filterFiles.add_mime_type("image/png")
-                #self.filterFiles.add_mime_type("image/tiff")
-                #self.filterFiles.add_mime_type("image/jpeg")
-                #self.filterFiles.add_mime_type("image/bmp")
-                #self.dlgFiles.add_filter(self.filterFiles)
                 self.dlgFiles.connect("response", self.f_load_files)
+
+		self.dlgFilesOutDir = gtk.FileChooserDialog("Select File", None,
+                                                gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER, (gtk.STOCK_CANCEL,\
+                                                gtk.RESPONSE_CANCEL,gtk.STOCK_OPEN,gtk.RESPONSE_OK))
+
+                self.dlgFilesOutDir.set_select_multiple(True)
+                self.dlgFilesOutDir.set_current_folder(os.getenv('HOME'))
+                self.dlgFilesOutDir.connect("response", self.set_output_dir)
+
+		hboxOutDir = gtk.HBox(False,3)
+		self.vboxtw.pack_start(hboxOutDir, True, True, 1)
+		hboxOutDir.show()
+
+		self.lblSelectfile = gtk.Label()
+                self.lblSelectfile.set_markup("Select Output Folder:")
+                hboxOutDir.pack_start(self.lblSelectfile, True, True, 1)
+                self.lblSelectfile.show()
+
+                self.btnFiles = gtk.FileChooserButton(self.dlgFilesOutDir)
+                self.btnFiles.set_current_folder(os.getenv('HOME'))
+                #self.btnFiles.set_title("home")
+                self.btnFiles.set_width_chars(18)
+                hboxOutDir.pack_start(self.btnFiles, True, True, 1)
+                self.btnFiles.set_filename("Open")
+                self.btnFiles.show()
+
+		hboxOutDir = gtk.HBox(False,3)
+                self.vboxtw.pack_start(hboxOutDir, True, True, 1)
+                hboxOutDir.show()
 
                 self.lblSelectfile = gtk.Label()
                 self.lblSelectfile.set_markup("Select folder with alphabet:")
-                self.vboxtw.pack_start(self.lblSelectfile, True, True, 1)
+                hboxOutDir.pack_start(self.lblSelectfile, True, True, 1)
                 self.lblSelectfile.show()
 
                 self.btnFiles = gtk.FileChooserButton(self.dlgFiles)
                 self.btnFiles.set_current_folder(os.getenv('HOME'))
                 #self.btnFiles.set_title("home")
                 self.btnFiles.set_width_chars(18)
-                self.vboxtw.pack_start(self.btnFiles, True, True, 1)
+                hboxOutDir.pack_start(self.btnFiles, True, True, 1)
                 self.btnFiles.set_filename("Open")
                 self.btnFiles.show()
 		
@@ -110,15 +133,18 @@ class TopWindow:
 	def train(self,dummy):
 		print dummy
 		font_string=self.font_selected+" "+self.language+" 15"	
-		tesseract_trainer.generate.draw(font_string,15,self.language,tesseract_trainer.file.read_file(self.DirectorIn))
+		tesseract_trainer.generate.draw(font_string,15,self.language,tesseract_trainer.file.read_file(self.DirectoryIn),self.DirectoryOut)
 
 
  	def f_load_files(self, widget, Data):
-                if Data == -5 :
-                	self.DirectoryIn = self.dlgFiles.get_current_folder() + "/"
-                	self.Files = self.dlgFiles.get_filenames()
-                	print self.Files
-
+		if Data == -5 :
+	               self.DirectoryIn = widget.get_current_folder() + "/"
+                	
+	def set_output_dir(self, widget,Data):
+		if Data == -5 :
+                       self.DirectoryOut = widget.get_current_folder() + "/"
+               
+		
 
 	def get_active_text(self,combobox):
    		model = combobox.get_model()
@@ -177,7 +203,13 @@ def runBash(cmd):
         p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
         out = p.stdout.read()#.strip()
         return out
+def mod():
+	tw = TopWindow()
+        tw.main()
+
+
 
 if __name__ == "__main__":
 	tw = TopWindow()
 	tw.main()
+

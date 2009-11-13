@@ -822,6 +822,14 @@ class MainWindow:
         return uiManager.get_widget('/MenuBar')
     #enddef
 
+    def train_new_set(self,widget):
+	import new_lang
+	new_lang.mod()
+
+    def send_to_server(self,widget):
+	print 'hoho'
+
+
     def __init__(self,imageName):
         self.window = gtk.Window(gtk.WINDOW_TOPLEVEL)
         self.window.set_title("Tesseract Box Editor")
@@ -838,6 +846,20 @@ class MainWindow:
 
         menuBar = self.makeMenu()
         vbox.pack_start(menuBar, False)
+
+	self.hbox = gtk.HBox(False,2)
+        vbox.pack_start(self.hbox, False)
+	self.hbox.show()
+
+	self.sendButton = gtk.Button("Send Data to Server")
+	self.hbox.pack_start(self.sendButton,False)
+	self.sendButton.connect("clicked",self.send_to_server)
+	self.sendButton.show()
+
+	self.trainButton = gtk.Button("Train a New Character Set")
+        self.hbox.pack_start(self.trainButton,False)
+	self.trainButton.connect("clicked",self.train_new_set)
+	self.trainButton.show()	
 
         self.scrolledWindow = gtk.ScrolledWindow()
         self.scrolledWindow.set_policy(gtk.POLICY_AUTOMATIC,

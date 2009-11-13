@@ -27,7 +27,7 @@ def expand(temp_bbox):
     return bbox
 
 
-def draw(font_string,font_size,lang,alphabets): # language, font file name, font full path, font size, characters
+def draw(font_string,font_size,lang,alphabets,outdir): # language, font file name, font full path, font size, characters
     """ Generates tif images and box files"""
     
     
@@ -42,7 +42,7 @@ def draw(font_string,font_size,lang,alphabets): # language, font file name, font
     boxfile=image_dir+"/"+"bigimage.box"
     f=open(boxfile,"w")
      
-    bigimage=Image.new("L",(2000,10000),255)
+    bigimage=Image.new("L",(2000,1000),255)
     bigdraw=ImageDraw.Draw(bigimage)
     x=y=10
     count=0
@@ -105,7 +105,7 @@ def draw(font_string,font_size,lang,alphabets): # language, font file name, font
 
         os.unlink("pango.png") #delete the pango generated png
 
-        line=akshar+" "+str(bigbox[0]-1)+" "+str(2000-(bigbox[1]+deltay)-1)+" "+str(bigbox[2]+1)+" "+str(2000-(bigbox[3]-deltay)+1) # this is the line to be added to the box file
+        line=akshar+" "+str(bigbox[0]-1)+" "+str(1000-(bigbox[1]+deltay)-1)+" "+str(bigbox[2]+1)+" "+str(1000-(bigbox[3]-deltay)+1) # this is the line to be added to the box file
 	f.write(line+'\n')
 
 	#degrade code starts
@@ -117,7 +117,7 @@ def draw(font_string,font_size,lang,alphabets): # language, font file name, font
 				distort2.putpixel((ex,wai),255)
 		bigbox=(x,y,x+deltax,y+deltay)
 		#draw.rectangle(bigbox,None,10)
-		line=akshar+" "+str(bigbox[0]-1)+" "+str(2000-(bigbox[1]+deltay)-1)+" "+str(bigbox[2]+1)+" "+str(2000-(bigbox[3]-deltay)+1) # this is the line to be added to the box file
+		line=akshar+" "+str(bigbox[0]-1)+" "+str(1000-(bigbox[1]+deltay)-1)+" "+str(bigbox[2]+1)+" "+str(1000-(bigbox[3]-deltay)+1) # this is the line to be added to the box file
         	f.write(line+'\n')
 		bigimage.paste(distort2,(x,y))
 		x=bigbox[2]+5
@@ -133,7 +133,7 @@ def draw(font_string,font_size,lang,alphabets): # language, font file name, font
        
     bigimage.save(image_dir+"/"+"bigimage.tif","TIFF")
     f.close()
-    train.train(lang)
+    train.train(lang,outdir)
        
 if __name__ == "__main__":           
 	if(len(sys.argv)!=9):
