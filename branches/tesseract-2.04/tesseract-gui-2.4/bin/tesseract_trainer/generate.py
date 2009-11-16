@@ -19,7 +19,6 @@ from PIL import Image
 
 bigbox=()
 
-
 def expand(temp_bbox):
     """expand a bounding box a little bit"""
     tol=2
@@ -41,8 +40,9 @@ def draw(font_string,font_size,lang,alphabets,outdir): # language, font file nam
     #font= ImageFont.truetype(font,fsz)
     boxfile=image_dir+"/"+"bigimage.box"
     f=open(boxfile,"w")
-     
-    bigimage=Image.new("L",(2000,1000),255)
+    wt = 2000
+    ht = 1000 
+    bigimage=Image.new("L",(wt,ht),255)
     bigdraw=ImageDraw.Draw(bigimage)
     x=y=10
     count=0
@@ -100,12 +100,12 @@ def draw(font_string,font_size,lang,alphabets,outdir): # language, font file nam
         draw=ImageDraw.Draw(bigimage)
 	#draw.rectangle(bigbox,None,100)
         x=bigbox[2]+5
-        if x>1950:
+        if x>(wt-10):
             x=10; y=y+40
 
         os.unlink("pango.png") #delete the pango generated png
 
-        line=akshar+" "+str(bigbox[0]-1)+" "+str(1000-(bigbox[1]+deltay)-1)+" "+str(bigbox[2]+1)+" "+str(1000-(bigbox[3]-deltay)+1) # this is the line to be added to the box file
+        line=akshar+" "+str(bigbox[0]-1)+" "+str(ht-(bigbox[1]+deltay)-1)+" "+str(bigbox[2]+1)+" "+str(ht-(bigbox[3]-deltay)+1) # this is the line to be added to the box file
 	f.write(line+'\n')
 
 	#degrade code starts
@@ -117,11 +117,11 @@ def draw(font_string,font_size,lang,alphabets,outdir): # language, font file nam
 				distort2.putpixel((ex,wai),255)
 		bigbox=(x,y,x+deltax,y+deltay)
 		#draw.rectangle(bigbox,None,10)
-		line=akshar+" "+str(bigbox[0]-1)+" "+str(1000-(bigbox[1]+deltay)-1)+" "+str(bigbox[2]+1)+" "+str(1000-(bigbox[3]-deltay)+1) # this is the line to be added to the box file
+		line=akshar+" "+str(bigbox[0]-1)+" "+str(ht-(bigbox[1]+deltay)-1)+" "+str(bigbox[2]+1)+" "+str(ht-(bigbox[3]-deltay)+1) # this is the line to be added to the box file
         	f.write(line+'\n')
 		bigimage.paste(distort2,(x,y))
 		x=bigbox[2]+5
-        	if x>1950:
+        	if x>(wt-10):
             		x=10; y=y+40
 		
 			
