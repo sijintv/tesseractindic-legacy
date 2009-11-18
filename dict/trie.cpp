@@ -27,12 +27,12 @@
 ----------------------------------------------------------------------*/
 #include "trie.h"
 #include "callcpp.h"
-#include "dawg.h"
 
 #ifdef __UNIX__
 #include <assert.h>
 #endif
 #include <stdio.h>
+#include <wchar.h>
 
 /*----------------------------------------------------------------------
               V a r i a b l e s
@@ -175,7 +175,7 @@ bool add_word_ending(EDGE_ARRAY dawg,
  * Add in a word by creating the necessary nodes and edges.
  **********************************************************************/
 void add_word_to_dawg(EDGE_ARRAY dawg,
-                      const char *string_utf8,
+                      const wchar_t *string,
                       inT32 max_num_edges,
                       inT32 reserved_edges) {
   EDGE_REF    edge;
@@ -186,12 +186,10 @@ void add_word_to_dawg(EDGE_ARRAY dawg,
   inT32         word_end = FALSE;
   bool          add_failed = false;
 
-  wchar_t* string = utf82wchar(string_utf8);
-
   if (debug) cprintf("Adding word %s\n", string);
   cprintf("Adding word %s\n", string);
   for (i=0; i<wcslen(string)-1; i++) {
-    unsigned char ch = case_sensative ? string[i] : tolower(string[i]);
+    unsigned wchar_t ch = case_sensative ? string[i] : tolower(string[i]);
     if (still_finding_chars) {
       edge = edge_char_of(dawg, last_node, ch, word_end);
       if (debug) cprintf ("exploring edge = " REFFORMAT "\n", edge);
@@ -450,7 +448,7 @@ void read_word_list(const char *filename,
                     inT32 max_num_edges,
                     inT32 reserved_edges) {
   FILE *word_file;
-  char string [CHARS_PER_LINE];
+  wchar_t string [CHARS_PER_LINE];
   int  word_count = 0;
   int old_debug = debug;
   if (debug > 0 && debug < 3)
@@ -460,19 +458,20 @@ void read_word_list(const char *filename,
 
   initialize_dawg(dawg, max_num_edges);
 
-  while (fgets (string, CHARS_PER_LINE, word_file) != NULL) {
-    string [strlen (string) - 1] = (char) 0;
+  while (fgetws (string, CHARS_PER_LINE, word_file) != NULL) {
+    string [wcslen (string) - 1] = (char) 0;
     ++word_count;
     if (debug && word_count % 10000 == 0)
       cprintf("Read %d words so far\n", word_count);
     if (string[0] != '\0' /* strlen (string) */) {
-      if (!word_in_dawg(dawg, string)) {
+      /*if (!word_in_dawg(dawg, string)) {
         add_word_to_dawg(dawg, string, max_num_edges, reserved_edges);
         if (!word_in_dawg(dawg, string)) {
           cprintf("error: word not in DAWG after adding it '%s'\n", string);
           return;
         }
-      }
+      }*/
+     add_word_to_dawg(dawg, string, max_num_edges, reserved_edges);
     }
   }
   debug = old_debug;
