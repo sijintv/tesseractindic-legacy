@@ -170,10 +170,10 @@ inT32 def_letter_is_okay(EDGE_ARRAY dawg,
         return FALSE;
     }
     /* Trailing punctuation */
-    if (verify_trailing_punct (dawg, &dummy_word[0], char_index)) {
+    /*if (verify_trailing_punct (dawg, &dummy_word[0], char_index)) {
       *node = NO_EDGE;
       return (TRUE);
-    }
+    }*/
 
     return (FALSE);
   }
@@ -318,8 +318,8 @@ EDGE_ARRAY read_squished_dawg(const char *filename) {
  * string of trailing puntuation.  TRUE is returned if everything is
  * OK.
  **********************************************************************/
-inT32 verify_trailing_punct(EDGE_ARRAY dawg, char *word, inT32 char_index) {
-  char       last_char;
+/*inT32 verify_trailing_punct(EDGE_ARRAY dawg, char *word, inT32 char_index) {
+  wchar_t       last_char;
   wchar_t       *first_char;
 
   if (trailing_punc (word [char_index])) {
@@ -336,7 +336,7 @@ inT32 verify_trailing_punct(EDGE_ARRAY dawg, char *word, inT32 char_index) {
     word [char_index] = last_char;
   }
   return (FALSE);
-}
+}*/
 
 
 /**********************************************************************
