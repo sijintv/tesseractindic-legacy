@@ -327,7 +327,7 @@ inT32 def_letter_is_okay(EDGE_ARRAY dawg,
 /*
  * Allow for externally provided letter_is_okay.
  */
-typedef inT32 (*LETTER_OK_FUNC)(EDGE_ARRAY, NODE_REF*, inT32, char, const char*,
+typedef inT32 (*LETTER_OK_FUNC)(EDGE_ARRAY, NODE_REF*, inT32, char, const wchar_t*,
                                 inT32);
 extern LETTER_OK_FUNC letter_is_okay;
 

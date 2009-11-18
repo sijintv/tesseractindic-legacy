@@ -69,7 +69,7 @@ typedef struct choicestruct
   inT8 config;
   char *string;
   char *lengths; //Length of each unichar in the string
-  const char* script; // script is a script returned by unicharset,
+  const wchar_t* script; // script is a script returned by unicharset,
                       // and thus must not be deleted.
 } A_CHOICE;
 
@@ -206,7 +206,7 @@ CHOICES append_choice(CHOICES ratings,
                       float rating,
                       float certainty,
                       inT8 config,
-                      const char* script);
+                      const wchar_t* script);
 
 CHOICES append_choice(CHOICES ratings,
                       const char *string,
@@ -224,7 +224,7 @@ A_CHOICE *new_choice(const char *string,
                      float rating,
                      float certainty,
                      inT8 config,
-                     const char* script,
+                     const wchar_t* script,
                      char permuter);
 
 A_CHOICE *new_choice(const char *string,
@@ -235,7 +235,7 @@ A_CHOICE *new_choice(const char *string,
                      char permuter);
 
 void print_choices(const char *label, CHOICES rating);
-void print_word_string(const char* str);
+void print_word_string(const wchar_t* str);
 void print_word_choice(const char *label, A_CHOICE* choice);
 
 #endif

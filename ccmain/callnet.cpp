@@ -28,7 +28,7 @@ const ERRCODE NETINIT = "NN init error";
 
 //extern "C"
 //{
-//extern char*                          demodir;                                        /* where program lives */
+//extern wchar_t*                          demodir;                                        /* where program lives */
 
 void init_net() {  /* Initialise net */
 #ifdef ASPIRIN_INCLUDED

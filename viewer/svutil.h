@@ -54,7 +54,7 @@ class SVSync {
   // Signals a thread to exit.
   static void ExitThread();
   // Starts a new process.
-  static void StartProcess(const char* executable, const char* args);
+  static void StartProcess(const wchar_t* executable, const wchar_t* args);
 };
 
 // A semaphore class which encapsulates the main signalling
@@ -100,17 +100,17 @@ class SVMutex {
 class SVNetwork {
  public:
   // Set up a connection to hostname on port.
-  SVNetwork(const char* hostname, int port);
+  SVNetwork(const wchar_t* hostname, int port);
 
   // Destructor.
   ~SVNetwork();
 
   // Put a message in the messagebuffer to the server and try to send it.
-  void Send(const char* msg);
+  void Send(const wchar_t* msg);
 
   // Receive a message from the server.
-  // This will always return one line of char* (denoted by \n).
-  char* Receive();
+  // This will always return one line of wchar_t* (denoted by \n).
+  wchar_t* Receive();
 
   // Close the connection to the server.
   void Close();
@@ -124,14 +124,14 @@ class SVNetwork {
   // The actual stream_ to the server.
   int stream_;
   // Stores the last received message-chunk from the server.
-  char* msg_buffer_in_;
+  wchar_t* msg_buffer_in_;
 
   // Stores the messages which are supposed to go out.
   std::string msg_buffer_out_;
 
   bool has_content; // Win32 (strtok)
   // Where we are at in our msg_buffer_in_
-  char* buffer_ptr_;  // Unix (strtok_r)
+  wchar_t* buffer_ptr_;  // Unix (strtok_r)
 };
 
 #endif  // TESSERACT_VIEWER_SVUTIL_H__

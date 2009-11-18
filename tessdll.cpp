@@ -69,7 +69,7 @@ BOOL APIENTRY DllMain( HANDLE hModule,
 }
 
 
-TessDllAPI::TessDllAPI(const char* lang) {
+TessDllAPI::TessDllAPI(const wchar_t* lang) {
   const char *fake_argv[] = { "api_config" };
 
   uinT16 oldlang;  //language
@@ -225,7 +225,7 @@ ETEXT_DESC * TessDllAPI::Recognize_a_Block(uinT32 left,uinT32 right,
 }
 
 TessDllAPI *recognize=0L;
-char* current_lang = 0L;
+wchar_t* current_lang = 0L;
 
 extern "C"
 {
@@ -235,7 +235,7 @@ TESSDLL_API void __cdecl TessDllRelease() {
   recognize=0L;
 }
 
-TESSDLL_API void  * __cdecl TessDllInit(const char* lang) {
+TESSDLL_API void  * __cdecl TessDllInit(const wchar_t* lang) {
   if (recognize) TessDllRelease();
 
   recognize = new TessDllAPI(lang);
@@ -253,7 +253,7 @@ TESSDLL_API int __cdecl TessDllBeginPageBPP(uinT32 xsize,uinT32 ysize,
 
 TESSDLL_API int __cdecl TessDllBeginPageLangBPP(uinT32 xsize, uinT32 ysize,
                                              unsigned char *buf,
-                                             const char* lang, uinT8 bpp) {
+                                             const wchar_t* lang, uinT8 bpp) {
   if (recognize==0L || (lang != 0L) != (current_lang != 0L) ||
       lang != 0L && strcmp(lang, current_lang))
     TessDllInit(lang);
@@ -263,7 +263,7 @@ TESSDLL_API int __cdecl TessDllBeginPageLangBPP(uinT32 xsize, uinT32 ysize,
 
 TESSDLL_API int __cdecl TessDllBeginPageUprightBPP(uinT32 xsize, uinT32 ysize,
                                              unsigned char *buf,
-                                             const char* lang, uinT8 bpp) {
+                                             const wchar_t* lang, uinT8 bpp) {
   if (recognize==0L || (lang != 0L) != (current_lang != 0L) ||
       lang != 0L && strcmp(lang, current_lang))
     TessDllInit(lang);
@@ -278,7 +278,7 @@ TESSDLL_API int __cdecl TessDllBeginPage(uinT32 xsize,uinT32 ysize,
 
 TESSDLL_API int __cdecl TessDllBeginPageLang(uinT32 xsize, uinT32 ysize,
                                              unsigned char *buf,
-                                             const char* lang) {
+                                             const wchar_t* lang) {
   if (recognize==0L || (lang != 0L) != (current_lang != 0L) ||
       lang != 0L && strcmp(lang, current_lang))
     TessDllInit(lang);
@@ -288,7 +288,7 @@ TESSDLL_API int __cdecl TessDllBeginPageLang(uinT32 xsize, uinT32 ysize,
 
 TESSDLL_API int __cdecl TessDllBeginPageUpright(uinT32 xsize, uinT32 ysize,
                                              unsigned char *buf,
-                                             const char* lang) {
+                                             const wchar_t* lang) {
   if (recognize==0L || (lang != 0L) != (current_lang != 0L) ||
       lang != 0L && strcmp(lang, current_lang))
     TessDllInit(lang);

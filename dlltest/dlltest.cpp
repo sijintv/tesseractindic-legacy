@@ -130,7 +130,7 @@ int main(int argc, char **argv) {
 	  }
     unistr[j - i] = '\0';
 		  
-    wchar_t *utf16ch=make_unicode_string(reinterpret_cast<const char*>(unistr));
+    wchar_t *utf16ch=make_unicode_string(reinterpret_cast<const wchar_t*>(unistr));
 #ifndef _UNICODE
     // If we aren't in _UNICODE mode, print string only if ascii.
     if (ch->char_code <= 0x7f) {

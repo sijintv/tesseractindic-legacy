@@ -62,7 +62,7 @@ if (seam)\
 		if (HeapFull(seams))\
 			junk_worst_seam(seams,seam,priority);\
 		else\
-			HeapPush (seams, priority, (char*) seam);\
+			HeapPush (seams, priority, (wchar_t*) seam);\
 	}
 
 /**********************************************************************

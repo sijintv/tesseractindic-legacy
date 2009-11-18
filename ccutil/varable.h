@@ -29,7 +29,7 @@ class DLLSYM INT_VARIABLE;
                                  //read the file
 extern DLLSYM BOOL8 read_variables_file(const char *file  //name to read
                                        );
-bool set_new_style_variable(const char *variable, const char* value);
+bool set_new_style_variable(const char *variable, const wchar_t* value);
                                  //print all vars
 extern DLLSYM void print_variables(FILE *fp  //file to print on
                                   );
@@ -57,7 +57,7 @@ class DLLSYM INT_VARIABLE
   friend class INT_VAR_TO;
   friend class INT_VAR_FROM;
                                  //for setting values
-  friend bool set_new_style_variable(const char *variable, const char* value);
+  friend bool set_new_style_variable(const char *variable, const wchar_t* value);
 
   public:
     INT_VARIABLE(inT32 v,               // initial value
@@ -124,7 +124,7 @@ class DLLSYM BOOL_VARIABLE {
   friend class BOOL_VAR_FROM;
   friend class BOOL_VAR_TO;
                                  //for setting values
-  friend bool set_new_style_variable(const char *variable, const char* value);
+  friend bool set_new_style_variable(const char *variable, const wchar_t* value);
 
   public:
     BOOL_VARIABLE(                       //constructor
@@ -197,7 +197,7 @@ class DLLSYM STRING_VARIABLE
   friend class STRING_VAR_TO;
   friend class STRING_VAR_FROM;
                                  //for setting values
-  friend bool set_new_style_variable(const char *variable, const char* value);
+  friend bool set_new_style_variable(const char *variable, const wchar_t* value);
 
   public:
     STRING_VARIABLE(                       //constructor
@@ -274,7 +274,7 @@ class DLLSYM double_VARIABLE
   friend class double_VAR_TO;
   friend class double_VAR_FROM;
                                  //for setting values
-  friend bool set_new_style_variable(const char *variable, const char* value);
+  friend bool set_new_style_variable(const char *variable, const wchar_t* value);
 
   public:
     double_VARIABLE(                       //constructor

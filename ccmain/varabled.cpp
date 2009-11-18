@@ -108,7 +108,7 @@ void VariablesEditor::GetFirstWords(
 }
 
 // Getter for the name.
-const char* VariableContent::GetName() const {
+const wchar_t* VariableContent::GetName() const {
   if (var_type_ == VT_INTEGER) { return iIt->name_str(); }
   else if (var_type_ == VT_BOOLEAN) { return bIt->name_str(); }
   else if (var_type_ == VT_DOUBLE) { return dIt->name_str(); }
@@ -118,7 +118,7 @@ const char* VariableContent::GetName() const {
 }
 
 // Getter for the description.
-const char* VariableContent::GetDescription() const {
+const wchar_t* VariableContent::GetDescription() const {
   if (var_type_ == VT_INTEGER) { return iIt->info_str(); }
   else if (var_type_ == VT_BOOLEAN) { return bIt->info_str(); }
   else if (var_type_ == VT_DOUBLE) { return dIt->info_str(); }
@@ -127,8 +127,8 @@ const char* VariableContent::GetDescription() const {
 }
 
 // Getter for the value.
-const char* VariableContent::GetValue() const {
-char* msg = new char[1024];
+const wchar_t* VariableContent::GetValue() const {
+wchar_t* msg = new char[1024];
   if (var_type_ == VT_INTEGER) {
     sprintf(msg, "%d", ((inT32) *(iIt)));
   } else if (var_type_ == VT_BOOLEAN) {
@@ -146,7 +146,7 @@ char* msg = new char[1024];
 }
 
 // Setter for the value.
-void VariableContent::SetValue(const char* val) {
+void VariableContent::SetValue(const wchar_t* val) {
 // TODO (wanke) Test if the values actually are properly converted.
 // (Quickly visible impacts?)
   changed_ = TRUE;
@@ -163,10 +163,10 @@ void VariableContent::SetValue(const char* val) {
 
 // Gets the up to the first 3 prefixes from s (split by _).
 // For example, tesseract_foo_bar will be split into tesseract,foo and bar.
-void VariablesEditor::GetPrefixes(const char* s, STRING* level_one,
+void VariablesEditor::GetPrefixes(const wchar_t* s, STRING* level_one,
                                                  STRING* level_two,
                                                  STRING* level_three) {
-  char* p = new char[1024];
+  wchar_t* p = new char[1024];
   GetFirstWords(s, 1, p);
   *level_one = p;
   GetFirstWords(s, 2, p);
@@ -190,7 +190,7 @@ SVMenuNode* VariablesEditor::BuildListOfAllLeaves() {  // find all variables.
   SVMenuNode* mr = new SVMenuNode();
   VariableContent_LIST vclist;
   VariableContent_IT vc_it(&vclist);
-  std::map<const char*, int> amount;  //to count the # of entries for a specifc char*.
+  std::map<const wchar_t*, int> amount;  //to count the # of entries for a specifc wchar_t*.
 
   INT_VARIABLE_C_IT int_it(INT_VARIABLE::get_head());
   BOOL_VARIABLE_C_IT bool_it(BOOL_VARIABLE::get_head());
@@ -261,7 +261,7 @@ SVMenuNode* VariablesEditor::BuildListOfAllLeaves() {  // find all variables.
 // Event listener. Waits for SVET_POPUP events and processes them.
 void VariablesEditor::Notify(const SVEvent* sve) {
   if (sve->type == SVET_POPUP) {  // only catch SVET_POPUP!
-    char* param = sve->parameter;
+    wchar_t* param = sve->parameter;
     if (sve->command_id == writeCommands[0]) {
       WriteVars(param, false);
     } else if (sve->command_id == writeCommands[1]) {
@@ -281,7 +281,7 @@ void VariablesEditor::Notify(const SVEvent* sve) {
 // empty window and attach the variables editor to that window (ugly).
 VariablesEditor::VariablesEditor(ScrollView* sv) {
   if (sv == NULL) {
-    const char* name = "VarEditorMAIN";
+    const wchar_t* name = "VarEditorMAIN";
     sv = new ScrollView(name, 1, 1, 200, 200, 300, 200);
   }
 

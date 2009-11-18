@@ -45,7 +45,7 @@ class TESSDLL_API TessDllAPI : public TessBaseAPI
  public:
   //lang is the code of the language for which the data will be loaded.
   //(Codes follow ISO 639-3.) If it is NULL, english (eng) will be loaded.
-  TessDllAPI(const char* lang = NULL) ;
+  TessDllAPI(const wchar_t* lang = NULL) ;
   ~TessDllAPI ();
 
   //xsize should be the width of line in bytes times 8
@@ -103,10 +103,10 @@ TESSDLL_API int __cdecl TessDllBeginPage(uinT32 xsize,uinT32 ysize,
 
 TESSDLL_API int __cdecl TessDllBeginPageLang(uinT32 xsize,uinT32 ysize,
                                              unsigned char *buf,
-                                             const char* lang);
+                                             const wchar_t* lang);
 TESSDLL_API int __cdecl TessDllBeginPageUpright(uinT32 xsize,uinT32 ysize,
                                              unsigned char *buf,
-                                             const char* lang);
+                                             const wchar_t* lang);
 //Added in version 2.0 to allow users to specify bytes per pixel to do
 //1 for binary biptmap
 //8 for gray
@@ -116,10 +116,10 @@ TESSDLL_API int __cdecl TessDllBeginPageBPP(uinT32 xsize,uinT32 ysize,
 
 TESSDLL_API int __cdecl TessDllBeginPageLangBPP(uinT32 xsize,uinT32 ysize,
                                              unsigned char *buf,
-                                             const char* lang,uinT8 bpp);
+                                             const wchar_t* lang,uinT8 bpp);
 TESSDLL_API int __cdecl TessDllBeginPageUprightBPP(uinT32 xsize,uinT32 ysize,
                                              unsigned char *buf,
-                                             const char* lang,uinT8 bpp);
+                                             const wchar_t* lang,uinT8 bpp);
 
 TESSDLL_API void __cdecl TessDllEndPage(void);
 

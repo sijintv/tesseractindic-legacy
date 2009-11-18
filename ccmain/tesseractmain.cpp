@@ -75,12 +75,12 @@ const int kMaxIntSize = 22;
 const ERRCODE USAGE = "Usage";
 char szAppName[] = "Tessedit";   //app name
 
-void TesseractImage(const char* input_file, IMAGE* image, STRING* text_out) {
+void TesseractImage(const wchar_t* input_file, IMAGE* image, STRING* text_out) {
   int bytes_per_line = check_legal_image_size(image->get_xsize(),
                                               image->get_ysize(),
                                               image->get_bpp());
   if (tessedit_serial_unlv == 0) {
-    char* text;
+    wchar_t* text;
     if (tessedit_create_boxfile)
       text = TessBaseAPI::TesseractRectBoxes(image->get_buffer(),
                                              image->get_bpp()/8,
@@ -117,7 +117,7 @@ void TesseractImage(const char* input_file, IMAGE* image, STRING* text_out) {
     for (b_it.mark_cycle_pt(); !b_it.cycled_list(); b_it.forward()) {
       BLOCK* block = b_it.data();
       TBOX box = block->bounding_box();
-      char* text = TessBaseAPI::TesseractRectUNLV(image->get_buffer(),
+      wchar_t* text = TessBaseAPI::TesseractRectUNLV(image->get_buffer(),
                                                   image->get_bpp()/8,
                                                   bytes_per_line,
                                                   box.left(),
@@ -150,7 +150,7 @@ int main(int argc, char **argv) {
 	return 1;
   }
   // Find the required language.
-  const char* lang = "eng";
+  const wchar_t* lang = "eng";
   int arg = 3;
   if (argc >= 5 && strcmp(argv[3], "-l") == 0) {
     lang = argv[4];
@@ -158,7 +158,7 @@ int main(int argc, char **argv) {
   }
   // Find the basename of the input file.
   STRING infile(argv[1]);
-  const char* lastdot = strrchr(argv[1], '.');
+  const wchar_t* lastdot = strrchr(argv[1], '.');
   if (lastdot != NULL) {
     infile[lastdot - argv[1]] = '\0';
   }

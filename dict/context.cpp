@@ -36,9 +36,9 @@
 // main program can override this).
 PROBABILITY_IN_CONTEXT_FUNCTION probability_in_context = &def_probability_in_context;
 
-double def_probability_in_context(const char* context,
+double def_probability_in_context(const wchar_t* context,
                                   int context_bytes,
-                                  const char* character,
+                                  const wchar_t* character,
                                   int character_bytes) {
   (void) context;
   (void) context_bytes;

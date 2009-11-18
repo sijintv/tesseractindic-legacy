@@ -68,7 +68,7 @@ CHOICES append_choice(CHOICES ratings,
                       float rating,
                       float certainty,
                       inT8 config,
-                      const char* script) {
+                      const wchar_t* script) {
   A_CHOICE *this_choice;
 
   this_choice = new_choice (string, lengths, rating, certainty, config,
@@ -142,7 +142,7 @@ A_CHOICE *new_choice(const char *string,
                      float rating,
                      float certainty,
                      inT8 config,
-                     const char* script,
+                     const wchar_t* script,
                      char permuter) {
   A_CHOICE *this_choice;
 
@@ -198,7 +198,7 @@ void print_word_choice(const char *label, A_CHOICE* choice) {
  * Print the string in a human-readable format.
  * The output is not newline terminated.
  **********************************************************************/
-void print_word_string(const char* str) {
+void print_word_string(const wchar_t* str) {
   int step = 1;
   for (int i = 0; str[i] != '\0'; i += step) {
     step = unicharset.step(str + i);

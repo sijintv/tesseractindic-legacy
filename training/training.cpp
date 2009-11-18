@@ -73,7 +73,7 @@ inT8                        level                       //level of check
 
 void*                       c_alloc_struct(             //allocate memory
 inT32                       count,                      //no of chars required
-const char*                 name                        //class name
+const wchar_t*                 name                        //class name
 )
 {
     return alloc_struct(count,name);
@@ -81,7 +81,7 @@ const char*                 name                        //class name
 void                        c_free_struct(              //free a structure
 void*                       deadstruct,                 //structure to free
 inT32                       count,                      //no of bytes
-const char*                 name                        //class name
+const wchar_t*                 name                        //class name
 )
 {
     free_struct(deadstruct,count,name);
@@ -100,7 +100,7 @@ void*                       ptr
 )
 {
     char                    tmp;
-    char*                   cptr=(char*)ptr;
+    wchar_t*                   cptr=(wchar_t*)ptr;
 
     tmp=*cptr;
     *cptr=*(cptr+3);
@@ -115,7 +115,7 @@ void*                       ptr
 )
 {
     char                    tmp;
-    char*                   cptr=(char*)ptr;
+    wchar_t*                   cptr=(wchar_t*)ptr;
 
     tmp=*cptr;
     *cptr=*(cptr+1);

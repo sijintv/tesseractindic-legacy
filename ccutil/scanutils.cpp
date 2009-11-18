@@ -179,7 +179,7 @@ double streamtofloat(FILE* s)
   return minus ? -f : f;
 }
 
-double strtofloat(const char* s)
+double strtofloat(const wchar_t* s)
 {
   int minus = 0;
   int v = 0;
@@ -511,7 +511,7 @@ int vfscanf(FILE* stream, const char *format, va_list ap)
       break;
 
       match_run:      // Match expression finished
-        char* oarg = sarg;
+        wchar_t* oarg = sarg;
         while (width) {
           q = fgetc(stream);
           unsigned char qc = static_cast<unsigned char>(q);

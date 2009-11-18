@@ -1246,7 +1246,7 @@ void permute_subword(CHOICES_LIST character_choices,
     if (this_char != '-' && this_char != '/') {
       subchoices = array_push (subchoices, choices);
     } else {
-      const char* str = best_string(choices);
+      const wchar_t* str = best_string(choices);
       strcat(word, str);
       char length[] = {strlen(str), 0};
       strcat(unichar_lengths + x, length);
@@ -1343,7 +1343,7 @@ A_CHOICE *permute_top_choice(CHOICES_LIST character_choices,
   float upper_certainties[MAX_PERM_LENGTH + 1];
 
   register CHOICES this_char;
-  register const char* ch;
+  register const wchar_t* ch;
   register inT8 lower_done;
   register inT8 upper_done;
 
@@ -1558,7 +1558,7 @@ A_CHOICE *permute_top_choice(CHOICES_LIST character_choices,
  *
  * Choose between the candidate il1 chars.
  **********************************************************************/
-const char* choose_il1(const char *first_char,        //first choice
+const wchar_t* choose_il1(const char *first_char,        //first choice
                        const char *second_char,       //second choice
                        const char *third_char,        //third choice
                        const char *prev_char,         //prev in word

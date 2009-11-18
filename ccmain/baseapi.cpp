@@ -75,14 +75,14 @@ static STRING input_file = "noname.tif";
 // Supply the name of the variable and the value as a string, just as
 // you would in a config file.
 // Returns false if the name lookup failed.
-bool TessBaseAPI::SetVariable(const char* variable, const char* value) {
+bool TessBaseAPI::SetVariable(const wchar_t* variable, const wchar_t* value) {
   if (set_new_style_variable(variable, value))
     return true;
   return set_old_style_variable(variable, value);
 }
 
-void TessBaseAPI::SimpleInit(const char* datapath,
-                             const char* language,
+void TessBaseAPI::SimpleInit(const wchar_t* datapath,
+                             const wchar_t* language,
                              bool numeric_mode) {
   InitWithLanguage(datapath, NULL, language, NULL, numeric_mode, 0, NULL);
 }
@@ -100,9 +100,9 @@ void TessBaseAPI::SimpleInit(const char* datapath,
 // providing config files for debug/display purposes.
 // TODO(rays) get the facts straight. Is it OK to call
 // it more than once? Make it properly check for errors and return them.
-int TessBaseAPI::Init(const char* datapath, const char* outputbase,
-                              const char* configfile, bool numeric_mode,
-                              int argc, char* argv[]) {
+int TessBaseAPI::Init(const wchar_t* datapath, const wchar_t* outputbase,
+                              const wchar_t* configfile, bool numeric_mode,
+                              int argc, wchar_t* argv[]) {
   return InitWithLanguage(datapath, outputbase, NULL, configfile,
                           numeric_mode, argc, argv);
 }
@@ -111,9 +111,9 @@ int TessBaseAPI::Init(const char* datapath, const char* outputbase,
 // Similar to Init() except that it is possible to specify the language.
 // Language is the code of the language for which the data will be loaded.
 // (Codes follow ISO 639-3.) If it is NULL, english (eng) will be loaded.
-int TessBaseAPI::InitWithLanguage(const char* datapath, const char* outputbase,
-                              const char* language, const char* configfile,
-                              bool numeric_mode, int argc, char* argv[]) {
+int TessBaseAPI::InitWithLanguage(const wchar_t* datapath, const wchar_t* outputbase,
+                              const wchar_t* language, const wchar_t* configfile,
+                              bool numeric_mode, int argc, wchar_t* argv[]) {
   int result = init_tesseract(datapath, outputbase, language,
       configfile, argc, argv);
 
@@ -122,16 +122,16 @@ int TessBaseAPI::InitWithLanguage(const char* datapath, const char* outputbase,
 }
 
 // Init the lang model component of Tesseract
-int TessBaseAPI::InitLangMod(const char* datapath, const char* outputbase,
-                                const char* language, const char* configfile,
-                                bool numeric_mode, int argc, char* argv[]) {
+int TessBaseAPI::InitLangMod(const wchar_t* datapath, const wchar_t* outputbase,
+                                const wchar_t* language, const wchar_t* configfile,
+                                bool numeric_mode, int argc, wchar_t* argv[]) {
   return init_tesseract_lm(datapath, outputbase, language,
       configfile, argc, argv);
 }
 
 // Set the name of the input file. Needed only for training and
 // loading a UNLV zone file.
-void TessBaseAPI::SetInputName(const char* name) {
+void TessBaseAPI::SetInputName(const wchar_t* name) {
   input_file = name;
 }
 
@@ -144,9 +144,9 @@ void TessBaseAPI::SetInputName(const char* name) {
 // Binary images of 1 bit per pixel may also be given but they must be
 // byte packed with the MSB of the first byte being the first pixel, and a
 // one pixel is WHITE. For binary images set bytes_per_pixel=0.
-// The recognized text is returned as a char* which (in future will be coded
+// The recognized text is returned as a wchar_t* which (in future will be coded
 // as UTF8 and) must be freed with the delete [] operator.
-char* TessBaseAPI::TesseractRect(const unsigned char* imagedata,
+wchar_t* TessBaseAPI::TesseractRect(const unsigned wchar_t* imagedata,
                                  int bytes_per_pixel,
                                  int bytes_per_line,
                                  int left, int top,
@@ -162,7 +162,7 @@ char* TessBaseAPI::TesseractRect(const unsigned char* imagedata,
 }
 
 // As TesseractRect but produces a box file as output.
-char* TessBaseAPI::TesseractRectBoxes(const unsigned char* imagedata,
+wchar_t* TessBaseAPI::TesseractRectBoxes(const unsigned wchar_t* imagedata,
                                       int bytes_per_pixel,
                                       int bytes_per_line,
                                       int left, int top,
@@ -185,7 +185,7 @@ char* TessBaseAPI::TesseractRectBoxes(const unsigned char* imagedata,
   return TesseractToBoxText(page_res, left, imageheight - (top + height));
 }
 
-char* TessBaseAPI::TesseractRectUNLV(const unsigned char* imagedata,
+wchar_t* TessBaseAPI::TesseractRectUNLV(const unsigned wchar_t* imagedata,
                                      int bytes_per_pixel,
                                      int bytes_per_line,
                                      int left, int top,
@@ -220,7 +220,7 @@ void TessBaseAPI::End() {
 }
 
 // Dump the internal binary image to a PGM file.
-void TessBaseAPI::DumpPGM(const char* filename) {
+void TessBaseAPI::DumpPGM(const wchar_t* filename) {
   IMAGELINE line;
   line.init(page_image.get_xsize());
   FILE *fp = fopen(filename, "w");
@@ -246,7 +246,7 @@ Pix* TessBaseAPI::GetTesseractImage() {
 
 // Copy the given image rectangle to Tesseract, with adaptive thresholding
 // if the image is not already binary.
-void TessBaseAPI::CopyImageToTesseract(const unsigned char* imagedata,
+void TessBaseAPI::CopyImageToTesseract(const unsigned wchar_t* imagedata,
                                        int bytes_per_pixel,
                                        int bytes_per_line,
                                        int left, int top,
@@ -280,7 +280,7 @@ void TessBaseAPI::CopyImageToTesseract(const unsigned char* imagedata,
 // hi_values[channel] is 0 or background if 1. A hi_value of -1 indicates
 // that there is no apparent foreground. At least one hi_value will not be -1.
 // thresholds and hi_values are assumed to be of bytes_per_pixel size.
-void TessBaseAPI::OtsuThreshold(const unsigned char* imagedata,
+void TessBaseAPI::OtsuThreshold(const unsigned wchar_t* imagedata,
                                 int bytes_per_pixel,
                                 int bytes_per_line,
                                 int left, int top, int right, int bottom,
@@ -343,14 +343,14 @@ void TessBaseAPI::OtsuThreshold(const unsigned char* imagedata,
 // counted with this call in a multi-channel (pixel-major) image.
 // Histogram is always a 256 element array to count occurrences of
 // each pixel value.
-void TessBaseAPI::HistogramRect(const unsigned char* imagedata,
+void TessBaseAPI::HistogramRect(const unsigned wchar_t* imagedata,
                                 int bytes_per_pixel,
                                 int bytes_per_line,
                                 int left, int top, int right, int bottom,
                                 int* histogram) {
   int width = right - left;
   memset(histogram, 0, sizeof(*histogram) * 256);
-  const unsigned char* pixels = imagedata +
+  const unsigned wchar_t* pixels = imagedata +
                                 top*bytes_per_line +
                                 left*bytes_per_pixel;
   for (int y = top; y < bottom; ++y) {
@@ -682,7 +682,7 @@ void TessBaseAPI::ClipMaatraa(int height, int width)
 // Threshold the given grey or color image into the tesseract global
 // image ready for recognition. Requires thresholds and hi_value
 // produced by OtsuThreshold above.
-void TessBaseAPI::ThresholdRect(const unsigned char* imagedata,
+void TessBaseAPI::ThresholdRect(const unsigned wchar_t* imagedata,
                                 int bytes_per_pixel,
                                 int bytes_per_line,
                                 int left, int top,
@@ -697,10 +697,10 @@ void TessBaseAPI::ThresholdRect(const unsigned char* imagedata,
   // For each line in the image, fill the IMAGELINE class and put it into the
   // Tesseract global page_image. Note that Tesseract stores images with the
   // bottom at y=0 and 0 is black, so we need 2 kinds of inversion.
-  const unsigned char* data = imagedata + top*bytes_per_line +
+  const unsigned wchar_t* data = imagedata + top*bytes_per_line +
                               left*bytes_per_pixel;
   for (int y = height - 1 ; y >= 0; --y) {
-    const unsigned char* pix = data;
+    const unsigned wchar_t* pix = data;
     for (int x = 0; x < width; ++x, pix += bytes_per_pixel) {
       line.pixels[x] = 1;
       for (int ch = 0; ch < bytes_per_pixel; ++ch) {
@@ -729,13 +729,13 @@ ClipMaatraa(height,width);
 
 // Cut out the requested rectangle of the binary image to the
 // tesseract global image ready for recognition.
-void TessBaseAPI::CopyBinaryRect(const unsigned char* imagedata,
+void TessBaseAPI::CopyBinaryRect(const unsigned wchar_t* imagedata,
                                  int bytes_per_line,
                                  int left, int top,
                                  int width, int height) {
   // Copy binary image, cutting out the required rectangle.
   IMAGE image;
-  image.capture(const_cast<unsigned char*>(imagedata),
+  image.capture(const_cast<unsigned wchar_t*>(imagedata),
                 bytes_per_line*8, top + height, 1);
   page_image.create(width, height, 1);
 
@@ -744,7 +744,7 @@ image.write("bentest.tif");
 }
 
 // Low-level function to recognize the current global image to a string.
-char* TessBaseAPI::RecognizeToString() {
+wchar_t* TessBaseAPI::RecognizeToString() {
   BLOCK_LIST    block_list;
 
   FindLines(&block_list);
@@ -838,12 +838,12 @@ int TessBaseAPI::TextConf(PAGE_RES* page_res) {
 
 // Make a text string from the internal data structures.
 // The input page_res is deleted.
-char* TessBaseAPI::TesseractToText(PAGE_RES* page_res) {
+wchar_t* TessBaseAPI::TesseractToText(PAGE_RES* page_res) {
   if (page_res != NULL) {
     int total_length = TextLength(page_res);
     PAGE_RES_IT   page_res_it(page_res);
-    char* result = new char[total_length];
-    char* ptr = result;
+    wchar_t* result = new char[total_length];
+    wchar_t* ptr = result;
     for (page_res_it.restart_page(); page_res_it.word () != NULL;
          page_res_it.forward()) {
       WERD_RES *word = page_res_it.word();
@@ -869,7 +869,7 @@ static int ConvertWordToBoxText(WERD_RES *word,
                                 ROW_RES* row,
                                 int left,
                                 int bottom,
-                                char* word_str) {
+                                wchar_t* word_str) {
   // Copy the output word and denormalize it back to image coords.
   WERD copy_outword;
   copy_outword = *(word->outword);
@@ -922,13 +922,13 @@ const int kMaxCharsPerChar = 26;
 // Make a text string from the internal data structures.
 // The input page_res is deleted.
 // The text string takes the form of a box file as needed for training.
-char* TessBaseAPI::TesseractToBoxText(PAGE_RES* page_res,
+wchar_t* TessBaseAPI::TesseractToBoxText(PAGE_RES* page_res,
                                       int left, int bottom) {
   if (page_res != NULL) {
     int total_length = TextLength(page_res) * kMaxCharsPerChar;
     PAGE_RES_IT   page_res_it(page_res);
-    char* result = new char[total_length];
-    char* ptr = result;
+    wchar_t* result = new char[total_length];
+    wchar_t* ptr = result;
     for (page_res_it.restart_page(); page_res_it.word () != NULL;
          page_res_it.forward()) {
       WERD_RES *word = page_res_it.word();
@@ -956,7 +956,7 @@ const int kLatinChs[] = {
   0x00a2, 0x0022, 0x0022, 0x0027, 0x0027, 0x00b7, 0x002d, 0
 };
 
-char* TessBaseAPI::TesseractToUNLV(PAGE_RES* page_res) {
+wchar_t* TessBaseAPI::TesseractToUNLV(PAGE_RES* page_res) {
   bool tilde_crunch_written = false;
   bool last_char_was_newline = true;
   bool last_char_was_tilde = false;
@@ -964,8 +964,8 @@ char* TessBaseAPI::TesseractToUNLV(PAGE_RES* page_res) {
   if (page_res != NULL) {
     int total_length = TextLength(page_res);
     PAGE_RES_IT   page_res_it(page_res);
-    char* result = new char[total_length];
-    char* ptr = result;
+    wchar_t* result = new char[total_length];
+    wchar_t* ptr = result;
     for (page_res_it.restart_page(); page_res_it.word () != NULL;
          page_res_it.forward()) {
       WERD_RES *word = page_res_it.word();
@@ -1002,7 +1002,7 @@ char* TessBaseAPI::TesseractToUNLV(PAGE_RES* page_res) {
             (word->best_choice->string ()[0] == ' ')) {
           /* Prevent adjacent tilde across words - we know that adjacent tildes within
              words have been removed */
-          char* p = (char *) word->best_choice->string().string ();
+          wchar_t* p = (char *) word->best_choice->string().string ();
           strcpy (p, p + 1);       //shuffle up
           p = (char *) word->best_choice->lengths().string ();
           strcpy (p, p + 1);       //shuffle up
@@ -1015,7 +1015,7 @@ char* TessBaseAPI::TesseractToUNLV(PAGE_RES* page_res) {
           ensure_rep_chars_are_consistent(word);
 
         set_unlv_suspects(word);
-        const char* wordstr = word->best_choice->string().string();
+        const wchar_t* wordstr = word->best_choice->string().string();
         if (wordstr[0] != 0) {
           if (!last_char_was_newline)
             *ptr++ = ' ';
@@ -1371,7 +1371,7 @@ static void extract_result(ELIST_ITERATOR *out,
 
 // Extract the OCR results, costs (penalty points for uncertainty),
 // and the bounding boxes of the characters.
-int TessBaseAPI::TesseractExtractResult(char** string,
+int TessBaseAPI::TesseractExtractResult(wchar_t** string,
                                         int** lengths,
                                         float** costs,
                                         int** x0,

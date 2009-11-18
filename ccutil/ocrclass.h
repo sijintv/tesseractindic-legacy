@@ -115,7 +115,7 @@
 #define PITCH_VAR     2          /*variable pitch */
 
 /*Bitmasks for character enhancements.
-OR these together for enhancement in ocr_append_char*/
+OR these together for enhancement in ocr_append_wchar_t*/
 #define EUC_BOLD      1          /*bold character */
 #define EUC_ITALIC      2        /*italic char */
 #define EUC_UNDERLINE   4        /*underlined char */

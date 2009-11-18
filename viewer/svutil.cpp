@@ -57,7 +57,7 @@ void SVSync::ExitThread() {
 }
 
 // Starts a new process.
-void SVSync::StartProcess(const char* executable, const char* args) {
+void SVSync::StartProcess(const wchar_t* executable, const wchar_t* args) {
 #ifdef WIN32
   std::string proc;
   proc.append(executable);
@@ -67,7 +67,7 @@ void SVSync::StartProcess(const char* executable, const char* args) {
   STARTUPINFO start_info;
   PROCESS_INFORMATION proc_info;
   GetStartupInfo(&start_info);
-  if (!CreateProcess(NULL, const_cast<char*>(proc.c_str()), NULL, NULL, FALSE,
+  if (!CreateProcess(NULL, const_cast<wchar_t*>(proc.c_str()), NULL, NULL, FALSE,
                 CREATE_NO_WINDOW | DETACHED_PROCESS, NULL, NULL,
                 &start_info, &proc_info))
     return;
@@ -80,14 +80,14 @@ void SVSync::StartProcess(const char* executable, const char* args) {
     // broken socket detection seems to be useless.
     prctl(PR_SET_PDEATHSIG, 2, 0, 0, 0);
 #endif
-    char* mutable_args = strdup(args);
+    wchar_t* mutable_args = strdup(args);
     int argc = 1;
     for (int i = 0; mutable_args[i]; ++i) {
       if (mutable_args[i] == ' ') {
         ++argc;
       }
     }
-    char** argv = new char*[argc + 2];
+    wchar_t** argv = new wchar_t*[argc + 2];
     argv[0] = strdup(executable);
     argv[1] = mutable_args;
     argc = 2;
@@ -175,7 +175,7 @@ void SVSync::StartThread(void *(*func)(void*), void* arg) {
 }
 
 // Place a message in the message buffer (and flush it).
-void SVNetwork::Send(const char* msg) {
+void SVNetwork::Send(const wchar_t* msg) {
   mutex_send_->Lock();
   msg_buffer_out_.append(msg);
   mutex_send_->Unlock();
@@ -192,9 +192,9 @@ void SVNetwork::Flush() {
 }
 
 // Receive a message from the server.
-// This will always return one line of char* (denoted by \n).
-char* SVNetwork::Receive() {
-  char* result = NULL;
+// This will always return one line of wchar_t* (denoted by \n).
+wchar_t* SVNetwork::Receive() {
+  wchar_t* result = NULL;
 #ifdef WIN32
   if (has_content) { result = strtok (NULL, "\n"); }
 #else
@@ -250,7 +250,7 @@ void SVNetwork::Close() {
 }
 
 // Set up a connection to hostname on port.
-SVNetwork::SVNetwork(const char* hostname, int port) {
+SVNetwork::SVNetwork(const wchar_t* hostname, int port) {
   mutex_send_ = new SVMutex();
   struct sockaddr_in address;
   struct hostent *name;
@@ -287,7 +287,7 @@ SVNetwork::SVNetwork(const char* hostname, int port) {
 
   // If server is not there, we will start a new server as local child process.
   if (connect(stream_, (struct sockaddr *) &address, sizeof(address)) < 0) {
-    const char* scrollview_path = getenv("SCROLLVIEW_PATH");
+    const wchar_t* scrollview_path = getenv("SCROLLVIEW_PATH");
     if (scrollview_path == NULL) {
 #ifdef SCROLLVIEW_PATH
 #define _STR(a) #a
@@ -305,20 +305,20 @@ SVNetwork::SVNetwork(const char* hostname, int port) {
     // this unnecessary.
     // Also the path has to be separated by ; on windows and : otherwise.
 #ifdef WIN32
-    const char* prog = "java -Xms512m -Xmx1024m";
-    const char* cmd_template = "-Djava.library.path=%s -cp %s/ScrollView.jar;"
+    const wchar_t* prog = "java -Xms512m -Xmx1024m";
+    const wchar_t* cmd_template = "-Djava.library.path=%s -cp %s/ScrollView.jar;"
         "%s/piccolo-1.2.jar;%s/piccolox-1.2.jar"
         " com.google.scrollview.ScrollView";
 #else
-    const char* prog = "sh";
-    const char* cmd_template = "-c \"trap 'kill %1' 0 1 2 ; java "
+    const wchar_t* prog = "sh";
+    const wchar_t* cmd_template = "-c \"trap 'kill %1' 0 1 2 ; java "
         "-Xms1024m -Xmx2048m -Djava.library.path=%s -cp %s/ScrollView.jar:"
         "%s/piccolo-1.2.jar:%s/piccolox-1.2.jar"
         " com.google.scrollview.ScrollView"
         " >/dev/null 2>&1 & wait\"";
 #endif
     int cmdlen = strlen(cmd_template) + 4*strlen(scrollview_path) + 1;
-    char* cmd = new char[cmdlen];
+    wchar_t* cmd = new char[cmdlen];
     snprintf(cmd, cmdlen, cmd_template, scrollview_path, scrollview_path,
              scrollview_path, scrollview_path);
 
