@@ -22,7 +22,8 @@ unicharset.o: unicharset.cpp /usr/include/assert.h \
  /usr/include/bits/select.h /usr/include/bits/sigset.h \
  /usr/include/bits/time.h /usr/include/sys/sysmacros.h \
  /usr/include/bits/pthreadtypes.h /usr/include/alloca.h \
- /usr/include/bits/stdlib.h errcode.h fileerr.h unicharmap.h
+ /usr/include/bits/stdlib.h errcode.h fileerr.h unicharmap.h \
+ /usr/include/bits/wchar.h /usr/include/bits/wchar2.h
 
 /usr/include/assert.h:
 
@@ -137,3 +138,7 @@ errcode.h:
 fileerr.h:
 
 unicharmap.h:
+
+/usr/include/bits/wchar.h:
+
+/usr/include/bits/wchar2.h:
