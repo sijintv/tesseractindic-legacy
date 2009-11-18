@@ -38,6 +38,8 @@
 #include "strngs.h"
 #include "emalloc.h"
 
+#include <wchar.h>
+
 /*----------------------------------------------------------------------
               V a r i a b l e s
 ----------------------------------------------------------------------*/
@@ -341,12 +343,12 @@ inT32 verify_trailing_punct(EDGE_ARRAY dawg, char *word, inT32 char_index) {
  *
  * Test to see if the word can be found in the DAWG.
  **********************************************************************/
-inT32 word_in_dawg(EDGE_ARRAY dawg, const char *string) {
+inT32 word_in_dawg(EDGE_ARRAY dawg, const wchar_t *string) {
   NODE_REF   node = 0;
   inT32        i;
   inT32         length;
 
-  length=strlen(string);
+  length=wcslen(string);
   if (length==0)
     return FALSE;
   for (i=0; i<length; i++) {
