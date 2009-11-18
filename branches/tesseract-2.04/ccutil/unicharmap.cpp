@@ -21,6 +21,7 @@
 #include "unichar.h"
 #include "host.h"
 #include "unicharmap.h"
+#include <wchar.h>
 
 UNICHARMAP::UNICHARMAP() :
 nodes(0) {
