@@ -31,14 +31,15 @@
 #include <ctype.h>
 #include <string.h>
 #include <math.h>
+#include "dawg.h"
 
 // Initialize probability_in_context to point to a default implementation (a
 // main program can override this).
 PROBABILITY_IN_CONTEXT_FUNCTION probability_in_context = &def_probability_in_context;
 
-double def_probability_in_context(const wchar_t* context,
+double def_probability_in_context(const char* context,
                                   int context_bytes,
-                                  const wchar_t* character,
+                                  const char* character,
                                   int character_bytes) {
   (void) context;
   (void) context_bytes;
@@ -89,7 +90,7 @@ void fix_quotes(char *str) {
  *
  * Check a string to see if it matches a set of punctuation rules.
  **********************************************************************/
-int punctuation_ok(const char *word, const char *lengths) {
+int punctuation_ok(const wchar_t *word, const char *lengths) {
   int punctuation_types[5];
   int trailing = 0;
   int num_puncts = 0;

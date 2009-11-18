@@ -37,8 +37,8 @@
 #include "context.h"
 #include "strngs.h"
 #include "emalloc.h"
-
 #include <wchar.h>
+#include <locale.h>
 
 /*----------------------------------------------------------------------
               V a r i a b l e s
@@ -118,14 +118,16 @@ inT32 def_letter_is_okay(EDGE_ARRAY dawg,
                          NODE_REF *node,
                          inT32 char_index,
                          char prevchar,
-                         const wchar_t *word,
+                         const char *word_utf8,
                          inT32 word_end) {
   EDGE_REF     edge;
-  STRING dummy_word(word);  // Auto-deleting string fixes memory leak.
+
+  wchar_t* word = utf2wchar(word_utf8);
+  STRING dummy_word(word_utf8);  // Auto-deleting string fixes memory leak.
   STRING word_single_lengths; //Lengths of single UTF-8 characters of the word.
   const wchar_t *ptr;
 
-  for (ptr = word; *ptr != '\0';) {
+  for (ptr = word; *ptr != L'\0';) {
     //int step = UNICHAR::utf8_step(ptr);
     int step = sizeof(wchar_t);
     if (step == 0)
@@ -164,16 +166,16 @@ inT32 def_letter_is_okay(EDGE_ARRAY dawg,
     if (leading_punc (word [char_index]) &&
     (char_index == 0  ||  leading_punc (dummy_word [char_index-1]))) {
       *node = 0;
-      if (punctuation_ok((char*)word, word_single_lengths.string()) >= 0)
+      if (punctuation_ok(word, word_single_lengths.string()) >= 0)
         return (TRUE);
       else
         return FALSE;
     }
     /* Trailing punctuation */
-    /*if (verify_trailing_punct (dawg, &dummy_word[0], char_index)) {
+    if (verify_trailing_punct (dawg, &dummy_word[0], char_index)) {
       *node = NO_EDGE;
       return (TRUE);
-    }*/
+    }
 
     return (FALSE);
   }
@@ -318,9 +320,9 @@ EDGE_ARRAY read_squished_dawg(const char *filename) {
  * string of trailing puntuation.  TRUE is returned if everything is
  * OK.
  **********************************************************************/
-/*inT32 verify_trailing_punct(EDGE_ARRAY dawg, char *word, inT32 char_index) {
-  wchar_t       last_char;
-  wchar_t       *first_char;
+inT32 verify_trailing_punct(EDGE_ARRAY dawg, char *word, inT32 char_index) {
+  char       last_char;
+  char       *first_char;
 
   if (trailing_punc (word [char_index])) {
 
@@ -336,7 +338,7 @@ EDGE_ARRAY read_squished_dawg(const char *filename) {
     word [char_index] = last_char;
   }
   return (FALSE);
-}*/
+}
 
 
 /**********************************************************************
@@ -344,12 +346,11 @@ EDGE_ARRAY read_squished_dawg(const char *filename) {
  *
  * Test to see if the word can be found in the DAWG.
  **********************************************************************/
-inT32 word_in_dawg(EDGE_ARRAY dawg, const wchar_t *string) {
+inT32 word_in_dawg(EDGE_ARRAY dawg, const char *string_utf8) {
   NODE_REF   node = 0;
   inT32        i;
   inT32         length;
-
-  length=wcslen(string);
+  const char *string;
   if (length==0)
     return FALSE;
   for (i=0; i<length; i++) {
@@ -357,10 +358,23 @@ inT32 word_in_dawg(EDGE_ARRAY dawg, const wchar_t *string) {
       print_dawg_node(dawg, node);
       new_line();
     }
-    if (! letter_is_okay (dawg, &node, i, '\0', string, (string[i+1]==0))) {
+    if (! letter_is_okay (dawg, &node, i, '\0', string_utf8, (string[i+1]==0))) {
       return (FALSE);
     }
   }
 
   return (TRUE);
+}
+
+wchar_t* utf2wchar(const char *str) {
+  setlocale(LC_ALL, "en_US.UTF-8");
+  int size = strlen(str);
+  wchar_t uni[100]; //assuming that there wont be a 101+ charcter word
+  int ret = mbstowcs(uni,str,size);
+  if(ret<=0){cprintf("mbstowc failed, ret=%d",ret);}
+  return uni;
+  int len = wcslen(uni);
+  //for (int i=0;i<len;i++){
+  //  wcout<<"here is -->"<<uni[i]<<"\n"; 
+
 }
