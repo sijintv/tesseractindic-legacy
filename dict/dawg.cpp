@@ -126,7 +126,8 @@ inT32 def_letter_is_okay(EDGE_ARRAY dawg,
   const wchar_t *ptr;
 
   for (ptr = word; *ptr != '\0';) {
-    int step = UNICHAR::utf8_step(ptr);
+    //int step = UNICHAR::utf8_step(ptr);
+    int step = sizeof(wchar_t);
     if (step == 0)
       return FALSE;
     word_single_lengths += step;
@@ -163,7 +164,7 @@ inT32 def_letter_is_okay(EDGE_ARRAY dawg,
     if (leading_punc (word [char_index]) &&
     (char_index == 0  ||  leading_punc (dummy_word [char_index-1]))) {
       *node = 0;
-      if (punctuation_ok(word, word_single_lengths.string()) >= 0)
+      if (punctuation_ok((char*)word, word_single_lengths.string()) >= 0)
         return (TRUE);
       else
         return FALSE;
@@ -319,7 +320,7 @@ EDGE_ARRAY read_squished_dawg(const char *filename) {
  **********************************************************************/
 inT32 verify_trailing_punct(EDGE_ARRAY dawg, char *word, inT32 char_index) {
   char       last_char;
-  char       *first_char;
+  wchar_t       *first_char;
 
   if (trailing_punc (word [char_index])) {
 
