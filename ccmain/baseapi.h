@@ -59,7 +59,7 @@ class TessBaseAPI {
   // providing config files for debug/display purposes.
   // TODO(rays) get the facts straight. Is it OK to call
   // it more than once? Make it properly check for errors and return them.
-  static int Init(const char* datapath, const char* outputbase, const char* language,
+  static int Init(const char* datapath, const char* outputbase,
         const char* configfile, bool numeric_mode,
         int argc, char* argv[]);
 

@@ -17,6 +17,8 @@
 //
 ///////////////////////////////////////////////////////////////////////
 //
+
+#ifndef GRAPHICS_DISABLED
 // This class contains the main ScrollView-logic,
 // e.g. parsing & sending messages, images etc.
 #ifdef WIN32
@@ -30,13 +32,15 @@ const int kMaxIntPairSize = 45;  // Holds %d,%d, for upto 64 bit.
 #include "scrollview.h"
 
 #include <stdarg.h>
+#include <limits.h>
+#include <string.h>
 #include <map>
 #include <utility>
 #include <algorithm>
 #include <vector>
 #include <string>
-#include<cstring>
-#include<climits>
+#include <cstring>
+#include <climits>
 
 #include "svutil.h"
 
@@ -301,14 +305,14 @@ void* ScrollView::StartEventHandler(void* a) {
     stream_->Flush();
     sv->semaphore_->Wait();
     new_event = NULL;
-    int serial = INT_MAX;
+    int serial = -1;
     int k = -1;
     sv->mutex_->Lock();
     // Check every table entry if he is is valid and not already processed.
 
     for (int i = 0; i < SVET_COUNT; i++) {
-      if ((sv->event_table_[i] != NULL) &&
-          (sv->event_table_[i]->counter < serial)) {
+      if (sv->event_table_[i] != NULL &&
+          (serial < 0 || sv->event_table_[i]->counter < serial)) {
         new_event = sv->event_table_[i];
         serial = sv->event_table_[i]->counter;
         k = i;
@@ -816,3 +820,6 @@ int ScrollView::TranslateYCoordinate(int y) {
   if (!y_axis_is_reversed_) { return y;
   } else { return y_size_ - y; }
 }
+
+
+#endif  // GRAPHICS_DISABLED

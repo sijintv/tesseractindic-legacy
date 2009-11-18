@@ -37,10 +37,6 @@
 #include "tfacep.h"
 #include "callnet.h"
 
-#include <iostream>
-
-using namespace std;
-
 /*
 ** Include automatically generated configuration file if running autoconf
 */
@@ -78,7 +74,6 @@ extern int NO_BLOCK;
 const int kMaxIntSize = 22;
 const ERRCODE USAGE = "Usage";
 char szAppName[] = "Tessedit";   //app name
-bool connected_script=false; //whether language is connected script, eg: hindi, bengali etc
 
 void TesseractImage(const char* input_file, IMAGE* image, STRING* text_out) {
   int bytes_per_line = check_legal_image_size(image->get_xsize(),
@@ -145,14 +140,14 @@ void TesseractImage(const char* input_file, IMAGE* image, STRING* text_out) {
  *
  **********************************************************************/
 
-#ifndef GRAPHICS_DISABLED
 int main(int argc, char **argv) {
   STRING outfile;               //output file
 
   if (argc < 3) {
-    USAGE.error (argv[0], EXIT,
+    USAGE.error (argv[0], TESSLOG,
       "%s imagename outputbase [-l lang] [configfile [[+|-]varfile]...]\n",
       argv[0]);
+	return 1;
   }
   // Find the required language.
   const char* lang = "eng";
@@ -161,13 +156,6 @@ int main(int argc, char **argv) {
     lang = argv[4];
     arg = 5;
   }
-  
-  if(strcmp(lang,"ben")==0 || strcmp(lang,"hin")==0 || strcmp(lang,"asm")==0 || 
-     strcmp(lang,"guj")==0 || strcmp(lang,"pan")==0 || strcmp(lang,"ori")==0 || strcmp(lang,"ban")==0 || strcmp(lang,"beng")==0){
-  connected_script=true;
-  cout<<"Connected Script Found!!\n";
-  }
-    
   // Find the basename of the input file.
   STRING infile(argv[1]);
   const char* lastdot = strrchr(argv[1], '.');
@@ -252,62 +240,6 @@ int main(int argc, char **argv) {
 
   return 0;                      //Normal exit
 }
-#else
-
-int main(int argc, char **argv) {
-  uinT16 lang;                   //language
-  STRING pagefile;               //input file
-
-  if (argc < 4) {
-    USAGE.error (argv[0], EXIT,
-      "%s imagename outputbase configfile [[+|-]varfile]...\n", argv[0]);
-  }
-
-  time_t t_start = time(NULL);
-
-  init_tessembedded (argv[0], argv[2], argv[3], argc - 4, argv + 4);
-
-  tprintf ("Tesseract Open Source OCR Engine (graphics disabled)\n");
-
-  if (tessedit_read_image) {
-#ifdef _TIFFIO_
-    TIFF* tif = TIFFOpen(argv[1], "r");
-    if (tif) {
-      read_tiff_image(tif);
-      TIFFClose(tif);
-    } else
-    READFAILED.error (argv[0], EXIT, argv[1]);
-
-#else
-    if (page_image.read_header (argv[1]) < 0)
-      READFAILED.error (argv[0], EXIT, argv[1]);
-    if (page_image.read (page_image.get_ysize ()) < 0) {
-      MEMORY_OUT.error (argv[0], EXIT, "Read of image %s",
-        argv[1]);
-    }
-#endif
-  }
-
-  pagefile = argv[1];
-
-  BLOCK_LIST current_block_list;
-  tessembedded_read_file(pagefile, &current_block_list);
-  tprintf ("Done reading files.\n");
-
-  PAGE_RES page_res(&current_block_list);
-
-  recog_all_words(&page_res, NULL);
-
-  current_block_list.clear();
-  ResetAdaptiveClassifier();
-
-  time_t t_end = time(NULL);
-  double secs = difftime(t_end, t_start);
-  tprintf ("Done. Number of seconds: %d\n", (int)secs);
-  return 0;                      //Normal exit
-}
-
-#endif
 
 int initialized = 0;
 

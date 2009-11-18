@@ -80,7 +80,7 @@
 #define LETTER_MASK            (inT64) 0x00000000000000ffll
 #endif
 
-#define MAX_NUM_EDGES_IN_SQUISHED_DAWG_FILE 2000000
+#define MAX_NUM_EDGES_IN_SQUISHED_DAWG_FILE 3000000
 
 #define REFFORMAT "%lld"
 
@@ -192,7 +192,7 @@ for  (edge=0; edge<max_num_edges; edge++)      \
  **********************************************************************/
 
 #define edge_letter(edges,e)  \
-((char)(((edges)[e] & LETTER_MASK) >> LETTER_START_BIT))
+  (static_cast<int>(((edges)[e] & LETTER_MASK) >> LETTER_START_BIT))
 
 /**********************************************************************
 * letter_of_edge
@@ -201,7 +201,7 @@ for  (edge=0; edge<max_num_edges; edge++)      \
 **********************************************************************/
 
 #define letter_of_edge(edge)  \
-  ((char)((edge & LETTER_MASK) >> LETTER_START_BIT))
+  (static_cast<int>((edge & LETTER_MASK) >> LETTER_START_BIT))
 
 /**********************************************************************
  * last_edge

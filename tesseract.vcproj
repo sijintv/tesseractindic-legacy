@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8.00"
+	Version="9.00"
 	Name="tesseract"
 	ProjectGUID="{47519557-3296-407A-BE51-8175C77B0868}"
 	Keyword="MFCProj"
+	TargetFrameworkVersion="131072"
 	>
 	<Platforms>
 		<Platform
@@ -50,9 +51,9 @@
 				Optimization="2"
 				InlineFunctionExpansion="1"
 				AdditionalIncludeDirectories="aspirin,ccutil,ccstruct,classify,cutil,dict,display,image,textord,viewer,wordrec,pageseg,."
-				PreprocessorDefinitions="NDEBUG;WIN32;_WINDOWS;__MSW32__"
+				PreprocessorDefinitions="NDEBUG;WIN32;_WINDOWS;__MSW32__;_CRT_SECURE_NO_WARNINGS"
 				StringPooling="true"
-				RuntimeLibrary="2"
+				RuntimeLibrary="0"
 				EnableFunctionLevelLinking="true"
 				UsePrecompiledHeader="2"
 				PrecompiledHeaderThrough="mfcpch.h"
@@ -81,7 +82,9 @@
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
 				ProgramDatabaseFile=".\./tesseract.pdb"
-				SubSystem="2"
+				SubSystem="1"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -103,9 +106,6 @@
 			/>
 			<Tool
 				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -146,10 +146,10 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="aspirin,ccutil,ccstruct,classify,cutil,dict,display,image,textord,viewer,wordrec,pageseg,."
-				PreprocessorDefinitions="_DEBUG;WIN32;_WINDOWS;__MSW32__"
+				PreprocessorDefinitions="_DEBUG;WIN32;_WINDOWS;__MSW32__;_CRT_SECURE_NO_WARNINGS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
-				RuntimeLibrary="3"
+				RuntimeLibrary="1"
 				UsePrecompiledHeader="2"
 				PrecompiledHeaderThrough="mfcpch.h"
 				PrecompiledHeaderFile=".\tess.Debug/tesseract.pch"
@@ -179,7 +179,9 @@
 				SuppressStartupBanner="true"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile=".\bin.dbg/tesseract.pdb"
-				SubSystem="2"
+				SubSystem="1"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -201,9 +203,6 @@
 			/>
 			<Tool
 				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -2917,15 +2916,13 @@
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath="cutil\debug.cpp"
+					RelativePath=".\cutil\debug.cpp"
 					>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
 							Name="VCCLCompilerTool"
-							AdditionalIncludeDirectories=""
-							PreprocessorDefinitions=""
 							UsePrecompiledHeader="0"
 						/>
 					</FileConfiguration>
@@ -2934,8 +2931,6 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
-							AdditionalIncludeDirectories=""
-							PreprocessorDefinitions=""
 							UsePrecompiledHeader="0"
 						/>
 					</FileConfiguration>
@@ -3181,15 +3176,13 @@
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath="cutil\variables.cpp"
+					RelativePath=".\cutil\variables.cpp"
 					>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
 							Name="VCCLCompilerTool"
-							AdditionalIncludeDirectories=""
-							PreprocessorDefinitions=""
 							UsePrecompiledHeader="0"
 						/>
 					</FileConfiguration>
@@ -3198,8 +3191,6 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
-							AdditionalIncludeDirectories=""
-							PreprocessorDefinitions=""
 							UsePrecompiledHeader="0"
 						/>
 					</FileConfiguration>
@@ -3349,15 +3340,13 @@
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath="dict\permnum.cpp"
+					RelativePath=".\dict\permnum.cpp"
 					>
 					<FileConfiguration
 						Name="Release|Win32"
 						>
 						<Tool
 							Name="VCCLCompilerTool"
-							AdditionalIncludeDirectories=""
-							PreprocessorDefinitions=""
 							UsePrecompiledHeader="0"
 						/>
 					</FileConfiguration>
@@ -3366,8 +3355,6 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
-							AdditionalIncludeDirectories=""
-							PreprocessorDefinitions=""
 							UsePrecompiledHeader="0"
 						/>
 					</FileConfiguration>
@@ -4959,10 +4946,6 @@
 					>
 				</File>
 				<File
-					RelativePath="ccmain\tessembedded.h"
-					>
-				</File>
-				<File
 					RelativePath="ccmain\tesseractmain.h"
 					>
 				</File>
@@ -5471,7 +5454,7 @@
 					>
 				</File>
 				<File
-					RelativePath="cutil\debug.h"
+					RelativePath=".\cutil\debug.h"
 					>
 				</File>
 				<File
@@ -5527,7 +5510,7 @@
 					>
 				</File>
 				<File
-					RelativePath="cutil\variables.h"
+					RelativePath=".\cutil\variables.h"
 					>
 				</File>
 			</Filter>
@@ -5563,7 +5546,7 @@
 					>
 				</File>
 				<File
-					RelativePath="dict\permnum.h"
+					RelativePath=".\dict\permnum.h"
 					>
 				</File>
 				<File

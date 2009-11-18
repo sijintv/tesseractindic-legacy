@@ -100,10 +100,10 @@ void TessBaseAPI::SimpleInit(const char* datapath,
 // providing config files for debug/display purposes.
 // TODO(rays) get the facts straight. Is it OK to call
 // it more than once? Make it properly check for errors and return them.
-int TessBaseAPI::Init(const char* datapath, const char* outputbase, const char* language,
+int TessBaseAPI::Init(const char* datapath, const char* outputbase,
                               const char* configfile, bool numeric_mode,
                               int argc, char* argv[]) {
-  return InitWithLanguage(datapath, outputbase, language, configfile,
+  return InitWithLanguage(datapath, outputbase, NULL, configfile,
                           numeric_mode, argc, argv);
 }
 
@@ -114,8 +114,6 @@ int TessBaseAPI::Init(const char* datapath, const char* outputbase, const char* 
 int TessBaseAPI::InitWithLanguage(const char* datapath, const char* outputbase,
                               const char* language, const char* configfile,
                               bool numeric_mode, int argc, char* argv[]) {
-  //language="ban";
-  tprintf("%s",language);
   int result = init_tesseract(datapath, outputbase, language,
       configfile, argc, argv);
 
@@ -717,7 +715,7 @@ void TessBaseAPI::ThresholdRect(const unsigned char* imagedata,
     data += bytes_per_line;
   }
 
-if(connected_script==true){
+//if(connected_script==true){
 //page_image.write("benth.tif");
 //float angle=findskew(height,width);
 //cout<<"SKEW ANGLE="<<angle<<"\n";
@@ -725,7 +723,7 @@ if(connected_script==true){
 deskew(angle,height,width);
 }*/
 ClipMaatraa(height,width);
-}
+//}
 
 }
 
