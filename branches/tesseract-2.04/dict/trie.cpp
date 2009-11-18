@@ -33,6 +33,7 @@
 #endif
 #include <stdio.h>
 #include <wchar.h>
+#include <locale.h>
 
 /*----------------------------------------------------------------------
               V a r i a b l e s
@@ -185,9 +186,9 @@ void add_word_to_dawg(EDGE_ARRAY dawg,
   inT32         still_finding_chars = TRUE;
   inT32         word_end = FALSE;
   bool          add_failed = false;
-
-  if (debug) cprintf("Adding word %s\n", string);
-  cprintf("Adding word %s\n", string);
+  
+  if (debug){ cprintf("Adding word %s\n", string);}
+  cprintf("Adding word %ls\n", string);
   for (i=0; i<wcslen(string)-1; i++) {
     unsigned wchar_t ch = case_sensative ? string[i] : tolower(string[i]);
     if (still_finding_chars) {
@@ -261,6 +262,92 @@ void add_word_to_dawg(EDGE_ARRAY dawg,
   }
 }
 
+void add_word_to_dawg(EDGE_ARRAY dawg,
+                      const char *string,
+                      inT32 max_num_edges,
+                      inT32 reserved_edges) {
+  EDGE_REF    edge;
+  NODE_REF    last_node = 0;
+  NODE_REF    the_next_node;
+  inT32         i;
+  inT32         still_finding_chars = TRUE;
+  inT32         word_end = FALSE;
+  bool          add_failed = false;
+  cprintf("\nstring\n");
+  if (debug) cprintf("Adding word %s\n", string);
+  cprintf("Adding word %s\n", string);
+  for (i=0; i<strlen(string)-1; i++) {
+    unsigned wchar_t ch = case_sensative ? string[i] : tolower(string[i]);
+    if (still_finding_chars) {
+      edge = edge_char_of(dawg, last_node, ch, word_end);
+      if (debug) cprintf ("exploring edge = " REFFORMAT "\n", edge);
+      if (edge == NO_EDGE)
+        still_finding_chars = FALSE;
+      else
+      if (next_node (dawg, edge) == 0) {
+        word_end = TRUE;
+        still_finding_chars = FALSE;
+        remove_edge (dawg, last_node, 0, ch, word_end);
+      }
+      else {
+        last_node = next_node (dawg, edge);
+      }
+    }
+
+    if (! still_finding_chars) {
+      the_next_node = new_dawg_node (dawg, DEFAULT_NODE_SIZE,
+                                     max_num_edges, reserved_edges);
+      if (the_next_node == 0) {
+        add_failed = true;
+        break;
+      }
+      if (edges_in_node (dawg, last_node) + last_node == the_next_node) {
+        //cprintf ("Node collision at %d\n", the_next_node);
+        the_next_node = new_dawg_node (dawg, DEFAULT_NODE_SIZE,
+                                       max_num_edges, reserved_edges);
+        if (the_next_node == 0) {
+          add_failed = true;
+          break;
+        }
+      }
+      if (!add_new_edge (dawg, &last_node, &the_next_node, ch,
+                         word_end, max_num_edges, reserved_edges)) {
+        add_failed = true;
+        break;
+      }
+      word_end = FALSE;
+      if (debug)
+        cprintf ("adding node = %ld\n", the_next_node);
+      last_node = the_next_node;
+    }
+  }
+
+  the_next_node = 0;
+  unsigned char ch = case_sensative ? string[i] : tolower(string[i]);
+  if (still_finding_chars &&
+      (edge = edge_char_of(dawg, last_node, ch, false))!= NO_EDGE &&
+      (the_next_node = next_node(dawg, edge)) != 0) {
+    // An extension of this word already exists in the trie, so we
+    // only have to add the ending flags in both directions.
+    if (!add_word_ending(dawg, edge, the_next_node, ch))
+      cprintf("Unable to find backward edge for subword ending! %s\n", string);
+  } else {
+    if (!add_failed &&
+        !add_new_edge(dawg, &last_node, &the_next_node, ch,
+                      TRUE, max_num_edges, reserved_edges))
+      add_failed = true;
+  }
+
+  if (edges_in_node (dawg, 0) > reserved_edges) {
+    cprintf ("error: Not enough room in root node, %d\n",
+      edges_in_node (dawg, 0));
+    add_failed = true;
+  }
+  if (add_failed) {
+    cprintf ("Re-initializing document dictionary...\n");
+    initialize_dawg(dawg,max_num_edges);
+  }
+}
 
 /**********************************************************************
  * initialize_dawg
@@ -448,22 +535,25 @@ void read_word_list(const char *filename,
                     inT32 max_num_edges,
                     inT32 reserved_edges) {
   FILE *word_file;
-  wchar_t string [CHARS_PER_LINE];
+  char string_utf8[CHARS_PER_LINE];
   int  word_count = 0;
   int old_debug = debug;
   if (debug > 0 && debug < 3)
     debug = 0;
-
+  wchar_t* string;
   word_file = open_file (filename, "r");
 
   initialize_dawg(dawg, max_num_edges);
-
-  while (fgetws (string, CHARS_PER_LINE, word_file) != NULL) {
+  
+  
+  while (fgets (string_utf8, CHARS_PER_LINE, word_file) !=NULL) {
+    string = utf2wchar(string_utf8);
+    cprintf("Read %d words so far\n", word_count);
     string [wcslen (string) - 1] = (char) 0;
     ++word_count;
     if (debug && word_count % 10000 == 0)
       cprintf("Read %d words so far\n", word_count);
-    if (string[0] != '\0' /* strlen (string) */) {
+    if (string[0] != L'\0' /* strlen (string) */) {
       /*if (!word_in_dawg(dawg, string)) {
         add_word_to_dawg(dawg, string, max_num_edges, reserved_edges);
         if (!word_in_dawg(dawg, string)) {
@@ -683,4 +773,17 @@ void write_full_dawg (const char *filename, EDGE_ARRAY dawg,
    }
 
    fclose (file);
+}
+
+wchar_t* utf2wchar(const char *str) {
+  setlocale(LC_ALL, "en_US.UTF-8");
+  int size = strlen(str);
+  wchar_t uni[1000]; //assuming that there wont be a 101+ charcter word
+  int ret = mbstowcs(uni,str,size);
+  if(ret<=0){cprintf("mbstowc failed, ret=%d",ret);}
+  return uni;
+  int len = wcslen(uni);
+  //for (int i=0;i<len;i++){
+  //  wcout<<"here is -->"<<uni[i]<<"\n"; 
+
 }
