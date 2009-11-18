@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="256"
+   height="256"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.47pre4 r22446"
+   sodipodi:docname="tesseract-gui-icon.svg">
+  <defs
+     id="defs4">
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       id="perspective10" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="2.296875"
+     inkscape:cx="128"
+     inkscape:cy="128"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1396"
+     inkscape:window-height="841"
+     inkscape:window-x="32"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Capa 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-796.36218)">
+    <g
+       transform="matrix(10.360073,0,0,10.360073,-760.13214,-3333.8749)"
+       style="font-size:40px;font-style:normal;font-weight:normal;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+       id="flowRoot2830" />
+    <g
+       id="g2817"
+       inkscape:export-filename="/home/monon/Escritorio/tesseract-gui-2.4/share/tesseract-gui/tesseract-gui-logo.png"
+       inkscape:export-xdpi="17.102009"
+       inkscape:export-ydpi="17.102009"
+       transform="matrix(1.0284111,0,0,0.99827644,-1.8406566,0.94080363)">
+      <path
+         sodipodi:nodetypes="ccccccc"
+         transform="translate(0,796.36218)"
+         id="path2827"
+         d="M 139.60727,2.0892842 3.9264544,66.221372 3.4901817,190.55909 125.21026,254.69118 l 123.46518,-80.71045 0,-110.376994 L 139.60727,2.0892842 z"
+         style="fill:#000000;fill-opacity:1;stroke:none" />
+      <path
+         id="path2831"
+         transform="translate(0,796.36218)"
+         d="M 125.75,22.125 32.71875,67.09375 68.5,78.875 119.46875,44.34375 125.75,22.125 z M 16.15625,78 13.6875,176.03125 59.46875,147.5 58.03125,91.09375 16.15625,78 z m 154,17 -47.125,8.3125 5.65625,47.125 L 175.375,128.59375 170.15625,95 z"
+         style="fill:#637b8e;fill-opacity:1;stroke:none" />
+      <path
+         id="path3627"
+         transform="translate(0,796.36218)"
+         d="m 142.59375,17.625 -12.90625,29.0625 47,29.5625 L 226,66.21875 142.59375,17.625 z m 91.25,61.6875 -49.3125,11.34375 6.25,41.90625 44.125,15.5625 -1.0625,-68.8125 z M 70.25,96.75 l -2.1875,37.53125 30.53125,9.15625 0,-38.375 L 70.25,96.75 z"
+         style="fill:#2c3d63;fill-opacity:1;stroke:none" />
+      <path
+         d="M 82.019269,81.490917 110.377,88.47128 159.23954,79.745826 123.0289,59.241009 82.019269,81.490917 z M 169.82543,145.38293 129.125,170.9375 133.0625,226.34372 227.84375,168 169.82543,145.38293 z M 68.424,155.29164 24.75,186.75 98.59375,218.90622 99.03125,166.125 68.424,155.29164 z"
+         style="fill:#c3d3ff;fill-opacity:1;stroke:none"
+         transform="translate(0,796.36218)"
+         id="path2839" />
+    </g>
+  </g>
+</svg>
