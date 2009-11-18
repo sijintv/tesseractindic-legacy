@@ -22,7 +22,7 @@ strngs.o: strngs.cpp mfcpch.h tprintf.h varable.h /usr/include/stdio.h \
  /usr/include/sys/sysmacros.h /usr/include/bits/pthreadtypes.h \
  /usr/include/alloca.h /usr/include/bits/stdlib.h /usr/include/string.h \
  /usr/include/bits/string3.h memry.h errcode.h fileerr.h lsterr.h \
- strngs.h
+ strngs.h /usr/include/bits/wchar.h /usr/include/bits/wchar2.h
 
 mfcpch.h:
 
@@ -137,3 +137,7 @@ fileerr.h:
 lsterr.h:
 
 strngs.h:
+
+/usr/include/bits/wchar.h:
+
+/usr/include/bits/wchar2.h:
