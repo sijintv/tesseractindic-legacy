@@ -81,7 +81,7 @@ const UNICHAR_ID UNICHARSET::unichar_to_id(const wchar_t* const unichar_repr,
 // while leaving a legal UNICHAR_ID afterwards. In other words, if there
 // is both a short and a long match to the string, return the length that
 // ensures there is a legal match after it.
-int UNICHARSET::step(const wchar_t* str) const {
+int UNICHARSET::step(const char* str) const {
   // Find the length of the first matching unicharset member.
   int minlength = ids.minmatch(str);
   if (minlength == 0)
@@ -101,7 +101,7 @@ int UNICHARSET::step(const wchar_t* str) const {
   return minlength;
 }
 
-const wchar_t* const UNICHARSET::id_to_unichar(UNICHAR_ID id) const {
+const char* const UNICHARSET::id_to_unichar(UNICHAR_ID id) const {
   assert(id < this->size());
   return unichars[id].representation;
 }
@@ -109,7 +109,7 @@ const wchar_t* const UNICHARSET::id_to_unichar(UNICHAR_ID id) const {
 // Return a STRING containing debug information on the unichar, including
 // the id_to_unichar, its hex unicodes and the properties.
 STRING UNICHARSET::debug_str(UNICHAR_ID id) const {
-  const wchar_t* str = id_to_unichar(id);
+  const char* str = id_to_unichar(id);
   STRING result = str;
   result += " [";
   int step = 1;
@@ -173,11 +173,11 @@ bool UNICHARSET::contains_unichar(const wchar_t* const unichar_repr, int length)
   return ids.contains(unichar_repr, length);
 }
 
-bool UNICHARSET::eq(UNICHAR_ID unichar_id, const wchar_t* const unichar_repr) {
+bool UNICHARSET::eq(UNICHAR_ID unichar_id, const char* const unichar_repr) {
   return strcmp(this->id_to_unichar(unichar_id), unichar_repr) == 0;
 }
 
-bool UNICHARSET::save_to_file(const wchar_t* filename) const {
+bool UNICHARSET::save_to_file(const char* filename) const {
   FILE* file = fopen(filename, "w+");
 
   if (file == NULL)
@@ -206,7 +206,7 @@ bool UNICHARSET::save_to_file(const wchar_t* filename) const {
   return true;
 }
 
-bool UNICHARSET::load_from_file(const wchar_t* filename) {
+bool UNICHARSET::load_from_file(const char* filename) {
   FILE* file = fopen(filename, "r");
   int unicharset_size;
   char buffer[256];
@@ -252,8 +252,8 @@ bool UNICHARSET::load_from_file(const wchar_t* filename) {
 // Set a whitelist and/or blacklist of characters to recognize.
 // An empty or NULL whitelist enables everything (minus any blacklist).
 // An empty or NULL blacklist disables nothing.
-void UNICHARSET::set_black_and_whitelist(const wchar_t* blacklist,
-                                         const wchar_t* whitelist) {
+void UNICHARSET::set_black_and_whitelist(const char* blacklist,
+                                         const char* whitelist) {
   bool def_enabled = whitelist == NULL || whitelist[0] == '\0';
   // Set everything to default
   for (int ch = 0; ch < size_used; ++ch)
@@ -285,18 +285,18 @@ void UNICHARSET::set_black_and_whitelist(const wchar_t* blacklist,
   }
 }
 
-wchar_t* UNICHARSET::add_script(const wchar_t* script) {
+char* UNICHARSET::add_script(const char* script) {
   for (int i = 0; i < script_table_size_used; ++i) {
     if (strcmp(script, script_table[i]) == 0)
       return script_table[i];
   }
   if (script_table_size_reserved == 0) {
     script_table_size_reserved = 8;
-    script_table = new wchar_t*[script_table_size_reserved];
+    script_table = new char*[script_table_size_reserved];
   }
   if (script_table_size_used + 1 >= script_table_size_reserved) {
-    wchar_t** new_script_table = new wchar_t*[script_table_size_reserved * 2];
-    memcpy(new_script_table, script_table, script_table_size_reserved * sizeof(wchar_t*));
+    char** new_script_table = new char*[script_table_size_reserved * 2];
+    memcpy(new_script_table, script_table, script_table_size_reserved * sizeof(char*));
     delete[] script_table;
     script_table = new_script_table;
       script_table_size_reserved = 2 * script_table_size_reserved;
