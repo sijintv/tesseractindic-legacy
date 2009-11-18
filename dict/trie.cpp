@@ -174,7 +174,7 @@ bool add_word_ending(EDGE_ARRAY dawg,
  * Add in a word by creating the necessary nodes and edges.
  **********************************************************************/
 void add_word_to_dawg(EDGE_ARRAY dawg,
-                      const char *string,
+                      const wchar_t *string,
                       inT32 max_num_edges,
                       inT32 reserved_edges) {
   EDGE_REF    edge;
@@ -186,8 +186,10 @@ void add_word_to_dawg(EDGE_ARRAY dawg,
   bool          add_failed = false;
 
   if (debug) cprintf("Adding word %s\n", string);
-  for (i=0; i<strlen(string)-1; i++) {
-    unsigned char ch = case_sensative ? string[i] : tolower(string[i]);
+  cprintf("Adding word %s\n", string);
+  for (i=0; i<wcslen(string)-1; i++) {
+    //unsigned wchar_t ch = case_sensative ? string[i] : tolower(string[i]);
+    unsigned wchar_t ch =  string[i];
     if (still_finding_chars) {
       edge = edge_char_of(dawg, last_node, ch, word_end);
       if (debug) cprintf ("exploring edge = " REFFORMAT "\n", edge);
