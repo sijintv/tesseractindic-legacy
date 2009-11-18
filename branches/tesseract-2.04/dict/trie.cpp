@@ -32,7 +32,7 @@
 #include <assert.h>
 #endif
 #include <stdio.h>
-
+#include <wchar.h>
 /*----------------------------------------------------------------------
               V a r i a b l e s
 ----------------------------------------------------------------------*/
@@ -446,7 +446,7 @@ void read_word_list(const char *filename,
                     inT32 max_num_edges,
                     inT32 reserved_edges) {
   FILE *word_file;
-  char string [CHARS_PER_LINE];
+  wchar_t string [CHARS_PER_LINE];
   int  word_count = 0;
   int old_debug = debug;
   if (debug > 0 && debug < 3)
@@ -456,8 +456,8 @@ void read_word_list(const char *filename,
 
   initialize_dawg(dawg, max_num_edges);
 
-  while (fgets (string, CHARS_PER_LINE, word_file) != NULL) {
-    string [strlen (string) - 1] = (char) 0;
+  while (fgetws (string, CHARS_PER_LINE, word_file) != NULL) {
+    string [wcslen (string) - 1] = (char) 0;
     ++word_count;
     if (debug && word_count % 10000 == 0)
       cprintf("Read %d words so far\n", word_count);
