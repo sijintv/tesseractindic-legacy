@@ -321,13 +321,13 @@ inT32 def_letter_is_okay(EDGE_ARRAY dawg,
                      NODE_REF *node,
                      inT32 char_index,
                      char prevchar,
-                     const char *word,
+                     const wchar_t *word,
                      inT32 word_end);
 
 /*
  * Allow for externally provided letter_is_okay.
  */
-typedef inT32 (*LETTER_OK_FUNC)(EDGE_ARRAY, NODE_REF*, inT32, char, const wchar_t*,
+typedef inT32 (*LETTER_OK_FUNC)(EDGE_ARRAY, NODE_REF*, inT32, char, const char*,
                                 inT32);
 extern LETTER_OK_FUNC letter_is_okay;
 
@@ -340,7 +340,7 @@ EDGE_ARRAY read_squished_dawg(const char *filename);
 
 inT32 verify_trailing_punct(EDGE_ARRAY dawg, char *word, inT32 char_index);
 
-inT32 word_in_dawg(EDGE_ARRAY dawg, const char *string);
+inT32 word_in_dawg(EDGE_ARRAY dawg, const wchar_t *string);
 
 /*
 #if defined(__STDC__) || defined(__cplusplus) || MAC_OR_DOS
