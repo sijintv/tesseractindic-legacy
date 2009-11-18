@@ -33,8 +33,8 @@ UNICHARMAP::~UNICHARMAP() {
 
 // Search the given unichar representation in the tree. Each character in the
 // string is interpreted as an index in an array of nodes.
-UNICHAR_ID UNICHARMAP::unichar_to_id(const char* const unichar_repr) const {
-  const char* current_char = unichar_repr;
+UNICHAR_ID UNICHARMAP::unichar_to_id(const wchar_t* const unichar_repr) const {
+  const wchar_t* current_char = unichar_repr;
   UNICHARMAP_NODE* current_nodes = nodes;
 
   assert(*unichar_repr != '\0');
@@ -51,9 +51,9 @@ UNICHAR_ID UNICHARMAP::unichar_to_id(const char* const unichar_repr) const {
 // Search the given unichar representation in the tree, using length characters
 // from it maximum. Each character in the string is interpreted as an index in
 // an array of nodes.
-UNICHAR_ID UNICHARMAP::unichar_to_id(const char* const unichar_repr,
+UNICHAR_ID UNICHARMAP::unichar_to_id(const wchar_t* const unichar_repr,
                                      int length) const {
-  const char* current_char = unichar_repr;
+  const wchar_t* current_char = unichar_repr;
   UNICHARMAP_NODE* current_nodes = nodes;
 
   assert(*unichar_repr != '\0');
@@ -73,8 +73,8 @@ UNICHAR_ID UNICHARMAP::unichar_to_id(const char* const unichar_repr,
 // missing nodes. Once the right place has been found, insert the given id and
 // update the inserted flag to keep track of the insert. Each character in the
 // string is interpreted as an index in an array of nodes.
-void UNICHARMAP::insert(const char* const unichar_repr, UNICHAR_ID id) {
-  const char* current_char = unichar_repr;
+void UNICHARMAP::insert(const wchar_t* const unichar_repr, UNICHAR_ID id) {
+  const wchar_t* current_char = unichar_repr;
   UNICHARMAP_NODE** current_nodes_pointer = &nodes;
 
   assert(*unichar_repr != '\0');
@@ -98,8 +98,8 @@ void UNICHARMAP::insert(const char* const unichar_repr, UNICHAR_ID id) {
 // Search the given unichar representation in the tree. Each character in the
 // string is interpreted as an index in an array of nodes. Stop once the tree
 // does not have anymore nodes or once we found the right unichar_repr.
-bool UNICHARMAP::contains(const char* const unichar_repr) const {
-  const char* current_char = unichar_repr;
+bool UNICHARMAP::contains(const wchar_t* const unichar_repr) const {
+  const wchar_t* current_char = unichar_repr;
   UNICHARMAP_NODE* current_nodes = nodes;
 
   assert(*unichar_repr != '\0');
@@ -117,9 +117,9 @@ bool UNICHARMAP::contains(const char* const unichar_repr) const {
 // from it maximum. Each character in the string is interpreted as an index in
 // an array of nodes. Stop once the tree does not have anymore nodes or once we
 // found the right unichar_repr.
-bool UNICHARMAP::contains(const char* const unichar_repr,
+bool UNICHARMAP::contains(const wchar_t* const unichar_repr,
                           int length) const {
-  const char* current_char = unichar_repr;
+  const wchar_t* current_char = unichar_repr;
   UNICHARMAP_NODE* current_nodes = nodes;
 
   assert(*unichar_repr != '\0');
@@ -137,8 +137,8 @@ bool UNICHARMAP::contains(const char* const unichar_repr,
 
 // Return the minimum number of characters that must be used from this string
 // to obtain a match in the UNICHARMAP.
-int UNICHARMAP::minmatch(const char* const unichar_repr) const {
-  const char* current_char = unichar_repr;
+int UNICHARMAP::minmatch(const wchar_t* const unichar_repr) const {
+  const wchar_t* current_char = unichar_repr;
   UNICHARMAP_NODE* current_nodes = nodes;
 
   while (current_nodes != NULL && *current_char != '\0') {

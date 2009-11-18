@@ -445,7 +445,7 @@ void do_new_source(           // serialise
                   ) {
   FILE *infp;                    // input file
 
-  char* name = image_win->ShowInputDialog("New Source File name");
+  wchar_t* name = image_win->ShowInputDialog("New Source File name");
 
   STRING name_str(name);
   delete[] name;
@@ -600,7 +600,7 @@ void do_view_cmd() {
 void do_write_file(           // serialise
                   ) {
 
-  char* name = image_win->ShowInputDialog("File Name");
+  wchar_t* name = image_win->ShowInputDialog("File Name");
 
   FILE *infp;                    // input file
   char msg_str[80];
@@ -1576,7 +1576,7 @@ BOOL8 word_change_text(              // change correct text
                        ROW *row,      // row holding word
                        WERD *word     // word to be processed
                       ) {
-  char* cp = image_win->ShowInputDialog(
+  wchar_t* cp = image_win->ShowInputDialog(
       "Enter/edit the correct text and press <<RETURN>>");
   word->set_text(cp);
   delete[] cp;

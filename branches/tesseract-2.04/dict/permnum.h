@@ -61,7 +61,7 @@ void init_permnum();
 int number_character_type(char ch, int length, int state);
 
                                  //current state
-int number_state_change(int state, const char *word, const char* lengths);
+int number_state_change(int state, const char *word, const wchar_t* lengths);
 
 CHOICES number_permute(int state,
                        CHOICES_LIST choices,

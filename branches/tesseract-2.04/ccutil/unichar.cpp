@@ -25,7 +25,7 @@
 // If the string is too long to fit in the UNICHAR then it takes only what
 // will fit. Checks for illegal input and stops at an illegal sequence.
 // The resulting UNICHAR may be empty.
-UNICHAR::UNICHAR(const char* utf8_str, int len) {
+UNICHAR::UNICHAR(const wchar_t* utf8_str, int len) {
   int total_len = 0;
   int step = 0;
   if (len < 0) {
@@ -97,7 +97,7 @@ int UNICHAR::first_uni() const {
   };
   int uni = 0;
   int len = utf8_step(chars);
-  const char* src = chars;
+  const wchar_t* src = chars;
 
   switch (len) {
   default:
@@ -119,16 +119,16 @@ int UNICHAR::first_uni() const {
 }
 
 // Get a terminated UTF8 string: Must delete[] it after use.
-char* UNICHAR::utf8_str() const {
+wchar_t* UNICHAR::utf8_str() const {
   int len = utf8_len();
-  char* str = new char[len + 1];
+  wchar_t* str = new char[len + 1];
   memcpy(str, chars, len);
   str[len] = 0;
   return str;
 }
 
 // Get the number of bytes in the first character of the given utf8 string.
-int UNICHAR::utf8_step(const char* utf8_str) {
+int UNICHAR::utf8_step(const wchar_t* utf8_str) {
   static const char utf8_bytes[256] = {
     1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1, 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
     1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1, 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,

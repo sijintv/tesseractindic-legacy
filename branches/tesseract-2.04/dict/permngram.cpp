@@ -61,8 +61,8 @@ class HypothesisPrefix {
 
   double rating() const {return rating_;}
   double certainty() const {return certainty_;}
-  const char* word() const {return word_;}
-  const char* unichar_lengths() const {return unichar_lengths_;}
+  const wchar_t* word() const {return word_;}
+  const wchar_t* unichar_lengths() const {return unichar_lengths_;}
   const float* certainty_array() const {return certainty_array_;}
   bool is_dawg_prefix() const {return is_dawg_prefix_;}
   NODE_REF dawg_node() const {return dawg_node_;}
@@ -106,7 +106,7 @@ class HypothesisPrefixList {
 // be based only on shape rather than on shape and n-gram score.
 // Return 1.0 for them, the default classifier_score_ngram_score_ratio
 // otherwise.
-static double get_classifier_score_ngram_score_ratio(const char* choice);
+static double get_classifier_score_ngram_score_ratio(const wchar_t* choice);
 
 // Permute the given char_choices using a character level n-gram model and
 // return the best word choice found.
@@ -167,7 +167,7 @@ A_CHOICE *ngram_permute_and_select(CHOICES_LIST char_choices,
   }
 }
 
-double get_classifier_score_ngram_score_ratio(const char* choice) {
+double get_classifier_score_ngram_score_ratio(const wchar_t* choice) {
   if (!strcmp(",", choice) ||
       !strcmp(".", choice))
     return 1.0;
@@ -195,8 +195,8 @@ HypothesisPrefix::HypothesisPrefix(const HypothesisPrefix& prefix,
                                    A_CHOICE* choice,
                                    bool end_of_word,
                                    EDGE_ARRAY dawg) {
-  char* word_ptr = word_;
-  const char* prefix_word_ptr = prefix.word_;
+  wchar_t* word_ptr = word_;
+  const wchar_t* prefix_word_ptr = prefix.word_;
 
   // Copy first space character
   *(word_ptr++) = *(prefix_word_ptr++);
@@ -216,7 +216,7 @@ HypothesisPrefix::HypothesisPrefix(const HypothesisPrefix& prefix,
   }
 
   // If choice is empty, use a space character instead
-  const char* class_string_choice = *class_string(choice) == '\0' ?
+  const wchar_t* class_string_choice = *class_string(choice) == '\0' ?
       " " : class_string(choice);
 
   // Update certainty

@@ -487,8 +487,8 @@ void AdaptToWord(TWERD *Word,
   FLOAT32 *Threshold;
   const char *map = rejmap;
   char map_char = '1';
-  const char* BestChoice_string = BestChoice.string().string();
-  const char* BestChoice_lengths = BestChoice.lengths().string();
+  const wchar_t* BestChoice_string = BestChoice.string().string();
+  const wchar_t* BestChoice_lengths = BestChoice.lengths().string();
 
   if (strlen(BestChoice_lengths) > MAX_ADAPTABLE_WERD_SIZE)
     return;
@@ -1865,10 +1865,10 @@ void DoAdaptiveMatch(TBLOB *Blob,
   **                            History: Fri May 31 09:22:08 1991, DSJ, Created.
   */
     TBLOB *Blob;
-    const char* BestChoice_string = BestChoice.string().string();
-    const char* BestChoice_lengths = BestChoice.lengths().string();
-    const char* BestRawChoice_string = BestRawChoice.string().string();
-    const char* BestRawChoice_lengths = BestRawChoice.lengths().string();
+    const wchar_t* BestChoice_string = BestChoice.string().string();
+    const wchar_t* BestChoice_lengths = BestChoice.lengths().string();
+    const wchar_t* BestRawChoice_string = BestRawChoice.string().string();
+    const wchar_t* BestRawChoice_lengths = BestRawChoice.lengths().string();
 
     if (EnableNewAdaptRules &&   /* new rules */
         CurrentBestChoiceIs (BestChoice_string, BestChoice_lengths)) {
@@ -2695,7 +2695,7 @@ void DoAdaptiveMatch(TBLOB *Blob,
     FLOAT32 *Rating = Results->Ratings;
     CLASS_ID *Match = Results->Classes;
     FLOAT32 BadMatchThreshold;
-    static const char* romans = "i v x I V X";
+    static const wchar_t* romans = "i v x I V X";
     BadMatchThreshold = Results->BestRating + BadMatchPad;
 
     if (bln_numericmode) {

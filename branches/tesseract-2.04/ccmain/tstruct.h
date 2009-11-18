@@ -40,7 +40,7 @@ struct TESS_CHOICE
   float					certainty;					//absolute
   char					permuter;					//which permuter code
   inT8					config;						//which config
-  char*					string;						//really can!
+  wchar_t*					string;						//really can!
 };
 */
 class FRAGMENT:public ELIST_LINK

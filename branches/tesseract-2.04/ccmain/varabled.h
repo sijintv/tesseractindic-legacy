@@ -60,10 +60,10 @@ class VariableContent : public ELIST_LINK {
 
 
     // Getters and Setters.
-    void SetValue(const char* val);
-    const char* GetValue() const;
-    const char* GetName() const;
-    const char* GetDescription() const;
+    void SetValue(const wchar_t* val);
+    const wchar_t* GetValue() const;
+    const wchar_t* GetName() const;
+    const wchar_t* GetDescription() const;
 
     int GetId() { return my_id_; }
     bool HasChanged() { return changed_; }
@@ -100,7 +100,7 @@ class VariablesEditor : public SVEventHandler {
   private:
     // Gets the up to the first 3 prefixes from s (split by _).
     // For example, tesseract_foo_bar will be split into tesseract,foo and bar.
-      void GetPrefixes(const char* s, STRING* level_one,
+      void GetPrefixes(const wchar_t* s, STRING* level_one,
                      STRING* level_two, STRING* level_three);
 
     // Gets the first n words (split by _) and puts them in t.
@@ -116,7 +116,7 @@ class VariablesEditor : public SVEventHandler {
     SVMenuNode *BuildListOfAllLeaves();
 
     // Write all (changed_) variables to a config file.
-    void WriteVars(char* filename, bool changes_only);
+    void WriteVars(wchar_t* filename, bool changes_only);
 
     ScrollView* sv_window_;
 };

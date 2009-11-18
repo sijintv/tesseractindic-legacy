@@ -66,7 +66,7 @@ struct SVEvent {
   int x_size;          // Size of selection.
   int y_size;
   int command_id;      // The ID of the possibly associated event (e.g. MENU)
-  char* parameter;     // Any string that might have been passed as argument.
+  wchar_t* parameter;     // Any string that might have been passed as argument.
   int counter;         // Used to detect which kind of event to process next.
 
   SVEvent() {
@@ -157,15 +157,15 @@ class ScrollView {
 // Create a window. The pixel size of the window may be 0,0, in which case
 // a default size is selected based on the size of your canvas.
 // The canvas may not be 0,0 in size!
-  ScrollView(const char* name, int x_pos, int y_pos, int x_size, int y_size,
+  ScrollView(const wchar_t* name, int x_pos, int y_pos, int x_size, int y_size,
              int x_canvas_size, int y_canvas_size);
 // With a flag whether the x axis is reversed.
-  ScrollView(const char* name, int x_pos, int y_pos, int x_size, int y_size,
+  ScrollView(const wchar_t* name, int x_pos, int y_pos, int x_size, int y_size,
              int x_canvas_size, int y_canvas_size, bool y_axis_reversed);
 // Connect to a server other than localhost.
-  ScrollView(const char* name, int x_pos, int y_pos, int x_size, int y_size,
+  ScrollView(const wchar_t* name, int x_pos, int y_pos, int x_size, int y_size,
              int x_canvas_size, int y_canvas_size, bool y_axis_reversed,
-             const char* server_name);
+             const wchar_t* server_name);
   ~ScrollView();
 
 /*******************************************************************************
@@ -189,7 +189,7 @@ class ScrollView {
 *******************************************************************************/
 
 // Returns the title of the window.
-  const char* GetName() { return window_name_; }
+  const wchar_t* GetName() { return window_name_; }
 
 // Returns the unique ID of the window.
   int GetId() { return window_id_; }
@@ -257,13 +257,13 @@ class ScrollView {
   void Ellipse(int x, int y, int width, int height);
 
 // Draw text with the current pencolor
-  void Text(int x, int y, const char* mystring);
+  void Text(int x, int y, const wchar_t* mystring);
 
 // Draw an image from a local filename. This should be faster than createImage.
 // WARNING: This only works on a local machine. This also only works image
 // types supported by java (like bmp,jpeg,gif,png) since the image is opened by
 // the server.
-  void Image(const char* image, int x_pos, int y_pos);
+  void Image(const wchar_t* image, int x_pos, int y_pos);
 
 // Set the current position to draw from (x,y). In conjunction with...
   void SetCursor(int x, int y);
@@ -280,18 +280,18 @@ class ScrollView {
   void AlwaysOnTop(bool b);
 
 // Shows a modal dialog with "msg" as question and returns 'y' or 'n'.
-  int ShowYesNoDialog(const char* msg);
+  int ShowYesNoDialog(const wchar_t* msg);
 
-// Shows a modal dialog with "msg" as question and returns a char* string.
+// Shows a modal dialog with "msg" as question and returns a wchar_t* string.
 // Constraint: As return, only words (e.g. no whitespaces etc.) are allowed.
-  char* ShowInputDialog(const char* msg);
+  wchar_t* ShowInputDialog(const wchar_t* msg);
 
 // Adds a messagebox to the SVWindow. This way, it can show the messages...
   void AddMessageBox();
 
 // ...which can be added by this command.
 // This is intended as an "debug" output window.
-  void AddMessage(const char* format, ...);
+  void AddMessage(const wchar_t* format, ...);
 
 // Zoom the window to the rectangle given upper left corner and
 // lower right corner.
@@ -304,7 +304,7 @@ class ScrollView {
 // this just for fun will likely break your application!
 // It is public so you can actually take use of the LUA functionalities, but
 // be careful!
-  void SendMsg(const char* msg, ...);
+  void SendMsg(const wchar_t* msg, ...);
 
 // Custom messages (manipulating java code directly) can be send through this.
 // Send a message to the server without adding the
@@ -314,33 +314,33 @@ class ScrollView {
 // this just for fun will likely break your application!
 // It is public so you can actually take use of the LUA functionalities, but
 // be careful!
-  static void SendRawMessage(const char* msg);
+  static void SendRawMessage(const wchar_t* msg);
 
 /*******************************************************************************
 * Add new menu entries to parent. If parent is "", the entry gets added to the
 * main menubar (toplevel).
 *******************************************************************************/
 // This adds a new submenu to the menubar.
-  void MenuItem(const char* parent, const char* name);
+  void MenuItem(const wchar_t* parent, const wchar_t* name);
 
 // This adds a new (normal) menu entry with an associated eventID, which should
 // be unique among menubar eventIDs.
-  void MenuItem(const char* parent, const char* name, int cmdEvent);
+  void MenuItem(const wchar_t* parent, const wchar_t* name, int cmdEvent);
 
 // This adds a new checkbox entry, which might initally be flagged.
-  void MenuItem(const char* parent, const char* name,
+  void MenuItem(const wchar_t* parent, const wchar_t* name,
                 int cmdEvent, bool flagged);
 
 // This adds a new popup submenu to the popup menu. If parent is "", the entry
 // gets added at "toplevel" popupmenu.
-  void PopupItem(const char* parent, const char* name);
+  void PopupItem(const wchar_t* parent, const wchar_t* name);
 
 // This adds a new popup entry with the associated eventID, which should be
 // unique among popup eventIDs.
 // If value and desc are given, on a click the server will ask you to modify
 // the value and return the new value.
-  void PopupItem(const char* parent, const char* name,
-                 int cmdEvent, const char* value, const char* desc);
+  void PopupItem(const wchar_t* parent, const wchar_t* name,
+                 int cmdEvent, const wchar_t* value, const wchar_t* desc);
 
 // Returns the correct Y coordinate for a window, depending on whether it might
 // have to be flipped (by ySize).
@@ -357,9 +357,9 @@ class ScrollView {
 #endif
 
 // Sets up ScrollView, depending on the variables from the constructor.
-  void Initialize(const char* name, int x_pos, int y_pos, int x_size,
+  void Initialize(const wchar_t* name, int x_pos, int y_pos, int x_size,
                   int y_size, int x_canvas_size, int y_canvas_size,
-                  bool y_axis_reversed, const char* server_name);
+                  bool y_axis_reversed, const wchar_t* server_name);
 
 // Send the current buffered polygon (if any) and clear it.
   void SendPolygon();
@@ -380,12 +380,12 @@ class ScrollView {
   static void* StartEventHandler(void* sv);
 
 // Escapes the ' character with a \, so it can be processed by LUA.
-  char* AddEscapeChars(const char* input);
+  wchar_t* AddEscapeChars(const wchar_t* input);
 
   // The event handler for this window.
   SVEventHandler* event_handler_;
   // The name of the window.
-  const char* window_name_;
+  const wchar_t* window_name_;
   // The id of the window.
   int window_id_;
   // The points of the currently under-construction polyline.

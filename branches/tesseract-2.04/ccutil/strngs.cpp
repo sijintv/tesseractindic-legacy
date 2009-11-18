@@ -113,7 +113,7 @@ static DataCache MinCapacityDataCache;
 // Smallest string to allocate by default
 const int kMinCapacity = 16;
 
-char* STRING::AllocData(int used, int capacity) {
+wchar_t* STRING::AllocData(int used, int capacity) {
   if ((capacity != kMinCapacity)
       || ((data_ = (STRING_HEADER *)MinCapacityDataCache.alloc()) == NULL))
     data_ = (STRING_HEADER *)alloc_string(capacity + sizeof(STRING_HEADER));
@@ -135,7 +135,7 @@ void STRING::DiscardData() {
 
 // This is a private method; ensure FixHeader is called (or used_ is well defined)
 // beforehand
-char* STRING::ensure_cstr(inT32 min_capacity) {
+wchar_t* STRING::ensure_cstr(inT32 min_capacity) {
   STRING_HEADER* orig_header = GetHeader();
   if (min_capacity <= orig_header->capacity_)
     return ((char *)this->data_) + sizeof(STRING_HEADER);
@@ -184,12 +184,12 @@ STRING::STRING(const STRING& str) {
   CHECK_INVARIANT(this);
 }
 
-STRING::STRING(const char* cstr) {
+STRING::STRING(const wchar_t* cstr) {
   if (cstr == NULL) {
     AllocData(0, 0);
   } else {
     int len = strlen(cstr) + 1;
-    char* this_cstr = AllocData(len, len);
+    wchar_t* this_cstr = AllocData(len, len);
     memcpy(this_cstr, cstr, len);
   }
   CHECK_INVARIANT(this);
@@ -208,7 +208,7 @@ inT32 STRING::length() const {
   return GetHeader()->used_ - 1;
 }
 
-const char* STRING::string() const {
+const wchar_t* STRING::string() const {
   const STRING_HEADER* header = GetHeader();
   if (header->used_ == 0)
     return NULL;
@@ -231,7 +231,7 @@ const char& STRING::operator[](inT32 index) const {
   return GetCStr()[index];
 }
 
-void STRING::insert_range(inT32 index, const char* str, int len) {
+void STRING::insert_range(inT32 index, const wchar_t* str, int len) {
   // if index is outside current range, then also grow size of string
   // to accmodate the requested range.
   STRING_HEADER* this_header = GetHeader();
@@ -239,7 +239,7 @@ void STRING::insert_range(inT32 index, const char* str, int len) {
   if (index > used)
     used = index;
 
-  char* this_cstr = ensure_cstr(used + len + 1);
+  wchar_t* this_cstr = ensure_cstr(used + len + 1);
   if (index < used) {
     // move existing string from index to '\0' inclusive.
     memmove(this_cstr + index + len,
@@ -265,7 +265,7 @@ void STRING::insert_range(inT32 index, const char* str, int len) {
 }
 
 void STRING::erase_range(inT32 index, int len) {
-  char* this_cstr = GetCStr();
+  wchar_t* this_cstr = GetCStr();
   STRING_HEADER* this_header = GetHeader();
 
   memcpy(this_cstr+index, this_cstr+index+len,
@@ -275,7 +275,7 @@ void STRING::erase_range(inT32 index, int len) {
 }
 
 void STRING::truncate_at(inT32 index) {
-  char* this_cstr = ensure_cstr(index);
+  wchar_t* this_cstr = ensure_cstr(index);
   this_cstr[index] = '\0';
   GetHeader()->used_ = index;
   CHECK_INVARIANT(this);
@@ -314,7 +314,7 @@ BOOL8 STRING::operator!=(const STRING& str) const {
          || (memcmp(GetCStr(), str.GetCStr(), this_used) != 0);
 }
 
-BOOL8 STRING::operator!=(const char* cstr) const {
+BOOL8 STRING::operator!=(const wchar_t* cstr) const {
   FixHeader();
   const STRING_HEADER* this_header = GetHeader();
 
@@ -333,7 +333,7 @@ STRING& STRING::operator=(const STRING& str) {
   int   str_used = str_header->used_;
 
   GetHeader()->used_ = 0;  // clear since ensure doesnt need to copy data
-  char* this_cstr = ensure_cstr(str_used);
+  wchar_t* this_cstr = ensure_cstr(str_used);
   STRING_HEADER* this_header = GetHeader();
 
   memcpy(this_cstr, str.GetCStr(), str_used);
@@ -347,10 +347,10 @@ STRING & STRING::operator+=(const STRING& str) {
   FixHeader();
   str.FixHeader();
   const STRING_HEADER* str_header = str.GetHeader();
-  const char* str_cstr = str.GetCStr();
+  const wchar_t* str_cstr = str.GetCStr();
   int  str_used  = str_header->used_;
   int  this_used = GetHeader()->used_;
-  char* this_cstr = ensure_cstr(this_used + str_used);
+  wchar_t* this_cstr = ensure_cstr(this_used + str_used);
 
   STRING_HEADER* this_header = GetHeader();  // after ensure for realloc
 
@@ -386,7 +386,7 @@ void STRING::de_dump(FILE* f) {
   instring = (char *)de_serialise_bytes(f, (ptrdiff_t)data_);
   int len = strlen(instring) + 1;
 
-  char* this_cstr = AllocData(len, len);
+  wchar_t* this_cstr = AllocData(len, len);
   STRING_HEADER* this_header = GetHeader();
 
   memcpy(this_cstr, instring, len);
@@ -397,13 +397,13 @@ void STRING::de_dump(FILE* f) {
 }
 
 
-STRING & STRING::operator=(const char* cstr) {
+STRING & STRING::operator=(const wchar_t* cstr) {
   STRING_HEADER* this_header = GetHeader();
   if (cstr) {
     int len = strlen(cstr) + 1;
 
     this_header->used_ = 0;  // dont bother copying data if need to realloc
-    char* this_cstr = ensure_cstr(len);
+    wchar_t* this_cstr = ensure_cstr(len);
     this_header = GetHeader();  // for realloc
     memcpy(this_cstr, cstr, len);
     this_header->used_ = len;
@@ -434,7 +434,7 @@ STRING STRING::operator+(const char ch) const {
   FixHeader();
   const STRING_HEADER* this_header = GetHeader();
   int this_used = this_header->used_;
-  char* result_cstr = result.ensure_cstr(this_used + 1);
+  wchar_t* result_cstr = result.ensure_cstr(this_used + 1);
   STRING_HEADER* result_header = result.GetHeader();
   int result_used = result_header->used_;
 
@@ -456,7 +456,7 @@ STRING&  STRING::operator+=(const char *str) {
   FixHeader();
   int len = strlen(str) + 1;
   int this_used = GetHeader()->used_;
-  char* this_cstr = ensure_cstr(this_used + len);
+  wchar_t* this_cstr = ensure_cstr(this_used + len);
   STRING_HEADER* this_header = GetHeader();  // after ensure for realloc
 
   // if we had non-empty string then append overwriting old '\0'
@@ -480,7 +480,7 @@ STRING& STRING::operator+=(const char ch) {
 
   FixHeader();
   int   this_used = GetHeader()->used_;
-  char* this_cstr = ensure_cstr(this_used + 1);
+  wchar_t* this_cstr = ensure_cstr(this_used + 1);
   STRING_HEADER* this_header = GetHeader();
 
   if (this_used > 0)

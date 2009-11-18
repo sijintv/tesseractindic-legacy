@@ -22,7 +22,7 @@ int rgb[3] = { 255, 255, 255 };
 
 class SVPaint : public SVEventHandler {
  public:
-   SVPaint(const char* server_name);
+   SVPaint(const wchar_t* server_name);
 // This is the main event handling function that we need to overwrite, defined
 // in SVEventHandler.
    void Notify(const SVEvent* sv_event);
@@ -119,7 +119,7 @@ void SVPaint::ClickHandler(const SVEvent* sv_event) {
   case 3: //Text
     // We show a modal input dialog on our window, then draw the input and
     // finally delete the input pointer.
-    char* p = window_->ShowInputDialog("Text:");
+    wchar_t* p = window_->ShowInputDialog("Text:");
     window_->Text(sv_event->x, sv_event->y, p);
     delete p;
     break;
@@ -213,8 +213,8 @@ SVPaint::SVPaint(const char *server_name) {
 
 // If a parameter is given, we try to connect to the given server.
 // This enables us to test the remote capabilites of ScrollView.
-int main(int argc, char** argv) {
-	const char* server_name;
+int main(int argc, wchar_t** argv) {
+	const wchar_t* server_name;
 	if (argc > 1) { server_name = argv[1]; } else { server_name = "localhost"; }
 	SVPaint svp(server_name);
 }

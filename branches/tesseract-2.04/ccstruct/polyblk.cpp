@@ -234,7 +234,7 @@ void POLY_BLOCK::plot(ScrollView* window, ScrollView::Color colour, inT32 num) {
     #else
     ltoa (num, temp_buff, 10);
     #endif
-    window->Text(v.data ()->x (), v.data ()->y (), temp_buff);
+    window->Text(v.data ()->x (), v.data ()->y (), (wchar_t*)temp_buff);
   }
 
   window->SetCursor(v.data ()->x (), v.data ()->y ());

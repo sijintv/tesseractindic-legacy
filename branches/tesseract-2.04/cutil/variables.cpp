@@ -234,9 +234,9 @@ void read_variables(const char *filename) {
   }
 }
 
-bool set_old_style_variable(const char* variable, const char* value) {
-  char* var_variable = strdup(variable);
-  char* var_value = strdup(value);
+bool set_old_style_variable(const wchar_t* variable, const wchar_t* value) {
+  wchar_t* var_variable = strdup(variable);
+  wchar_t* var_value = strdup(value);
 
   VARIABLE *this_var;
   this_var = (VARIABLE *)first_node(search(variable_list, var_variable,

@@ -49,7 +49,7 @@ class DLLSYM STRING
 #if STRING_IS_PROTECTED
     const char &operator[] (inT32 index) const;
     // len is number of chars in s to insert starting at index in this string
-    void insert_range(inT32 index, const char*s, int len);
+    void insert_range(inT32 index, const wchar_t*s, int len);
     void erase_range(inT32 index, int len);
     void truncate_at(inT32 index);
 #else
@@ -117,22 +117,22 @@ class DLLSYM STRING
     }
 
     // returns the string data part of storage
-    inline char* GetCStr() {
-      return ((char *)data_) + sizeof(STRING_HEADER);
+    inline wchar_t* GetCStr() {
+      return ((wchar_t *)data_) + sizeof(STRING_HEADER);
     };
 
-    inline const char* GetCStr() const {
-      return ((const char *)data_) + sizeof(STRING_HEADER);
+    inline const wchar_t* GetCStr() const {
+      return ((const wchar_t *)data_) + sizeof(STRING_HEADER);
     };
 
     // Ensure string has requested capacity as optimization
     // to avoid unnecessary reallocations.
     // The return value is a cstr buffer with at least requested capacity
-    char* ensure_cstr(inT32 min_capacity);
+    wchar_t* ensure_cstr(inT32 min_capacity);
 
     void FixHeader() const;  // make used_ non-negative, even if const
 
-    char* AllocData(int used, int capacity);
+    wchar_t* AllocData(int used, int capacity);
     void DiscardData();
 };
 #endif

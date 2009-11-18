@@ -55,40 +55,40 @@ SVMenuNode::~SVMenuNode() {
 
 // Create a new sub menu node with just a caption.  This is used to create
 // nodes which act as parent nodes to other nodes (e.g. submenus).
-SVMenuNode* SVMenuNode::AddChild(const char* txt) {
+SVMenuNode* SVMenuNode::AddChild(const wchar_t* txt) {
   SVMenuNode* s = new SVMenuNode(-1, txt, false, false, NULL, NULL);
   this->AddChild(s);
   return s;
 }
 
 // Create a "normal" menu node which is associated with a command event.
-void SVMenuNode::AddChild(const char* txt, int command_event) {
+void SVMenuNode::AddChild(const wchar_t* txt, int command_event) {
   this->AddChild(new SVMenuNode(command_event, txt, false, false, NULL, NULL));
 }
 
 // Create a menu node with an associated value (which might be changed
 // through the gui).
-void SVMenuNode::AddChild(const char* txt, int command_event,
-                          const char* val) {
+void SVMenuNode::AddChild(const wchar_t* txt, int command_event,
+                          const wchar_t* val) {
   this->AddChild(new SVMenuNode(command_event, txt, false, false, val, NULL));
 }
 
 // Create a menu node with an associated value and description_.
-void SVMenuNode::AddChild(const char* txt, int command_event, const char* val,
-                          const char* desc) {
+void SVMenuNode::AddChild(const wchar_t* txt, int command_event, const wchar_t* val,
+                          const wchar_t* desc) {
   this->AddChild(new SVMenuNode(command_event, txt, false, false, val, desc));
 }
 
 // Create a flag menu node.
-void SVMenuNode::AddChild(const char* txt, int command_event, int tv) {
+void SVMenuNode::AddChild(const wchar_t* txt, int command_event, int tv) {
   this->AddChild(new SVMenuNode(command_event, txt, tv, true, NULL, NULL));
 }
 
 // Convenience function called from the different constructors to initialize
 // the different values of the menu node.
-SVMenuNode::SVMenuNode(int command_event, const char* txt,
-                       int tv, bool check_box_entry, const char* val,
-                       const char* desc) {
+SVMenuNode::SVMenuNode(int command_event, const wchar_t* txt,
+                       int tv, bool check_box_entry, const wchar_t* val,
+                       const wchar_t* desc) {
   cmd_event_ = command_event;
 
   text_ = new char[strlen(txt) + 1];

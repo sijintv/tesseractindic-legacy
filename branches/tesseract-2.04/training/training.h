@@ -69,13 +69,13 @@ inT8						level						//level of check
 
 void*						c_alloc_struct(				//allocate memory
 inT32						count,						//no of chars required
-const char*					name						//class name
+const wchar_t*					name						//class name
 );
 
 void						c_free_struct(				//free a structure
 void*						deadstruct,					//structure to free
 inT32						count,						//no of bytes
-const char*					name						//class name
+const wchar_t*					name						//class name
 );
 
 void						c_make_current(				/*move pen*/

@@ -37,37 +37,37 @@ class UNICHARSET {
 
   // Return the UNICHAR_ID of a given unichar representation within the
   // UNICHARSET.
-  const UNICHAR_ID unichar_to_id(const char* const unichar_repr) const;
+  const UNICHAR_ID unichar_to_id(const wchar_t* const unichar_repr) const;
 
   // Return the UNICHAR_ID of a given unichar representation within the
   // UNICHARSET. Only the first length characters from unichar_repr are used.
-  const UNICHAR_ID unichar_to_id(const char* const unichar_repr,
+  const UNICHAR_ID unichar_to_id(const wchar_t* const unichar_repr,
                                  int length) const;
 
   // Return the minimum number of bytes that matches a legal UNICHAR_ID,
   // while leaving a legal UNICHAR_ID afterwards. In other words, if there
   // is both a short and a long match to the string, return the length that
   // ensures there is a legal match after it.
-  int step(const char* str) const;
+  int step(const wchar_t* str) const;
 
   // Return the unichar representation corresponding to the given UNICHAR_ID
   // within the UNICHARSET.
-  const char* const id_to_unichar(UNICHAR_ID id) const;
+  const wchar_t* const id_to_unichar(UNICHAR_ID id) const;
 
   // Return a STRING containing debug information on the unichar, including
   // the id_to_unichar, its hex unicodes and the properties.
   STRING debug_str(UNICHAR_ID id) const;
 
   // Add a unichar representation to the set.
-  void unichar_insert(const char* const unichar_repr);
+  void unichar_insert(const wchar_t* const unichar_repr);
 
   // Return true if the given unichar representation exists within the set.
-  bool contains_unichar(const char* const unichar_repr);
-  bool contains_unichar(const char* const unichar_repr, int length);
+  bool contains_unichar(const wchar_t* const unichar_repr);
+  bool contains_unichar(const wchar_t* const unichar_repr, int length);
 
   // Return true if the given unichar representation corresponds to the given
   // UNICHAR_ID within the set.
-  bool eq(UNICHAR_ID unichar_id, const char* const unichar_repr);
+  bool eq(UNICHAR_ID unichar_id, const wchar_t* const unichar_repr);
 
   // Clear the UNICHARSET (all the previous data is lost).
   void clear() {
@@ -96,11 +96,11 @@ class UNICHARSET {
 
   // Save the content of the UNICHARSET to the given file. Return true if the
   // operation is successful.
-  bool save_to_file(const char* const filename) const;
+  bool save_to_file(const wchar_t* const filename) const;
 
   // Load the UNICHARSET from the given file. The previous data is lost. Return
   // true if the operation is successful.
-  bool load_from_file(const char* const filename);
+  bool load_from_file(const wchar_t* const filename);
 
   // Set a whitelist and/or blacklist of characters to recognize.
   // An empty or NULL whitelist enables everything (minus any blacklist).
@@ -109,7 +109,7 @@ class UNICHARSET {
   // Each list is a string of utf8 character strings. Boundaries between
   // unicharset units are worked out automatically, and characters not in
   // the unicharset are silently ignored.
-  void set_black_and_whitelist(const char* blacklist, const char* whitelist);
+  void set_black_and_whitelist(const wchar_t* blacklist, const wchar_t* whitelist);
 
   // Set the isalpha property of the given unichar to the given value.
   void set_isalpha(UNICHAR_ID unichar_id, bool value) {
@@ -133,7 +133,7 @@ class UNICHARSET {
 
   // Set the script name of the given unichar to the given value.
   // Value is copied and thus can be a temporary;
-  void set_script(UNICHAR_ID unichar_id, const char* value) {
+  void set_script(UNICHAR_ID unichar_id, const wchar_t* value) {
     unichars[unichar_id].properties.script = add_script(value);
   }
 
@@ -160,61 +160,61 @@ class UNICHARSET {
   // Return the script name of the given unichar.
   // The returned pointer will always be the same for the same script, it's
   // managed by unicharset and thus MUST NOT be deleted
-  const char* get_script(UNICHAR_ID unichar_id) const {
+  const wchar_t* get_script(UNICHAR_ID unichar_id) const {
     return unichars[unichar_id].properties.script;
   }
 
   // Return the isalpha property of the given unichar representation.
-  bool get_isalpha(const char* const unichar_repr) const {
+  bool get_isalpha(const wchar_t* const unichar_repr) const {
     return get_isalpha(unichar_to_id(unichar_repr));
   }
 
   // Return the islower property of the given unichar representation.
-  bool get_islower(const char* const unichar_repr) const {
+  bool get_islower(const wchar_t* const unichar_repr) const {
     return get_islower(unichar_to_id(unichar_repr));
   }
 
   // Return the isupper property of the given unichar representation.
-  bool get_isupper(const char* const unichar_repr) const {
+  bool get_isupper(const wchar_t* const unichar_repr) const {
     return get_isupper(unichar_to_id(unichar_repr));
   }
 
   // Return the isdigit property of the given unichar representation.
-  bool get_isdigit(const char* const unichar_repr) const {
+  bool get_isdigit(const wchar_t* const unichar_repr) const {
     return get_isdigit(unichar_to_id(unichar_repr));
   }
 
   // Return the script name of the given unichar representation.
   // The returned pointer will always be the same for the same script, it's
   // managed by unicharset and thus MUST NOT be deleted
-  const char* get_script(const char* const unichar_repr) const {
+  const wchar_t* get_script(const wchar_t* const unichar_repr) const {
     return get_script(unichar_to_id(unichar_repr));
   }
 
   // Return the isalpha property of the given unichar representation.
   // Only the first length characters from unichar_repr are used.
-  bool get_isalpha(const char* const unichar_repr,
+  bool get_isalpha(const wchar_t* const unichar_repr,
                int length) const {
     return get_isalpha(unichar_to_id(unichar_repr, length));
   }
 
   // Return the islower property of the given unichar representation.
   // Only the first length characters from unichar_repr are used.
-  bool get_islower(const char* const unichar_repr,
+  bool get_islower(const wchar_t* const unichar_repr,
                int length) const {
     return get_islower(unichar_to_id(unichar_repr, length));
   }
 
   // Return the isupper property of the given unichar representation.
   // Only the first length characters from unichar_repr are used.
-  bool get_isupper(const char* const unichar_repr,
+  bool get_isupper(const wchar_t* const unichar_repr,
                int length) const {
     return get_isupper(unichar_to_id(unichar_repr, length));
   }
 
   // Return the isdigit property of the given unichar representation.
   // Only the first length characters from unichar_repr are used.
-  bool get_isdigit(const char* const unichar_repr,
+  bool get_isdigit(const wchar_t* const unichar_repr,
                int length) const {
     return get_isdigit(unichar_to_id(unichar_repr, length));
   }
@@ -223,7 +223,7 @@ class UNICHARSET {
   // Only the first length characters from unichar_repr are used.
   // The returned pointer will always be the same for the same script, it's
   // managed by unicharset and thus MUST NOT be deleted
-  const char* get_script(const char* const unichar_repr,
+  const wchar_t* get_script(const wchar_t* const unichar_repr,
                int length) const {
     return get_script(unichar_to_id(unichar_repr, length));
   }
@@ -238,7 +238,7 @@ class UNICHARSET {
   // Uniquify the given script. For two scripts a and b, if strcmp(a, b) == 0,
   // then the returned pointer will be the same.
   // The script parameter is copied and thus can be a temporary.
-  char* add_script(const char* script);
+  wchar_t* add_script(const wchar_t* script);
 
   struct UNICHAR_PROPERTIES {
     bool  isalpha;
@@ -246,7 +246,7 @@ class UNICHARSET {
     bool  isupper;
     bool  isdigit;
     bool  enabled;
-    char* script;
+    wchar_t* script;
   };
 
   struct UNICHAR_SLOT {
@@ -258,10 +258,10 @@ class UNICHARSET {
   UNICHARMAP ids;
   int size_used;
   int size_reserved;
-  char** script_table;
+  wchar_t** script_table;
   int script_table_size_used;
   int script_table_size_reserved;
-  const char* null_script;
+  const wchar_t* null_script;
 };
 
 #endif  // THIRD_PARTY_TESSERACT_CCUTIL_UNICHARSET_H__

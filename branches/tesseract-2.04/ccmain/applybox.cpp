@@ -58,7 +58,7 @@ EXTERN double_VAR (applybox_error_band, 0.15, "Err band as fract of xht");
 // The unicharset used during box training
 static UNICHARSET unicharset_boxes;
 
-static void PrintString(const char* str) {
+static void PrintString(const wchar_t* str) {
   tprintf("%s:", str);
   int step = 0;
   for (int i = 0; str[i]; i += step) {
