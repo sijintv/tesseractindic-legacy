@@ -118,12 +118,12 @@ inT32 def_letter_is_okay(EDGE_ARRAY dawg,
                          NODE_REF *node,
                          inT32 char_index,
                          char prevchar,
-                         const char *word,
+                         const wchar_t *word,
                          inT32 word_end) {
   EDGE_REF     edge;
   STRING dummy_word(word);  // Auto-deleting string fixes memory leak.
   STRING word_single_lengths; //Lengths of single UTF-8 characters of the word.
-  const char *ptr;
+  const wchar_t *ptr;
 
   for (ptr = word; *ptr != '\0';) {
     int step = UNICHAR::utf8_step(ptr);
