@@ -119,6 +119,7 @@ inT32 def_letter_is_okay(EDGE_ARRAY dawg,
                          inT32 char_index,
                          char prevchar,
                          const wchar_t *word,
+			 const char *word1,
                          inT32 word_end) {
   EDGE_REF     edge;
   STRING dummy_word(word);  // Auto-deleting string fixes memory leak.
@@ -165,7 +166,7 @@ inT32 def_letter_is_okay(EDGE_ARRAY dawg,
     if (leading_punc (word [char_index]) &&
     (char_index == 0  ||  leading_punc (dummy_word [char_index-1]))) {
       *node = 0;
-      if (punctuation_ok(word, word_single_lengths.string()) >= 0)
+      if (punctuation_ok(word1, word_single_lengths.string()) >= 0)
         return (TRUE);
       else
         return FALSE;
@@ -360,7 +361,7 @@ inT32 word_in_dawg(EDGE_ARRAY dawg, const char *string1) {
       print_dawg_node(dawg, node);
       new_line();
     }
-    if (! letter_is_okay (dawg, &node, i, '\0', string, (string[i+1]==0))) {
+    if (! letter_is_okay (dawg, &node, i, '\0', string, string1, (string[i+1]==0))) {
       return (FALSE);
     }
   }
