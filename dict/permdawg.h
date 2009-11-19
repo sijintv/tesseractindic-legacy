@@ -47,6 +47,9 @@ extern float freq_word;
 /*----------------------------------------------------------------------
             Public Function Prototypes
 ----------------------------------------------------------------------*/
+
+
+
 void adjust_word(A_CHOICE *best_choice, float *certainty_array);
 
                                  /*previous option */

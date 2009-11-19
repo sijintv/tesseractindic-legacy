@@ -351,7 +351,7 @@ inT32 word_in_dawg(EDGE_ARRAY dawg, const char *string1) {
   inT32        i;
   inT32         length;
   
-  wchar_t* string = uni2wchar(string1);
+  wchar_t* string = utf2wchar(string1);
 
   length=wcslen(string);
   if (length==0)

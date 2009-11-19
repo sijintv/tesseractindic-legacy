@@ -195,7 +195,7 @@ HypothesisPrefix::HypothesisPrefix(const HypothesisPrefix& prefix,
                                    A_CHOICE* choice,
                                    bool end_of_word,
                                    EDGE_ARRAY dawg) {
-  char* word_ptr = word_;
+  char* word_ptr = (char*)word_;
   const char* prefix_word_ptr = prefix.word_;
 
   // Copy first space character
@@ -243,9 +243,10 @@ HypothesisPrefix::HypothesisPrefix(const HypothesisPrefix& prefix,
       // Verify each byte of the appended character. Note that word_ptr points
       // to the first byte so (word_ptr - (word_ + 1)) is the index of the first
       // new byte in the string that starts at (word_ + 1).
+      
       int current_byte_index = word_ptr - (word_ + 1) + char_subindex;
       if(!letter_is_okay(dawg, &dawg_node_, current_byte_index, '\0',
-                         word_ + 1, end_of_word &&
+                         (wchar_t*)word_ + 1, word_ + 1 ,end_of_word &&
                          class_string_choice[char_subindex + 1] == '\0')) {
         dawg_node_ = NO_EDGE;
         is_dawg_prefix_ = false;
