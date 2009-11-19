@@ -552,7 +552,7 @@ void read_word_list(const char *filename,
   while (fgets (string_utf8, CHARS_PER_LINE, word_file) !=NULL) {
     string = utf2wchar(string_utf8);
     cprintf("Read %d words so far\n", word_count);
-    string [wcslen (string) - 1] = (char) 0;
+    string [wcslen (string)] = (char) 0;
     ++word_count;
     if (debug && word_count % 10000 == 0)
       cprintf("Read %d words so far\n", word_count);
@@ -782,7 +782,7 @@ void write_full_dawg (const char *filename, EDGE_ARRAY dawg,
 wchar_t* utf2wchar(const char *str) {
   setlocale(LC_ALL, "en_US.UTF-8");
   int size = strlen(str);
-  wchar_t uni[1000]; //assuming that there wont be a 101+ charcter word
+  wchar_t uni[100]; //assuming that there wont be a 101+ charcter word
   int ret = mbstowcs(uni,str,size);
   if(ret<=0){cprintf("mbstowc failed, ret=%d",ret);}
   return uni;
