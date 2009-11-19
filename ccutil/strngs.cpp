@@ -20,6 +20,8 @@
 #include          "mfcpch.h"     //precompiled headers
 #include          "tprintf.h"
 #include          "strngs.h"
+#include <wchar.h>
+
 
 /**********************************************************************
  * DataCache for reducing initial allocations, such as the default
@@ -194,6 +196,18 @@ STRING::STRING(const char* cstr) {
   }
   CHECK_INVARIANT(this);
 }
+
+STRING::STRING(const wchar_t* cstr) {
+  if (cstr == NULL) {
+    AllocData(0, 0);
+  } else {
+    int len = wcslen(cstr) + 1;
+    wchar_t* this_cstr = (wchar_t*)AllocData(len*sizeof(wchar_t), len*sizeof(wchar_t));
+    memcpy(this_cstr, cstr, len);
+  }
+  CHECK_INVARIANT(this);
+}
+
 
 STRING::~STRING() {
   DiscardData();

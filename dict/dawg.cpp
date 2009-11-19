@@ -37,6 +37,8 @@
 #include "context.h"
 #include "strngs.h"
 #include "emalloc.h"
+#include "trie.h"
+#include <wchar.h>
 
 /*----------------------------------------------------------------------
               V a r i a b l e s
@@ -116,15 +118,17 @@ inT32 def_letter_is_okay(EDGE_ARRAY dawg,
                          NODE_REF *node,
                          inT32 char_index,
                          char prevchar,
-                         const char *word,
+                         const wchar_t *word,
                          inT32 word_end) {
   EDGE_REF     edge;
   STRING dummy_word(word);  // Auto-deleting string fixes memory leak.
   STRING word_single_lengths; //Lengths of single UTF-8 characters of the word.
-  const char *ptr;
+  //const wchar_t* dummy_word=word;
+  const wchar_t *ptr;
 
   for (ptr = word; *ptr != '\0';) {
-    int step = UNICHAR::utf8_step(ptr);
+    //int step = UNICHAR::utf8_step(ptr);
+    int step = sizeof(wchar_t);
     if (step == 0)
       return FALSE;
     word_single_lengths += step;
@@ -341,12 +345,14 @@ inT32 verify_trailing_punct(EDGE_ARRAY dawg, char *word, inT32 char_index) {
  *
  * Test to see if the word can be found in the DAWG.
  **********************************************************************/
-inT32 word_in_dawg(EDGE_ARRAY dawg, const char *string) {
+inT32 word_in_dawg(EDGE_ARRAY dawg, const char *string1) {
   NODE_REF   node = 0;
   inT32        i;
   inT32         length;
+  
+  wchar_t* string = uni2wchar(string1);
 
-  length=strlen(string);
+  length=wcslen(string);
   if (length==0)
     return FALSE;
   for (i=0; i<length; i++) {

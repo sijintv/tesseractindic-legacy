@@ -342,6 +342,8 @@ inT32 verify_trailing_punct(EDGE_ARRAY dawg, char *word, inT32 char_index);
 
 inT32 word_in_dawg(EDGE_ARRAY dawg, const char *string);
 
+wchar_t* uni2wchar(const char*);
+
 /*
 #if defined(__STDC__) || defined(__cplusplus) || MAC_OR_DOS
 # define	_ARGS(s) s
