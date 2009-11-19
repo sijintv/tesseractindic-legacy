@@ -38,6 +38,8 @@
 #include "cutil.h"
 #include "dawg.h"
 #include <ctype.h>
+#include <locale.h>
+#include <wchar.h>
 
 /*----------------------------------------------------------------------
               T y p e s
@@ -210,11 +212,11 @@ void append_next_choice(  /*previous option */
   else {
     int sub_offset = 0;
     NODE_REF node_saved = node;
-    while (sub_offset < unichar_lengths[char_index] &&
+    while (sub_offset < unichar_lengths[char_index]){/* &&
            letter_is_okay (dawg, &node, unichar_offsets[char_index] +
                            sub_offset, *prevchar, word, word_ending &&
-                           sub_offset == unichar_lengths[char_index] - 1))
-      ++sub_offset;
+                           sub_offset == unichar_lengths[char_index] - 1))*/
+      ++sub_offset;}
     if (sub_offset == unichar_lengths[char_index]) {
       /* Add a new word choice */
       if (word_ending) {
@@ -413,3 +415,13 @@ void end_permdawg() {
 int test_freq_words(const char *word) {
   return (word_in_dawg (frequent_words, word));
 }
+
+wchar_t* utf2wchar(const char *str) {
+  setlocale(LC_ALL, "en_US.UTF-8");
+  int size = strlen(str);
+  wchar_t uni[100]; //assuming that there wont be a 101+ charcter word
+  int ret = mbstowcs(uni,str,size);
+  if(ret<=0){cprintf("mbstowc failed, ret=%d",ret);}
+  return uni;
+}
+
