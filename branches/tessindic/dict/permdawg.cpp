@@ -38,7 +38,6 @@
 #include "cutil.h"
 #include "dawg.h"
 #include <ctype.h>
-#include <locale.h>
 #include <wchar.h>
 
 /*----------------------------------------------------------------------
@@ -416,12 +415,4 @@ int test_freq_words(const char *word) {
   return (word_in_dawg (frequent_words, word));
 }
 
-wchar_t* utf2wchar(const char *str) {
-  setlocale(LC_ALL, "en_US.UTF-8");
-  int size = strlen(str);
-  wchar_t uni[100]; //assuming that there wont be a 101+ charcter word
-  int ret = mbstowcs(uni,str,size);
-  if(ret<=0){cprintf("mbstowc failed, ret=%d",ret);}
-  return uni;
-}
 
