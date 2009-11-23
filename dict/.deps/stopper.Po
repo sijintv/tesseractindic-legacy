@@ -34,12 +34,12 @@ stopper.o: stopper.cpp stopper.h choicearr.h ../cutil/tessarray.h \
  ../cutil/const.h ../cutil/freelist.h ../cutil/efio.h ../cutil/globals.h \
  ../ccutil/tessclas.h ../cutil/const.h ../ccutil/unicharset.h \
  ../ccutil/unichar.h ../ccutil/unicharmap.h ../ccutil/strngs.h \
- ../ccutil/scanutils.h /usr/include/ctype.h /usr/include/math.h \
- /usr/include/bits/huge_val.h /usr/include/bits/huge_valf.h \
- /usr/include/bits/huge_vall.h /usr/include/bits/inf.h \
- /usr/include/bits/nan.h /usr/include/bits/mathdef.h \
- /usr/include/bits/mathcalls.h /usr/include/bits/mathinline.h \
- /usr/include/assert.h
+ ../ccutil/scanutils.h trie.h dawg.h /usr/include/ctype.h \
+ ../cutil/cutil.h /usr/include/math.h /usr/include/bits/huge_val.h \
+ /usr/include/bits/huge_valf.h /usr/include/bits/huge_vall.h \
+ /usr/include/bits/inf.h /usr/include/bits/nan.h \
+ /usr/include/bits/mathdef.h /usr/include/bits/mathcalls.h \
+ /usr/include/bits/mathinline.h /usr/include/assert.h
 
 stopper.h:
 
@@ -227,7 +227,13 @@ permnum.h:
 
 ../ccutil/scanutils.h:
 
+trie.h:
+
+dawg.h:
+
 /usr/include/ctype.h:
+
+../cutil/cutil.h:
 
 /usr/include/math.h:
 

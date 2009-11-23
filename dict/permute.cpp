@@ -53,8 +53,8 @@ int permutation_count;           // Used in metrics.cpp.
 #define MAX_USER_EDGES         50000
 #define USER_RESERVED_EDGES    2000
                                  /* Weights for adjustment */
-#define NON_WERD               1.25
-#define GARBAGE_STRING         1.5
+#define NON_WERD               5
+#define GARBAGE_STRING         5
 #define MAX_PERM_LENGTH         128
 
 EDGE_ARRAY pending_words;
@@ -911,13 +911,14 @@ int good_choice(A_CHOICE *choice) {
 void add_document_word(A_CHOICE *best_choice) {
   char filename[CHARS_PER_LINE];
   FILE *doc_word_file;
-  char *string;
+  char *string1;
   char *lengths;
   int stringlen;                 //length of word
 
-  string = class_string (best_choice);
+  string1 = class_string (best_choice);
   lengths = class_lengths (best_choice);
   stringlen = strlen (lengths);
+  wchar_t* string = utf2wchar(string1);
 
   // Skip if using external dictionary.
   if (letter_is_okay != &def_letter_is_okay) return;
@@ -945,7 +946,7 @@ void add_document_word(A_CHOICE *best_choice) {
     strcpy(filename, imagefile);
     strcat (filename, ".doc");
     doc_word_file = open_file (filename, "a");
-    fprintf (doc_word_file, "%s\n", string);
+    fprintf (doc_word_file, "%ls\n", string);
     fclose(doc_word_file);
   }
   add_word_to_dawg(document_words, string, MAX_DOC_EDGES, RESERVED_DOC_EDGES);
@@ -1688,8 +1689,9 @@ A_CHOICE *permute_words(CHOICES_LIST char_choices, float rating_limit) {
  *
  * Check all the DAWGs to see if this word is in any of them.
  **********************************************************************/
-int valid_word(const char *string) {
+int valid_word(const wchar_t *string) {
   int result = NO_PERM;
+  //wchar_t* string = utf2wchar(string1);
 
   if (word_in_dawg (word_dawg, string))
     result = SYSTEM_DAWG_PERM;

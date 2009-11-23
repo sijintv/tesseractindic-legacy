@@ -33,7 +33,7 @@ permngram.o: permngram.cpp ../cutil/const.h permngram.h choicearr.h \
  /usr/include/memory.h permute.h ../cutil/tordvars.h stopper.h states.h \
  ../cutil/globals.h ../ccutil/tessclas.h ../cutil/const.h \
  ../ccutil/unicharset.h ../ccutil/unichar.h ../ccutil/unicharmap.h \
- ../ccutil/strngs.h context.h /usr/include/math.h \
+ ../ccutil/strngs.h context.h trie.h ../cutil/cutil.h /usr/include/math.h \
  /usr/include/bits/huge_val.h /usr/include/bits/huge_valf.h \
  /usr/include/bits/huge_vall.h /usr/include/bits/inf.h \
  /usr/include/bits/nan.h /usr/include/bits/mathdef.h \
@@ -214,6 +214,10 @@ states.h:
 ../ccutil/strngs.h:
 
 context.h:
+
+trie.h:
+
+../cutil/cutil.h:
 
 /usr/include/math.h:
 

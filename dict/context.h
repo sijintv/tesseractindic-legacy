@@ -36,7 +36,10 @@ void close_choices();
 
 void fix_quotes(char *str);
 
+int punctuation_ok(const wchar_t *word, const char *lengths);
+
 int punctuation_ok(const char *word, const char *lengths);
+
 
 int case_ok(const char *word, const char *lengths);
 

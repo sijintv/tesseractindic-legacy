@@ -341,7 +341,7 @@ Copyright (C) 2006 Free Software Foundation, Inc.
 This config.status script is free software; the Free Software Foundation
 gives unlimited permission to copy, distribute and modify it."
 
-ac_pwd='/home/debayan/tesseract-2.04'
+ac_pwd='/home/debayan/ocr/branches/tessindic'
 srcdir='.'
 INSTALL='/usr/bin/install -c'
 MKDIR_P='/bin/mkdir -p'
@@ -551,7 +551,7 @@ s,@DEFS@,|#_!!_#|-DHAVE_CONFIG_H,g
 s,@ECHO_C@,|#_!!_#|,g
 s,@ECHO_N@,|#_!!_#|-n,g
 s,@ECHO_T@,|#_!!_#|,g
-s,@LIBS@,|#_!!_#|-lpthread ,g
+s,@LIBS@,|#_!!_#|-ltiff -lpthread -ljpeg -lpng -lz  -lm,g
 s,@build_alias@,|#_!!_#|,g
 s,@host_alias@,|#_!!_#|,g
 s,@target_alias@,|#_!!_#|,g
@@ -566,9 +566,9 @@ s,@host_os@,|#_!!_#|linux-gnu,g
 s,@PACKAGE_YEAR@,|#_!!_#|2009,g
 s,@PACKAGE_DATE@,|#_!!_#|05/29,g
 s,@CXX@,|#_!!_#|g++,g
-s,@CXXFLAGS@,|#_!!_#|-g -O2,g
+s,@CXXFLAGS@,|#_!!_#| -g -O2,g
 s,@LDFLAGS@,|#_!!_#|,g
-s,@CPPFLAGS@,|#_!!_#|,g
+s,@CPPFLAGS@,|#_!!_#| -I/usr/include/leptonica,g
 s,@ac_ct_CXX@,|#_!!_#|g++,g
 s,@EXEEXT@,|#_!!_#|,g
 s,@OBJEXT@,|#_!!_#|o,g
@@ -584,7 +584,7 @@ s,@AUTOCONF@,|#_!!_#|autoconf,g
 s,@AUTOMAKE@,|#_!!_#|automake-1.10,g
 s,@AUTOHEADER@,|#_!!_#|autoheader,g
 s,@MAKEINFO@,|#_!!_#|makeinfo,g
-s,@install_sh@,|#_!!_#|$(SHELL) /home/debayan/tesseract-2.04/config/install-sh,g
+s,@install_sh@,|#_!!_#|$(SHELL) /home/debayan/ocr/branches/tessindic/config/install-sh,g
 s,@STRIP@,|#_!!_#|,g
 s,@INSTALL_STRIP_PROGRAM@,|#_!!_#|$(install_sh) -c -s,g
 s,@mkdir_p@,|#_!!_#|/bin/mkdir -p,g
@@ -609,7 +609,7 @@ s,@MAINT@,|#_!!_#|#,g
 s,@USING_CL_TRUE@,|#_!!_#|#,g
 s,@USING_CL_FALSE@,|#_!!_#|,g
 s,@CC@,|#_!!_#|gcc,g
-s,@CFLAGS@,|#_!!_#|-g -O2,g
+s,@CFLAGS@,|#_!!_#| -g -O2,g
 s,@ac_ct_CC@,|#_!!_#|gcc,g
 s,@CCDEPMODE@,|#_!!_#|depmode=gcc3,g
 s,@am__fastdepCC_TRUE@,|#_!!_#|,g
@@ -622,10 +622,10 @@ s,@GREP@,|#_!!_#|/bin/grep,g
 s,@EGREP@,|#_!!_#|/bin/grep -E,g
 s,@RANLIB@,|#_!!_#|ranlib,g
 s,@CXXCPP@,|#_!!_#|g++ -E,g
-s,@LIBTIFF_LIBS@,|#_!!_#|,g
+s,@LIBTIFF_LIBS@,|#_!!_#|-ltiff,g
 s,@LIBTIFF_CFLAGS@,|#_!!_#|,g
-s,@HAVE_LIBTIFF_TRUE@,|#_!!_#|#,g
-s,@HAVE_LIBTIFF_FALSE@,|#_!!_#|,g
+s,@HAVE_LIBTIFF_TRUE@,|#_!!_#|,g
+s,@HAVE_LIBTIFF_FALSE@,|#_!!_#|#,g
 s,@LIBOBJS@,|#_!!_#|,g
 s,@LTLIBOBJS@,|#_!!_#|,g
 :end
@@ -906,6 +906,9 @@ s,^\([	 #]*\)[^	 ]*\([	 ]*HAVE_STRINGS_H\)[	 (].*,\1define\2 1 ,
 s,^\([	 #]*\)[^	 ]*\([	 ]*HAVE_INTTYPES_H\)[	 (].*,\1define\2 1 ,
 s,^\([	 #]*\)[^	 ]*\([	 ]*HAVE_STDINT_H\)[	 (].*,\1define\2 1 ,
 s,^\([	 #]*\)[^	 ]*\([	 ]*HAVE_UNISTD_H\)[	 (].*,\1define\2 1 ,
+s,^\([	 #]*\)[^	 ]*\([	 ]*HAVE_LIBZ\)[	 (].*,\1define\2 1 ,
+s,^\([	 #]*\)[^	 ]*\([	 ]*HAVE_LIBPNG\)[	 (].*,\1define\2 1 ,
+s,^\([	 #]*\)[^	 ]*\([	 ]*HAVE_LIBJPEG\)[	 (].*,\1define\2 1 ,
 s,^\([	 #]*\)[^	 ]*\([	 ]*HAVE_LIBPTHREAD\)[	 (].*,\1define\2 1 ,
 s,^\([	 #]*\)[^	 ]*\([	 ]*STDC_HEADERS\)[	 (].*,\1define\2 1 ,
 s,^\([	 #]*\)[^	 ]*\([	 ]*TIME_WITH_SYS_TIME\)[	 (].*,\1define\2 1 ,
@@ -914,6 +917,7 @@ s,^\([	 #]*\)[^	 ]*\([	 ]*HAVE_SYS_IPC_H\)[	 (].*,\1define\2 1 ,
 s,^\([	 #]*\)[^	 ]*\([	 ]*HAVE_SYS_SHM_H\)[	 (].*,\1define\2 1 ,
 s,^\([	 #]*\)[^	 ]*\([	 ]*HAVE_LIMITS_H\)[	 (].*,\1define\2 1 ,
 s,^\([	 #]*\)[^	 ]*\([	 ]*HAVE_MALLOC_H\)[	 (].*,\1define\2 1 ,
+s,^\([	 #]*\)[^	 ]*\([	 ]*HAVE_ALLHEADERS_H\)[	 (].*,\1define\2 1 ,
 s,^\([	 #]*\)[^	 ]*\([	 ]*HAVE_STDBOOL_H\)[	 (].*,\1define\2 1 ,
 s,^\([	 #]*\)[^	 ]*\([	 ]*_FILE_OFFSET_BITS\)[	 (].*,\1define\2 64 ,
 s,^\([	 #]*\)[^	 ]*\([	 ]*HAVE_WCHAR_T\)[	 (].*,\1define\2 1 ,
@@ -930,10 +934,6 @@ s,^\([	 #]*\)[^	 ]*\([	 ]*HAVE_WORKING_FORK\)[	 (].*,\1define\2 1 ,
 s,^\([	 #]*\)[^	 ]*\([	 ]*HAVE_STRERROR\)[	 (].*,\1define\2 1 ,
 s,^\([	 #]*\)[^	 ]*\([	 ]*HAVE_VSNPRINTF\)[	 (].*,\1define\2 1 ,
 s,^\([	 #]*\)[^	 ]*\([	 ]*HAVE_GETHOSTNAME\)[	 (].*,\1define\2 1 ,
-s,^\([	 #]*\)[^	 ]*\([	 ]*HAVE_STRCHR\)[	 (].*,\1define\2 1 ,
-s,^\([	 #]*\)[^	 ]*\([	 ]*HAVE_MEMCPY\)[	 (].*,\1define\2 1 ,
-s,^\([	 #]*\)[^	 ]*\([	 ]*HAVE_ACOS\)[	 (].*,\1define\2 1 ,
-s,^\([	 #]*\)[^	 ]*\([	 ]*HAVE_ASIN\)[	 (].*,\1define\2 1 ,
 CEOF
     sed -f "$tmp/defines.sed" $ac_file_inputs >"$tmp/out1"
     # First, check the format of the line:
@@ -942,6 +942,11 @@ CEOF
 /^[	 ]*#[	 ]*define[	 ][	 ]*[_abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ][_abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789]*[(	 ]/b def
 b
 :def
+s,^\([	 #]*\)[^	 ]*\([	 ]*HAVE_STRCHR\)[	 (].*,\1define\2 1 ,
+s,^\([	 #]*\)[^	 ]*\([	 ]*HAVE_MEMCPY\)[	 (].*,\1define\2 1 ,
+s,^\([	 #]*\)[^	 ]*\([	 ]*HAVE_ACOS\)[	 (].*,\1define\2 1 ,
+s,^\([	 #]*\)[^	 ]*\([	 ]*HAVE_ASIN\)[	 (].*,\1define\2 1 ,
+s,^\([	 #]*\)[^	 ]*\([	 ]*HAVE_LIBTIFF\)[	 (].*,\1define\2 1 ,
 s/ $//
 s,^[	 #]*u.*,/* & */,
 CEOF

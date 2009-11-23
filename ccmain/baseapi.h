@@ -133,7 +133,7 @@ class TessBaseAPI {
 
   // Check whether a word is valid according to Tesseract's language model
   // returns 0 if the string is invalid, non-zero if valid
-  static int IsValidWord(const char *string);
+  static int IsValidWord(const wchar_t *string);
 
  protected:
   // Copy the given image rectangle to Tesseract, with adaptive thresholding

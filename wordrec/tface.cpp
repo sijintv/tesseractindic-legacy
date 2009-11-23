@@ -41,6 +41,8 @@
 #include "chop.h"
 #include "callcpp.h"
 #include "badwords.h"
+#include <wchar.h>
+#include <locale.h>
 
 #include <math.h>
 #ifdef __UNIX__
@@ -268,5 +270,15 @@ int dict_word(const char *word) {
   if (test_freq_words (word))
     return FREQ_DAWG_PERM;
   else
-    return valid_word (word);
+    return valid_word (utf2wchar_(word));
 }
+
+wchar_t* utf2wchar_(const char *str) {
+  setlocale(LC_ALL, "en_US.UTF-8");
+  int size = strlen(str);
+  wchar_t uni[100]; //assuming that there wont be a 101+ charcter word
+  int ret = mbstowcs(uni,str,size);
+  if(ret<=0){cprintf("mbstowc failed, ret=%d",ret);}
+  return uni;
+}
+

@@ -57,9 +57,11 @@ tface.o: tface.cpp tface.h ../ccutil/host.h ../ccutil/platform.h \
  ../ccstruct/ocrrow.h ../ccstruct/quspline.h ../ccstruct/quadratc.h \
  ../ccutil/serialis.h ../ccutil/memry.h ../ccutil/notdll.h matchtab.h \
  chopper.h ../dict/permdawg.h ../dict/permute.h chop.h badwords.h \
- /usr/include/unistd.h /usr/include/bits/posix_opt.h \
- /usr/include/bits/environments.h /usr/include/bits/confname.h \
- /usr/include/getopt.h /usr/include/bits/unistd.h
+ /usr/include/bits/wchar.h /usr/include/bits/wchar2.h \
+ /usr/include/locale.h /usr/include/bits/locale.h /usr/include/unistd.h \
+ /usr/include/bits/posix_opt.h /usr/include/bits/environments.h \
+ /usr/include/bits/confname.h /usr/include/getopt.h \
+ /usr/include/bits/unistd.h
 
 tface.h:
 
@@ -390,6 +392,14 @@ chopper.h:
 chop.h:
 
 badwords.h:
+
+/usr/include/bits/wchar.h:
+
+/usr/include/bits/wchar2.h:
+
+/usr/include/locale.h:
+
+/usr/include/bits/locale.h:
 
 /usr/include/unistd.h:
 

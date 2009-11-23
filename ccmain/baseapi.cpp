@@ -1418,7 +1418,7 @@ int TessBaseAPI::TesseractExtractResult(char** string,
 
 // Check whether a word is valid according to Tesseract's language model
 // returns 0 if the string is invalid, non-zero if valid
-int TessBaseAPI::IsValidWord(const char *string) {
+int TessBaseAPI::IsValidWord(const wchar_t *string) {
   return valid_word(string);
 }
 

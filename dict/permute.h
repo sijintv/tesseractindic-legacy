@@ -89,5 +89,5 @@ const char* choose_il1(const char *first_char,   //first choice
 
 A_CHOICE *permute_words(CHOICES_LIST char_choices, float rating_limit);
 
-int valid_word(const char *string);
+int valid_word(const wchar_t *string);
 #endif

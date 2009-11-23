@@ -37,6 +37,7 @@
 #include "tprintf.h"
 #include "cutil.h"
 #include "dawg.h"
+#include "trie.h"
 #include <ctype.h>
 #include <wchar.h>
 
@@ -78,7 +79,7 @@ make_float_var (freq_word, FREQ_WERD, make_freq_word,
  * that this word choice has is based on case and punctuation rules.
  **********************************************************************/
 void adjust_word(A_CHOICE *best_choice, float *certainty_array) {
-  char *this_word;
+  wchar_t *this_word;
   int punct_status;
   float adjust_factor;
 
@@ -86,11 +87,11 @@ void adjust_word(A_CHOICE *best_choice, float *certainty_array) {
     tprintf ("%s %4.2f ",
       class_string (best_choice), class_probability (best_choice));
 
-  this_word = class_string (best_choice);
+  this_word = utf2wchar(class_string (best_choice));
   punct_status = punctuation_ok (this_word, class_lengths (best_choice));
 
   class_probability (best_choice) += RATING_PAD;
-  if (case_ok (this_word, class_lengths (best_choice))
+  if (case_ok ((char*)this_word, class_lengths (best_choice))
       && punct_status != -1) {
     if (punct_status < 1 && word_in_dawg (frequent_words, this_word)) {
       class_probability (best_choice) *= freq_word;
@@ -110,7 +111,7 @@ void adjust_word(A_CHOICE *best_choice, float *certainty_array) {
     class_probability (best_choice) *= ok_word;
     adjust_factor = ok_word;
     if (adjust_debug) {
-      if (!case_ok (this_word, class_lengths (best_choice)))
+      if (!case_ok ((char*)this_word, class_lengths (best_choice)))
         tprintf(", C");
       if (punctuation_ok (this_word, class_lengths (best_choice)) == -1)
         tprintf(", P");
@@ -411,7 +412,9 @@ void end_permdawg() {
  *
  * Tests a word against the frequent word dawg
  **********************************************************************/
-int test_freq_words(const char *word) {
+int test_freq_words(const char *word1) {
+  wchar_t* word = utf2wchar(word1);
+  
   return (word_in_dawg (frequent_words, word));
 }
 

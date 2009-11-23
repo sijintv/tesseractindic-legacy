@@ -33,7 +33,7 @@ permdawg.o: permdawg.cpp permdawg.h dawg.h /usr/include/ctype.h \
  ../cutil/emalloc.h permute.h ../cutil/tordvars.h context.h stopper.h \
  states.h ../cutil/freelist.h ../cutil/globals.h ../ccutil/tessclas.h \
  ../cutil/const.h ../ccutil/unicharset.h ../ccutil/unichar.h \
- ../ccutil/unicharmap.h ../ccutil/strngs.h ../cutil/cutil.h \
+ ../ccutil/unicharmap.h ../ccutil/strngs.h ../cutil/cutil.h trie.h \
  /usr/include/bits/wchar.h /usr/include/bits/wchar2.h
 
 permdawg.h:
@@ -215,6 +215,8 @@ states.h:
 ../ccutil/strngs.h:
 
 ../cutil/cutil.h:
+
+trie.h:
 
 /usr/include/bits/wchar.h:
 

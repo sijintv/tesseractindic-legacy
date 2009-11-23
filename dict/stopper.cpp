@@ -33,6 +33,7 @@
 #include "globals.h"
 #include "scanutils.h"
 #include "unichar.h"
+#include "trie.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -227,14 +228,14 @@ int AcceptableChoice(CHOICES_LIST Choices,
   if (StopperDebugLevel >= 1)
     cprintf ("\nStopper:  %s (word=%c, case=%c, punct=%c)\n",
       class_string (BestChoice),
-      (valid_word (class_string (BestChoice)) ? 'y' : 'n'),
+      (valid_word (utf2wchar(class_string (BestChoice))) ? 'y' : 'n'),
     (case_ok (class_string (BestChoice),
               class_lengths (BestChoice)) ? 'y' : 'n'),
     ((punctuation_ok (class_string (BestChoice),
                       class_lengths (BestChoice)) !=
     -1) ? 'y' : 'n'));
 
-  if (valid_word (class_string (BestChoice)) &&
+  if (valid_word (utf2wchar(class_string (BestChoice))) &&
     case_ok (class_string (BestChoice), class_lengths (BestChoice)) &&
   punctuation_ok (class_string (BestChoice),
                   class_lengths (BestChoice)) != -1) {
@@ -290,7 +291,7 @@ int AcceptableResult(A_CHOICE *BestChoice, A_CHOICE *RawChoice) {
   if (StopperDebugLevel >= 1)
     cprintf ("\nRejecter: %s (word=%c, case=%c, punct=%c, unambig=%c)\n",
       class_string (BestChoice),
-      (valid_word (class_string (BestChoice)) ? 'y' : 'n'),
+      (valid_word (utf2wchar(class_string (BestChoice))) ? 'y' : 'n'),
     (case_ok (class_string (BestChoice),
               class_lengths (BestChoice)) ? 'y' : 'n'),
     ((punctuation_ok (class_string (BestChoice),
@@ -301,7 +302,7 @@ int AcceptableResult(A_CHOICE *BestChoice, A_CHOICE *RawChoice) {
     (class_string (BestChoice) == NULL) || CurrentWordAmbig ())
     return (FALSE);
 
-  if (valid_word (class_string (BestChoice)) &&
+  if (valid_word (utf2wchar(class_string (BestChoice))) &&
     case_ok (class_string (BestChoice), class_lengths (BestChoice)) &&
   punctuation_ok (class_string (BestChoice),
                   class_lengths (BestChoice)) != -1) {
@@ -947,7 +948,7 @@ int AmbigsFound(char *Word,
       strcpy(CurrentChar, ambig);
                                    /* add tail */
       strcat(Word, UnmatchedTail);
-      if (valid_word (Word)) {
+      if (valid_word (utf2wchar(Word))) {
         if (StopperDebugLevel >= 1)
           cprintf ("Stopper:  Possible ambiguous word = %s\n", Word);
         if (fixpt != NULL) {

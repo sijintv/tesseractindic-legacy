@@ -119,15 +119,14 @@ inT32 def_letter_is_okay(EDGE_ARRAY dawg,
                          inT32 char_index,
                          char prevchar,
                          const wchar_t *word,
-			 const char *word1,
-                         inT32 word_end) {
+			 inT32 word_end) {
   EDGE_REF     edge;
   STRING dummy_word(word);  // Auto-deleting string fixes memory leak.
   STRING word_single_lengths; //Lengths of single UTF-8 characters of the word.
   //const wchar_t* dummy_word=word;
   const wchar_t *ptr;
 
-  for (ptr = word; *ptr != '\0';) {
+  for (ptr = word; *ptr != L'0';) {
     //int step = UNICHAR::utf8_step(ptr);
     int step = sizeof(wchar_t);
     if (step == 0)
@@ -137,8 +136,8 @@ inT32 def_letter_is_okay(EDGE_ARRAY dawg,
   }
 
   if (*node == NO_EDGE) {        /* Trailing punctuation */
-    if (trailing_punc(dummy_word[char_index]) &&
-        punctuation_ok(dummy_word.string(), word_single_lengths.string()) >= 0)
+    if (trailing_punc(dummy_word[char_index])/* &&
+        punctuation_ok(dummy_word.string(), word_single_lengths.string()) >= 0*/)
       return (TRUE);
     else
       return (FALSE);
@@ -166,7 +165,7 @@ inT32 def_letter_is_okay(EDGE_ARRAY dawg,
     if (leading_punc (word [char_index]) &&
     (char_index == 0  ||  leading_punc (dummy_word [char_index-1]))) {
       *node = 0;
-      if (punctuation_ok(word1, word_single_lengths.string()) >= 0)
+      if (punctuation_ok(word, word_single_lengths.string()) >= 0)
         return (TRUE);
       else
         return FALSE;
@@ -320,14 +319,15 @@ EDGE_ARRAY read_squished_dawg(const char *filename) {
  * string of trailing puntuation.  TRUE is returned if everything is
  * OK.
  **********************************************************************/
-inT32 verify_trailing_punct(EDGE_ARRAY dawg, char *word, inT32 char_index) {
-  char       last_char;
-  char       *first_char;
+inT32 verify_trailing_punct(EDGE_ARRAY dawg, char *word1, inT32 char_index) {
+  wchar_t       last_char;
+  wchar_t       *first_char;
+  wchar_t * word = utf2wchar(word1);
 
   if (trailing_punc (word [char_index])) {
 
     last_char = word [char_index];
-    word [char_index] = (char) 0;
+    word [char_index] = (wchar_t) 0;
 
     for (first_char = word; leading_punc (first_char[0]); first_char++);
 
@@ -346,12 +346,12 @@ inT32 verify_trailing_punct(EDGE_ARRAY dawg, char *word, inT32 char_index) {
  *
  * Test to see if the word can be found in the DAWG.
  **********************************************************************/
-inT32 word_in_dawg(EDGE_ARRAY dawg, const char *string1) {
+inT32 word_in_dawg(EDGE_ARRAY dawg, const wchar_t *string) {
   NODE_REF   node = 0;
   inT32        i;
   inT32         length;
   
-  wchar_t* string = utf2wchar(string1);
+  //wchar_t* string = utf2wchar(string1);
 
   length=wcslen(string);
   if (length==0)
@@ -361,7 +361,8 @@ inT32 word_in_dawg(EDGE_ARRAY dawg, const char *string1) {
       print_dawg_node(dawg, node);
       new_line();
     }
-    if (! letter_is_okay (dawg, &node, i, '\0', string, string1, (string[i+1]==0))) {
+    print_dawg_node(dawg, node);
+    if (! letter_is_okay (dawg, &node, i, '\0', string, (string[i+1]==0))) {
       return (FALSE);
     }
   }

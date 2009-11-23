@@ -77,11 +77,11 @@ void check_for_words (EDGE_ARRAY dawg,
     if (strlen (string)) {
       if (debug) {
         debug=0;
-        if (! word_in_dawg (dawg, string)) {
+        if (! word_in_dawg (dawg, utf2wchar(string))) {
           puts (string);
           if (filename == NULL) {
             debug = 1;
-            word_in_dawg (dawg, string);
+            word_in_dawg (dawg, utf2wchar(string));
           }
         }
         debug = 1;
@@ -219,7 +219,7 @@ void print_lost_words (EDGE_ARRAY dawg,
     string [strlen (string) - 1] = (char) 0;
 
     if (strlen (string)) {
-      if (! word_in_dawg (dawg, string)) {
+      if (! word_in_dawg (dawg, utf2wchar(string))) {
         puts (string);
       }
     }
