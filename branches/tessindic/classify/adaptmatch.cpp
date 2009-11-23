@@ -1086,7 +1086,7 @@ int AdaptableWord(TWERD *Word,
     strlen
     (BestRawChoice_lengths)
     &&
-    ((valid_word (BestChoice) && case_ok (BestChoice, BestChoice_lengths)) || (valid_number (BestChoice, BestChoice_lengths) && pure_number (BestChoice, BestChoice_lengths))) && punctuation_ok (BestChoice, BestChoice_lengths) != -1 && punctuation_ok (BestChoice, BestChoice_lengths) <= 1)));
+    (/*(valid_word (BestChoice) && case_ok (BestChoice, BestChoice_lengths)) || */(valid_number (BestChoice, BestChoice_lengths) && pure_number (BestChoice, BestChoice_lengths)))/* && punctuation_ok (BestChoice, BestChoice_lengths) != -1 && punctuation_ok (BestChoice, BestChoice_lengths) <= 1*/)));
 
 }                                /* AdaptableWord */
 

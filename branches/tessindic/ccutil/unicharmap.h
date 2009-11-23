@@ -47,6 +47,19 @@ class UNICHARMAP {
   // MUST be non-zero.
   UNICHAR_ID unichar_to_id(const char* const unichar_repr, int length) const;
 
+
+   // Return the id associated with the given unichar representation,
+  // this representation MUST exist within the UNICHARMAP.
+  // The length of the representation MUST be non-zero.
+  UNICHAR_ID unichar_to_id(const wchar_t* const unichar_repr) const;
+
+  // Return the id associated with the given unichar representation,
+  // this representation MUST exist within the UNICHARMAP. The first
+  // length characters (maximum) from unichar_repr are used. The length
+  // MUST be non-zero.
+  UNICHAR_ID unichar_to_id(const wchar_t* const unichar_repr, int length) const;
+
+
   // Return true if the given unichar representation is already present in the
   // UNICHARMAP. The length of the representation MUST be non-zero.
   bool contains(const char* const unichar_repr) const;
@@ -55,6 +68,14 @@ class UNICHARMAP {
   // UNICHARMAP. The first length characters (maximum) from unichar_repr are
   // used. The length MUST be non-zero.
   bool contains(const char* const unichar_repr, int length) const;
+
+
+  bool contains(const wchar_t* const unichar_repr) const;
+
+  // Return true if the given unichar representation is already present in the
+  // UNICHARMAP. The first length characters (maximum) from unichar_repr are
+  // used. The length MUST be non-zero.
+  bool contains(const wchar_t* const unichar_repr, int length) const;
 
   // Return the minimum number of characters that must be used from this string
   // to obtain a match in the UNICHARMAP.

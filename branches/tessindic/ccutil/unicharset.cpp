@@ -77,6 +77,20 @@ const UNICHAR_ID UNICHARSET::unichar_to_id(const char* const unichar_repr,
   return ids.unichar_to_id(unichar_repr, length);
 }
 
+const UNICHAR_ID
+UNICHARSET::unichar_to_id(const wchar_t* const unichar_repr) const {
+  assert(ids.contains(unichar_repr));
+  return ids.unichar_to_id(unichar_repr);
+}
+
+const UNICHAR_ID UNICHARSET::unichar_to_id(const wchar_t* const unichar_repr,
+                                           int length) const {
+  assert(length > 0 && length <= UNICHAR_LEN);
+  assert(ids.contains(unichar_repr, length));
+  return ids.unichar_to_id(unichar_repr, length);
+}
+
+
 // Return the minimum number of bytes that matches a legal UNICHAR_ID,
 // while leaving a legal UNICHAR_ID afterwards. In other words, if there
 // is both a short and a long match to the string, return the length that
@@ -172,6 +186,15 @@ bool UNICHARSET::contains_unichar(const char* const unichar_repr) {
 bool UNICHARSET::contains_unichar(const char* const unichar_repr, int length) {
   return ids.contains(unichar_repr, length);
 }
+
+bool UNICHARSET::contains_unichar(const wchar_t* const unichar_repr) {
+  return ids.contains(unichar_repr);
+}
+
+bool UNICHARSET::contains_unichar(const wchar_t* const unichar_repr, int length) {
+  return ids.contains(unichar_repr, length);
+}
+
 
 bool UNICHARSET::eq(UNICHAR_ID unichar_id, const char* const unichar_repr) {
   return strcmp(this->id_to_unichar(unichar_id), unichar_repr) == 0;

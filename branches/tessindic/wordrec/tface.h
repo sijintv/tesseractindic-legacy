@@ -25,6 +25,8 @@ void set_pass1();
 
 void set_pass2();
 
+wchar_t* utf2wchar_(const char*);
+
 CHOICES_LIST cc_recog(TWERD *tessword,
                       A_CHOICE *best_choice,
                       A_CHOICE *best_raw_choice,

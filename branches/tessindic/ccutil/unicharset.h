@@ -43,6 +43,15 @@ class UNICHARSET {
   // UNICHARSET. Only the first length characters from unichar_repr are used.
   const UNICHAR_ID unichar_to_id(const char* const unichar_repr,
                                  int length) const;
+  // Return the UNICHAR_ID of a given unichar representation within the
+  // UNICHARSET.
+  const UNICHAR_ID unichar_to_id(const wchar_t* const unichar_repr) const;
+
+  // Return the UNICHAR_ID of a given unichar representation within the
+  // UNICHARSET. Only the first length characters from unichar_repr are used.
+  const UNICHAR_ID unichar_to_id(const wchar_t* const unichar_repr,
+                                 int length) const;
+
 
   // Return the minimum number of bytes that matches a legal UNICHAR_ID,
   // while leaving a legal UNICHAR_ID afterwards. In other words, if there
@@ -64,6 +73,10 @@ class UNICHARSET {
   // Return true if the given unichar representation exists within the set.
   bool contains_unichar(const char* const unichar_repr);
   bool contains_unichar(const char* const unichar_repr, int length);
+
+  bool contains_unichar(const wchar_t* const unichar_repr);
+  bool contains_unichar(const wchar_t* const unichar_repr, int length);
+
 
   // Return true if the given unichar representation corresponds to the given
   // UNICHAR_ID within the set.
@@ -168,6 +181,10 @@ class UNICHARSET {
   bool get_isalpha(const char* const unichar_repr) const {
     return get_isalpha(unichar_to_id(unichar_repr));
   }
+  bool get_isalpha(const wchar_t* const unichar_repr) const {
+    return get_isalpha(unichar_to_id(unichar_repr));
+  }
+
 
   // Return the islower property of the given unichar representation.
   bool get_islower(const char* const unichar_repr) const {
@@ -176,6 +193,10 @@ class UNICHARSET {
 
   // Return the isupper property of the given unichar representation.
   bool get_isupper(const char* const unichar_repr) const {
+    return get_isupper(unichar_to_id(unichar_repr));
+  }
+
+  bool get_isupper(const wchar_t* const unichar_repr) const {
     return get_isupper(unichar_to_id(unichar_repr));
   }
 
@@ -198,6 +219,14 @@ class UNICHARSET {
     return get_isalpha(unichar_to_id(unichar_repr, length));
   }
 
+   // Return the isalpha property of the given unichar representation.
+  // Only the first length characters from unichar_repr are used.
+  bool get_isalpha(const wchar_t* const unichar_repr,
+               int length) const {
+    return get_isalpha(unichar_to_id(unichar_repr, length));
+  }
+
+
   // Return the islower property of the given unichar representation.
   // Only the first length characters from unichar_repr are used.
   bool get_islower(const char* const unichar_repr,
@@ -208,6 +237,11 @@ class UNICHARSET {
   // Return the isupper property of the given unichar representation.
   // Only the first length characters from unichar_repr are used.
   bool get_isupper(const char* const unichar_repr,
+               int length) const {
+    return get_isupper(unichar_to_id(unichar_repr, length));
+  }
+ 
+  bool get_isupper(const wchar_t* const unichar_repr,
                int length) const {
     return get_isupper(unichar_to_id(unichar_repr, length));
   }

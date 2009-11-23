@@ -27,7 +27,7 @@
 #include "stopper.h"
 #include "globals.h"
 #include "context.h"
-
+#include "trie.h"
 #include <math.h>
 #include <ctype.h>
 
@@ -156,7 +156,7 @@ A_CHOICE *ngram_permute_and_select(CHOICES_LIST char_choices,
                                         best_word.unichar_lengths(),
                                         best_word.rating(),
                                         best_word.certainty(), -1,
-                                        valid_word(best_word.word() + 1) ?
+                                        valid_word(utf2wchar(best_word.word()) + 1) ?
                                         SYSTEM_DAWG_PERM : TOP_CHOICE_PERM);
     LogNewWordChoice(best_choice, best_word.is_dawg_prefix() ?
                      1.0 : non_dawg_prefix_rating_adjustment,
@@ -246,7 +246,7 @@ HypothesisPrefix::HypothesisPrefix(const HypothesisPrefix& prefix,
       
       int current_byte_index = word_ptr - (word_ + 1) + char_subindex;
       if(!letter_is_okay(dawg, &dawg_node_, current_byte_index, '\0',
-                         (wchar_t*)word_ + 1, word_ + 1 ,end_of_word &&
+                         utf2wchar(word_) + 1, end_of_word &&
                          class_string_choice[char_subindex + 1] == '\0')) {
         dawg_node_ = NO_EDGE;
         is_dawg_prefix_ = false;

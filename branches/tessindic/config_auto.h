@@ -11,7 +11,7 @@
 #define HAVE_ACOS 1
 
 /* Define to 1 if you have the <allheaders.h> header file. */
-/* #undef HAVE_ALLHEADERS_H */
+#define HAVE_ALLHEADERS_H 1
 
 /* Define to 1 if you have the `asin' function. */
 #define HAVE_ASIN 1
@@ -29,22 +29,22 @@
 #define HAVE_INTTYPES_H 1
 
 /* Define to 1 if you have the `jpeg' library (-ljpeg). */
-/* #undef HAVE_LIBJPEG */
+#define HAVE_LIBJPEG 1
 
 /* Define to 1 if you have the `lept' library (-llept). */
 /* #undef HAVE_LIBLEPT */
 
 /* Define to 1 if you have the `png' library (-lpng). */
-/* #undef HAVE_LIBPNG */
+#define HAVE_LIBPNG 1
 
 /* Define to 1 if you have the `pthread' library (-lpthread). */
 #define HAVE_LIBPTHREAD 1
 
 /* Define if you have the www.libtiff.org LIBTIFF library. */
-/* #undef HAVE_LIBTIFF */
+#define HAVE_LIBTIFF 1
 
 /* Define to 1 if you have the `z' library (-lz). */
-/* #undef HAVE_LIBZ */
+#define HAVE_LIBZ 1
 
 /* Define to 1 if you have the <limits.h> header file. */
 #define HAVE_LIMITS_H 1

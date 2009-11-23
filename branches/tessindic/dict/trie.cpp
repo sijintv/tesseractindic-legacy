@@ -190,7 +190,8 @@ void add_word_to_dawg(EDGE_ARRAY dawg,
   if (debug){ cprintf("Adding word %s\n", string);}
   cprintf("Adding word %ls\n", string);
   for (i=0; i<wcslen(string)-1; i++) {
-    unsigned wchar_t ch = case_sensative ? string[i] : tolower(string[i]);
+    //unsigned wchar_t ch = case_sensative ? string[i] : tolower(string[i]);
+    wchar_t ch = string[i];
     cprintf("\nLetter->%lc\n",ch);
     if (still_finding_chars) {
       edge = edge_char_of(dawg, last_node, ch, word_end);
@@ -544,28 +545,31 @@ void read_word_list(const char *filename,
   if (debug > 0 && debug < 3)
     debug = 0;
   wchar_t* string;
+  int count =0;
   word_file = open_file (filename, "r");
 
   initialize_dawg(dawg, max_num_edges);
   
-  
+  //fgets (string_utf8, CHARS_PER_LINE, word_file); 
   while (fgets (string_utf8, CHARS_PER_LINE, word_file) !=NULL) {
+    
     string = utf2wchar(string_utf8);
-    cprintf("Read %d words so far\n", word_count);
-    string [wcslen (string)] = (char) 0;
+    string [wcslen (string)] = (wchar_t) 0;
     ++word_count;
     if (debug && word_count % 10000 == 0)
       cprintf("Read %d words so far\n", word_count);
-    if (string[0] != L'\0' /* strlen (string) */) {
-      /*if (!word_in_dawg(dawg, string)) {
+    cprintf("Read %d words so far\n", word_count);
+    if (string[0] != '\0' && count!=0 /* strlen (string) */) {
+      if (!word_in_dawg(dawg, string)) {
         add_word_to_dawg(dawg, string, max_num_edges, reserved_edges);
         if (!word_in_dawg(dawg, string)) {
           cprintf("error: word not in DAWG after adding it '%s'\n", string);
           return;
         }
-      }*/
-     add_word_to_dawg(dawg, string, max_num_edges, reserved_edges);
+      }
+     //add_word_to_dawg(dawg, string, max_num_edges, reserved_edges);
     }
+     count =1;
   }
   debug = old_debug;
   if (debug)
