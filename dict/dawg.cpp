@@ -37,8 +37,6 @@
 #include "context.h"
 #include "strngs.h"
 #include "emalloc.h"
-#include <wchar.h>
-#include <locale.h>
 
 /*----------------------------------------------------------------------
               V a r i a b l e s
@@ -60,17 +58,19 @@ EDGE_REF edge_char_of(EDGE_ARRAY dawg,
                       int word_end) {
   EDGE_REF   edge = node;
 
-  if (! case_sensative) character = tolower (character);
-
+  //if (! case_sensative) character = tolower (character);
   if (edge_occupied (dawg, edge)) {
     do {
-      if ((edge_letter (dawg, edge) == character) &&
-        (! word_end || end_of_word(dawg,edge)))
-        return (edge);
-
-    } edge_loop (dawg, edge);
+       // cprintf("\n(dawg)[edge]=%d -- edge=%d\n",(dawg)[edge],edge );
+        cprintf("\nedge_letter (dawg, edge)-->%d --  character-->%d",edge_letter (dawg, edge),character);
+        //cprintf("\nEDHE NUMBER=%d\n",edge);
+        if ((edge_letter (dawg, edge) == character) &&
+        (! word_end || end_of_word(dawg,edge))){cprintf("\nRETUNRNING EDGE\n");
+        return (edge);}
+    } edge_loop(dawg,edge);
+    //} while(edge_letter (dawg, ++edge)!=0);
   }
-
+  cprintf("\nNOEDGENOEDGE\n");
   return (NO_EDGE);
 }
 
@@ -118,18 +118,16 @@ inT32 def_letter_is_okay(EDGE_ARRAY dawg,
                          NODE_REF *node,
                          inT32 char_index,
                          char prevchar,
-                         const char *word_utf8,
+                         const char *word,
                          inT32 word_end) {
   EDGE_REF     edge;
-
-  wchar_t* word = utf2wchar(word_utf8);
-  STRING dummy_word(word_utf8);  // Auto-deleting string fixes memory leak.
+  STRING dummy_word(word);  // Auto-deleting string fixes memory leak.
   STRING word_single_lengths; //Lengths of single UTF-8 characters of the word.
-  const wchar_t *ptr;
-
-  for (ptr = word; *ptr != L'\0';) {
-    //int step = UNICHAR::utf8_step(ptr);
-    int step = sizeof(wchar_t);
+  const char *ptr;
+  cprintf("\nWOOOOOORD=%s\n",word);
+  for (ptr = word; *ptr != '\0';) {
+    int step = UNICHAR::utf8_step(ptr);
+   cprintf("\nPTR=%s\n",ptr);
     if (step == 0)
       return FALSE;
     word_single_lengths += step;
@@ -138,10 +136,10 @@ inT32 def_letter_is_okay(EDGE_ARRAY dawg,
 
   if (*node == NO_EDGE) {        /* Trailing punctuation */
     if (trailing_punc(dummy_word[char_index]) &&
-        punctuation_ok(dummy_word.string(), word_single_lengths.string()) >= 0)
-      return (TRUE);
-    else
-      return (FALSE);
+        punctuation_ok(dummy_word.string(), word_single_lengths.string()) >= 0){
+      return (TRUE);}
+    else{
+      return (FALSE);}
   }
   // rays: removed incorrect code that attempted to enforce leading
   // punctutation (or nothing) before an alpha character.
@@ -149,13 +147,16 @@ inT32 def_letter_is_okay(EDGE_ARRAY dawg,
   edge = edge_char_of(dawg, *node,
                       static_cast<unsigned char>(dummy_word[char_index]),
                       word_end);
+  //cprintf("\nEDGE=%d\n",edge);
 
   if (edge != NO_EDGE) {         /* Normal edge in DAWG */
     if (case_sensative || case_is_okay (dummy_word, char_index)) {
                                  //next_node (dawg, edge);
       *node = next_node(dawg, edge);
-      if (*node == 0)
-        *node = NO_EDGE;
+      //cprintf("\n*NODE=%d\n",*node);
+      if (*node == 0){
+        *node = NO_EDGE;}
+      
       return (TRUE);
     } else {
       return (FALSE);
@@ -166,17 +167,18 @@ inT32 def_letter_is_okay(EDGE_ARRAY dawg,
     if (leading_punc (word [char_index]) &&
     (char_index == 0  ||  leading_punc (dummy_word [char_index-1]))) {
       *node = 0;
-      if (punctuation_ok(word, word_single_lengths.string()) >= 0)
-        return (TRUE);
-      else
-        return FALSE;
+      if (punctuation_ok(word, word_single_lengths.string()) >= 0){
+        return (TRUE);}
+      else{
+        return FALSE;}
     }
     /* Trailing punctuation */
     if (verify_trailing_punct (dawg, &dummy_word[0], char_index)) {
+      cprintf("\nTRAILING PUNCT\n");
       *node = NO_EDGE;
       return (TRUE);
     }
-
+    cprintf("\nFALSEEE\n");
     return (FALSE);
   }
 }
@@ -301,8 +303,8 @@ EDGE_ARRAY read_squished_dawg(const char *filename) {
   fclose(file);
   EDGE_ARRAY dawg = (EDGE_ARRAY) memalloc(sizeof(EDGE_RECORD) * num_edges);
 
-  for (edge = 0; edge < num_edges; ++edge)
-    dawg[edge] = ntohl(dawg_32[edge]);
+  for (edge = 0; edge < num_edges; ++edge){
+    dawg[edge] = ntohl(dawg_32[edge]);}
 
   Efree(dawg_32);
 
@@ -346,11 +348,12 @@ inT32 verify_trailing_punct(EDGE_ARRAY dawg, char *word, inT32 char_index) {
  *
  * Test to see if the word can be found in the DAWG.
  **********************************************************************/
-inT32 word_in_dawg(EDGE_ARRAY dawg, const char *string_utf8) {
+inT32 word_in_dawg(EDGE_ARRAY dawg, const char *string) {
   NODE_REF   node = 0;
   inT32        i;
   inT32         length;
-  const char *string;
+
+  length=strlen(string);
   if (length==0)
     return FALSE;
   for (i=0; i<length; i++) {
@@ -358,23 +361,10 @@ inT32 word_in_dawg(EDGE_ARRAY dawg, const char *string_utf8) {
       print_dawg_node(dawg, node);
       new_line();
     }
-    if (! letter_is_okay (dawg, &node, i, '\0', string_utf8, (string[i+1]==0))) {
+    if (! letter_is_okay (dawg, &node, i, '\0', string, (string[i+1]==0))) {
       return (FALSE);
     }
   }
 
   return (TRUE);
-}
-
-wchar_t* utf2wchar(const char *str) {
-  setlocale(LC_ALL, "en_US.UTF-8");
-  int size = strlen(str);
-  wchar_t uni[100]; //assuming that there wont be a 101+ charcter word
-  int ret = mbstowcs(uni,str,size);
-  if(ret<=0){cprintf("mbstowc failed, ret=%d",ret);}
-  return uni;
-  int len = wcslen(uni);
-  //for (int i=0;i<len;i++){
-  //  wcout<<"here is -->"<<uni[i]<<"\n"; 
-
 }

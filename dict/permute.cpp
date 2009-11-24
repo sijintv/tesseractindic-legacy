@@ -53,8 +53,8 @@ int permutation_count;           // Used in metrics.cpp.
 #define MAX_USER_EDGES         50000
 #define USER_RESERVED_EDGES    2000
                                  /* Weights for adjustment */
-#define NON_WERD               1.25
-#define GARBAGE_STRING         1.5
+#define NON_WERD               5
+#define GARBAGE_STRING         5
 #define MAX_PERM_LENGTH         128
 
 EDGE_ARRAY pending_words;
@@ -962,7 +962,8 @@ void
 adjust_non_word (A_CHOICE * best_choice, float certainties[]) {
   char *this_word;
   float adjust_factor;
-
+  /*cprintf ("%s %4.2f ",
+      class_string (best_choice), class_probability (best_choice));*/
   if (adjust_debug)
     cprintf ("%s %4.2f ",
       class_string (best_choice), class_probability (best_choice));
@@ -974,6 +975,7 @@ adjust_non_word (A_CHOICE * best_choice, float certainties[]) {
       && punctuation_ok (this_word, class_lengths (best_choice)) != -1) {
     class_probability (best_choice) *= non_word;
     adjust_factor = non_word;
+    //cprintf (" NONWORD , %4.2f ", non_word);
     if (adjust_debug)
       cprintf (", %4.2f ", non_word);
   }
@@ -985,14 +987,14 @@ adjust_non_word (A_CHOICE * best_choice, float certainties[]) {
         cprintf (", C");
       if (punctuation_ok (this_word, class_lengths (best_choice)) == -1)
         cprintf (", P");
-      cprintf (", %4.2f ", garbage);
+      cprintf (" GARBAGE , %4.2f ", garbage);
     }
   }
 
   class_probability (best_choice) -= RATING_PAD;
 
   LogNewWordChoice(best_choice, adjust_factor, certainties);
-
+  //cprintf (" --> %4.2f\n", class_probability (best_choice));
   if (adjust_debug)
     cprintf (" --> %4.2f\n", class_probability (best_choice));
 }
@@ -1077,7 +1079,9 @@ A_CHOICE *permute_all(CHOICES_LIST char_choices,
     return (NULL);
   if (permute_only_top)
     return result_1;
-  if (any_alpha && array_count (char_choices) <= MAX_WERD_LENGTH) {
+  //cprintf("\nany_alpha->%d -- (array_count (char_choices) <= MAX_WERD_LENGTH)-->%d)\n",any_alpha ,(array_count (char_choices) <= MAX_WERD_LENGTH));
+  any_alpha=1;
+  if (any_alpha && (array_count (char_choices) <= MAX_WERD_LENGTH)) {
     result_2 = permute_words (char_choices, rating_limit);
     if (class_probability (result_1) < class_probability (result_2)
     || class_string (result_2) == NULL) {
@@ -1246,7 +1250,7 @@ void permute_subword(CHOICES_LIST character_choices,
     if (this_char != '-' && this_char != '/') {
       subchoices = array_push (subchoices, choices);
     } else {
-      const wchar_t* str = best_string(choices);
+      const char* str = best_string(choices);
       strcat(word, str);
       char length[] = {strlen(str), 0};
       strcat(unichar_lengths + x, length);
@@ -1277,7 +1281,7 @@ void permute_subword(CHOICES_LIST character_choices,
   free_choice_list(subchoices);
   if (best_choice)
     free_choice(best_choice);
-
+  cprintf ("Subword permuted = %s, %5.2f, %5.2f\n\n",word, *rating, *certainty);
   if (compound_debug && *rating < MAX_FLOAT32) {
     cprintf ("Subword permuted = %s, %5.2f, %5.2f\n\n",
       word, *rating, *certainty);
@@ -1343,7 +1347,7 @@ A_CHOICE *permute_top_choice(CHOICES_LIST character_choices,
   float upper_certainties[MAX_PERM_LENGTH + 1];
 
   register CHOICES this_char;
-  register const wchar_t* ch;
+  register const char* ch;
   register inT8 lower_done;
   register inT8 upper_done;
 
@@ -1530,12 +1534,12 @@ A_CHOICE *permute_top_choice(CHOICES_LIST character_choices,
 
   best_choice = new_choice (word, word_lengths,
                             rating, certainty, -1, TOP_CHOICE_PERM);
-  adjust_non_word(best_choice, certainties);
+  //adjust_non_word(best_choice, certainties);
 
   other_choice = new_choice (lower_word, lower_word_lengths,
                              lower_rating, lower_certainty,
                              -1, LOWER_CASE_PERM);
-  adjust_non_word(other_choice, lower_certainties);
+  //adjust_non_word(other_choice, lower_certainties);
   if (class_probability (best_choice) > class_probability (other_choice)) {
     clone_choice(best_choice, other_choice);
   }
@@ -1544,7 +1548,7 @@ A_CHOICE *permute_top_choice(CHOICES_LIST character_choices,
   other_choice = new_choice (capital_word, capital_word_lengths,
                              upper_rating, upper_certainty,
                              -1, UPPER_CASE_PERM);
-  adjust_non_word(other_choice, upper_certainties);
+  //adjust_non_word(other_choice, upper_certainties);
   if (class_probability (best_choice) > class_probability (other_choice)) {
     clone_choice(best_choice, other_choice);
   }
@@ -1558,7 +1562,7 @@ A_CHOICE *permute_top_choice(CHOICES_LIST character_choices,
  *
  * Choose between the candidate il1 chars.
  **********************************************************************/
-const wchar_t* choose_il1(const char *first_char,        //first choice
+const char* choose_il1(const char *first_char,        //first choice
                        const char *second_char,       //second choice
                        const char *third_char,        //third choice
                        const char *prev_char,         //prev in word
@@ -1668,7 +1672,6 @@ A_CHOICE *permute_words(CHOICES_LIST char_choices, float rating_limit) {
     class_probability (best_choice) = MAX_FLOAT32;
   }
   else {
-
     dawg_permute_and_select ("system words:", word_dawg, SYSTEM_DAWG_PERM,
       char_choices, best_choice);
 

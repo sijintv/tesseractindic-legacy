@@ -54,6 +54,7 @@
 static EDGE_ARRAY frequent_words;
 static float rating_margin;
 static float rating_pad = 5.0;
+//int word_ending = FALSE;
 
 make_toggle_var (dawg_debug, 0, make_dawg_debug,
 8, 10, set_dawg_debug, "DAWG Debug ");
@@ -179,6 +180,11 @@ void append_next_choice(  /*previous option */
   }
   else {
     if (rating_array[char_index] * rating_margin + rating_pad < rating) {
+      cprintf("early pruned word rating=%4.2f, limit=%4.2f",
+                rating, *limit);
+        print_word_string(word);
+      cprintf("\n");
+
       if (dawg_debug) {
         tprintf("early pruned word rating=%4.2f, limit=%4.2f",
                 rating, *limit);
@@ -210,14 +216,18 @@ void append_next_choice(  /*previous option */
   else {
     int sub_offset = 0;
     NODE_REF node_saved = node;
-    while (sub_offset < unichar_lengths[char_index] &&
+    while (sub_offset < unichar_lengths[char_index] && 
            letter_is_okay (dawg, &node, unichar_offsets[char_index] +
                            sub_offset, *prevchar, word, word_ending &&
-                           sub_offset == unichar_lengths[char_index] - 1))
-      ++sub_offset;
+                           sub_offset == unichar_lengths[char_index]-1)){cprintf("\nNODE=%d\n",node);
+      ++sub_offset;}
+      //++sub_offset;
+    cprintf("\nsub_offset=%d -- unichar_lengths[char_index]=%d",sub_offset,unichar_lengths[char_index]);
     if (sub_offset == unichar_lengths[char_index]) {
       /* Add a new word choice */
+    cprintf("\nWORDENGING=%d\n",word_ending);
       if (word_ending) {
+        cprintf("new choice = %s\n", word);
         if (dawg_debug == 1)
           tprintf("new choice = %s\n", word);
         *limit = rating;
@@ -238,6 +248,15 @@ void append_next_choice(  /*previous option */
                                rating_array, certainty_array, last_word));
       }
     } else {
+      cprintf("letter not OK at char %d, index %d + sub index %d/%d\n",
+                char_index, unichar_offsets[char_index],
+                sub_offset, unichar_lengths[char_index]);
+        cprintf("Word");
+        print_word_string(word);
+        cprintf("\nRejected tail");
+        print_word_string(word + unichar_offsets[char_index]);
+        cprintf("\n");
+
       if (dawg_debug == 1) {
         tprintf("letter not OK at char %d, index %d + sub index %d/%d\n",
                 char_index, unichar_offsets[char_index],
@@ -280,6 +299,10 @@ CHOICES dawg_permute(EDGE_ARRAY dawg,
   CHOICES c;
   char *prevchar;
   int word_ending = FALSE;
+  
+  cprintf("dawg_permute (node=" REFFORMAT ", char_index=%d, limit=%f, word=", node, char_index, *limit);
+  print_word_string(word);
+  //cprintf(", rating=%4.2f, certainty=%4.2f)\n",rating, certainty);
 
   if (dawg_debug) {
     tprintf("dawg_permute (node=" REFFORMAT ", char_index=%d, limit=%f, word=",
@@ -288,16 +311,15 @@ CHOICES dawg_permute(EDGE_ARRAY dawg,
     tprintf(", rating=%4.2f, certainty=%4.2f)\n",
              rating, certainty);
   }
-
   /* Check for EOW */
-  if (1 + char_index == array_count (choices) + hyphen_base_size ())
-    word_ending = TRUE;
-
+  if (1+ char_index == array_count (choices) + hyphen_base_size ()){
+    word_ending = TRUE;cprintf("\nWORD_ENDING iS NOW TRUE=%d\n",word_ending);}
+  cprintf("\nchar_index-->%d --  array_count (choices) + hyphen_base_size ()-->%d\n",char_index,array_count (choices) + hyphen_base_size ());
   if (char_index < array_count (choices) + hyphen_base_size ()) {
     prevchar = NULL;
-    iterate_list (c,
-      (CHOICES) array_index (choices,
-    char_index - hyphen_base_size ())) {
+  cprintf("\nWORDENIND=%d\n",word_ending);
+  for ( c = (CHOICES) array_index (choices,char_index - hyphen_base_size ()); c!=0; c=rest(c)) {
+  cprintf("\nWORDENIND=%d\n",word_ending); 
       append_next_choice (dawg, node, permuter, word, unichar_lengths,
                           unichar_offsets, choices, char_index,
                           (A_CHOICE *) first_node (c),
@@ -307,6 +329,7 @@ CHOICES dawg_permute(EDGE_ARRAY dawg,
       prevchar = best_string (c);
     }
   }
+  print_choices ("dawg_permute", result);cprintf("\n");
   if (result && (dawg_debug == 1))
     print_choices ("dawg_permute", result);
   return (result);
@@ -411,5 +434,7 @@ void end_permdawg() {
  * Tests a word against the frequent word dawg
  **********************************************************************/
 int test_freq_words(const char *word) {
+
+  
   return (word_in_dawg (frequent_words, word));
 }
