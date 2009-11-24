@@ -35,7 +35,7 @@ class BLOB_CHOICE:public ELIST_LINK
                 float src_rating,     //rating
                 float src_cert,       //certainty
                 inT8 src_config,      //config (font)
-                const wchar_t* script);  //script
+                const char* script);  //script
 
     void set_unichar(  //change it
                    char *newunichar) {
@@ -60,7 +60,7 @@ class BLOB_CHOICE:public ELIST_LINK
                       //The rationale is that the script is obtained from
                       //unicharset that manage itself ownership of returned
                       //pointers.
-                    const wchar_t* newscript) {
+                    const char* newscript) {
       blob_script = newscript;
     }
 
@@ -70,8 +70,8 @@ class BLOB_CHOICE:public ELIST_LINK
       return choice;
     }
 
-    const wchar_t* const unichar() const {  //access function
-      return (wchar_t*)blob_unichar;
+    const char* const unichar() const {  //access function
+      return blob_unichar;
     }
     float rating() const {  //access function
       return blob_rating;
@@ -82,7 +82,7 @@ class BLOB_CHOICE:public ELIST_LINK
     inT8 config() const {  //access function
       return blob_config;
     }
-    const wchar_t* script() const {  //access function
+    const char* script() const {  //access function
       return blob_script;
     }
 
@@ -92,7 +92,7 @@ class BLOB_CHOICE:public ELIST_LINK
     inT16 junk2;
     float blob_rating;                  //size related
     float blob_certainty;               //absolute
-    const wchar_t* blob_script;
+    const char* blob_script;
 };
 
                                  //make them listable

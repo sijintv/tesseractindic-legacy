@@ -593,7 +593,7 @@ DLLSYM BOOL8 read_variables_file(const char *file  // name to read
   return anyerr;
 }
 
-bool set_new_style_variable(const char *variable, const wchar_t* value) {
+bool set_new_style_variable(const char *variable, const char* value) {
   INT_VARIABLE_C_IT int_it = &INT_VARIABLE::head;
   BOOL_VARIABLE_C_IT BOOL_it = &BOOL_VARIABLE::head;
   STRING_VARIABLE_C_IT STRING_it = &STRING_VARIABLE::head;

@@ -479,7 +479,7 @@ const char *format, ...          //special message
 
 #else                            // Non graphical debugger
 
-DEBUG_WIN::DEBUG_WIN( const wchar_t*, inT32, inT32, inT32, inT32, inT32 ) {
+DEBUG_WIN::DEBUG_WIN( const char*, inT32, inT32, inT32, inT32, inT32 ) {
 }
 
 DEBUG_WIN::~DEBUG_WIN () {

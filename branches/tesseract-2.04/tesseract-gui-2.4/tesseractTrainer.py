@@ -833,19 +833,6 @@ class MainWindow:
         menuBar = self.makeMenu()
         vbox.pack_start(menuBar, False)
 
-	self.hbox = gtk.HBox(False,2)
-        vbox.pack_start(self.hbox, False)
-        self.hbox.show()
-
-        self.sendButton = gtk.Button("Send Data to Server")
-        self.hbox.pack_start(self.sendButton,False)
-        self.sendButton.show()
-
-        self.trainButton = gtk.Button("Train a New Character Set")
-        self.hbox.pack_start(self.trainButton,False)
-        self.trainButton.show()
-
-
         self.scrolledWindow = gtk.ScrolledWindow()
         self.scrolledWindow.set_policy(gtk.POLICY_AUTOMATIC,
                                        gtk.POLICY_AUTOMATIC)

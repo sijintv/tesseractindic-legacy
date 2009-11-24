@@ -29,11 +29,11 @@
 #include "freelist.h"
 #include "emalloc.h"
 
-int main(int argc, wchar_t** argv) {
+int main(int argc, char** argv) {
 
   if (argc == 3) {
-    const wchar_t* wordlist_filename = argv[1];
-    const wchar_t* dawg_filename = argv[2];
+    const char* wordlist_filename = argv[1];
+    const char* dawg_filename = argv[2];
 
     EDGE_ARRAY dawg;
     inT32 max_num_edges =  10000000;

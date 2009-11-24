@@ -78,7 +78,7 @@ LABELEDLISTNODE, *LABELEDLIST;
 
 typedef struct
 {
-	wchar_t* Label;
+	char* Label;
 	int	NumMerged[MAX_NUM_PROTOS];
 	CLASS_TYPE Class;
 }MERGE_CLASS_NODE;
@@ -161,7 +161,7 @@ PARAMDESC *ConvertToPARAMDESC(
 	PARAM_DESC* Param_Desc,
 	int N);
 */
-void MergeInsignificantProtos(LIST ProtoList, const wchar_t* label,
+void MergeInsignificantProtos(LIST ProtoList, const char* label,
                               CLUSTERER	*Clusterer, CLUSTERCONFIG *Config);
 
 LIST RemoveInsignificantProtos(
@@ -179,7 +179,7 @@ void Normalize (
 void SetUpForFloat2Int(
 	LIST LabeledClassList);
 
-void WritePFFMTable(INT_TEMPLATES Templates, const wchar_t* filename);
+void WritePFFMTable(INT_TEMPLATES Templates, const char* filename);
 
 //--------------Global Data Definitions and Declarations--------------
 static char FontName[MAXNAMESIZE];
@@ -204,12 +204,12 @@ static FLOAT32 RoundingAccuracy = 0.0f;
 // The unicharset used during mftraining
 static UNICHARSET unicharset_mftraining;
 
-const wchar_t* test_ch = "";
+const char* test_ch = "";
 
 /*----------------------------------------------------------------------------
 						Public Code
 -----------------------------------------------------------------------------*/
-void DisplayProtoList(const wchar_t* ch, LIST protolist) {
+void DisplayProtoList(const char* ch, LIST protolist) {
   void* window = c_create_window("Char samples", 50, 200,
                                  520, 520, -130.0, 130.0, -130.0, 130.0);
   LIST proto = protolist;
@@ -670,7 +670,7 @@ LABELEDLIST NewLabeledList (
 	LABELEDLIST	LabeledList;
 
 	LabeledList = (LABELEDLIST) Emalloc (sizeof (LABELEDLISTNODE));
-	LabeledList->Label = (wchar_t*)Emalloc (strlen (Label)+1);
+	LabeledList->Label = (char*)Emalloc (strlen (Label)+1);
 	strcpy (LabeledList->Label, Label);
 	LabeledList->List = NIL;
     LabeledList->SampleCount = 0;
@@ -685,7 +685,7 @@ MERGE_CLASS NewLabeledClass (
 	MERGE_CLASS	MergeClass;
 
 	MergeClass = (MERGE_CLASS) Emalloc (sizeof (MERGE_CLASS_NODE));
-	MergeClass->Label = (wchar_t*)Emalloc (strlen (Label)+1);
+	MergeClass->Label = (char*)Emalloc (strlen (Label)+1);
 	strcpy (MergeClass->Label, Label);
 	MergeClass->Class = NewClass (MAX_NUM_PROTOS, MAX_NUM_CONFIGS);
 	return (MergeClass);
@@ -1087,7 +1087,7 @@ CLUSTERER *SetUpForClustering(
 }	/* SetUpForClustering */
 
 /*------------------------------------------------------------------------*/
-void MergeInsignificantProtos(LIST ProtoList, const wchar_t* label,
+void MergeInsignificantProtos(LIST ProtoList, const char* label,
                               CLUSTERER	*Clusterer, CLUSTERCONFIG *Config) {
   PROTOTYPE	*Prototype;
   bool debug = strcmp(test_ch, label) == 0;
@@ -1324,7 +1324,7 @@ void SetUpForFloat2Int(
 } // SetUpForFloat2Int
 
 /*--------------------------------------------------------------------------*/
-void WritePFFMTable(INT_TEMPLATES Templates, const wchar_t* filename) {
+void WritePFFMTable(INT_TEMPLATES Templates, const char* filename) {
   FILE* fp = Efopen(filename, "wb");
   /* then write out each class */
   for (int i = 0; i < Templates->NumClasses; i++) {

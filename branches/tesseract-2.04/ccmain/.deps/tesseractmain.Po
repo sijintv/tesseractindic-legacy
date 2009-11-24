@@ -72,7 +72,8 @@ tesseractmain.o: tesseractmain.cpp ../ccutil/mfcpch.h applybox.h \
  ../wordrec/closed.h ../wordrec/associate.h ../wordrec/badwords.h \
  ../cutil/structures.h ../cutil/oldlist.h ../cutil/freelist.h \
  ../cutil/danerror.h /usr/include/setjmp.h /usr/include/bits/setjmp.h \
- callnet.h ../config_auto.h
+ callnet.h ../config_auto.h /usr/include/tiffio.h /usr/include/tiff.h \
+ /usr/include/tiffconf.h /usr/include/tiffvers.h
 
 ../ccutil/mfcpch.h:
 
@@ -485,3 +486,11 @@ expandblob.h:
 callnet.h:
 
 ../config_auto.h:
+
+/usr/include/tiffio.h:
+
+/usr/include/tiff.h:
+
+/usr/include/tiffconf.h:
+
+/usr/include/tiffvers.h:

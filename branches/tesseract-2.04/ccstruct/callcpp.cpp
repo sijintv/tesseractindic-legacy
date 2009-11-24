@@ -155,7 +155,7 @@ void c_check_mem(                     //check consistency
 
 #ifndef GRAPHICS_DISABLED
 ScrollView *c_create_window(                   /*create a window */
-                      const wchar_t *name,  /*name/title of window */
+                      const char *name,  /*name/title of window */
                       inT16 xpos,        /*coords of window */
                       inT16 ypos,        /*coords of window */
                       inT16 xsize,       /*size of window */

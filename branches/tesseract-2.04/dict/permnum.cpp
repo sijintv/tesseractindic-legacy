@@ -307,7 +307,7 @@ void init_permnum() {
  * table) we are looking at.
  **********************************************************************/
 int number_character_type(  //current state
-                          const wchar_t* ch,
+                          const char* ch,
                           int length,
                           int state) {
   if (unicharset.get_isalpha (ch, length)) {

@@ -316,8 +316,6 @@ EDGE_REF edge_char_of(EDGE_ARRAY dawg,
 
 inT32 edges_in_node(EDGE_ARRAY dawg, NODE_REF node);
 
-wchar_t* utf2wchar(const char *str);
-
 
 inT32 def_letter_is_okay(EDGE_ARRAY dawg,
                      NODE_REF *node,

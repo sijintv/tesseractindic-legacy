@@ -22,7 +22,6 @@
 #include          "callcpp.h"
 #include          "ratngs.h"
 //#include "tordvars.h"
-#include <wchar.h>
 
 extern FILE *matcher_fp;
 
@@ -38,7 +37,7 @@ BLOB_CHOICE::BLOB_CHOICE(                   //constructor
                          float src_rating,  //rating
                          float src_cert,    //certainty
                          inT8 src_config,   //config (font)
-                         const wchar_t* src_script  //script
+                         const char* src_script  //script
                         ) {
   strcpy(blob_unichar, src_unichar);
   blob_rating = src_rating;
@@ -315,13 +314,13 @@ void print_ratings_info(                           //print summary info
     best_rat;                    //rating
   FLOAT32
     best_cert;                   //certainty
-  const wchar_t*
+  const char*
     first_char = NULL;           //character
   FLOAT32
     first_rat;                   //rating
   FLOAT32
     first_cert;                  //certainty
-  const wchar_t*
+  const char*
     sec_char = NULL;             //character
   FLOAT32
     sec_rat = 0.0f;              //rating
@@ -356,7 +355,7 @@ void print_ratings_info(                           //print summary info
   best_cert = -1;
   for (index = 0, c_it.mark_cycle_pt (); !c_it.cycled_list ();
   c_it.forward (), index++) {
-    if (wcscmp(c_it.data ()->unichar (), (wchar_t*)blob_answer) == 0) {
+    if (strcmp(c_it.data ()->unichar (), blob_answer) == 0) {
       best_index = index;
       best_rat = c_it.data ()->rating ();
       best_cert = -c_it.data ()->certainty ();

@@ -37,18 +37,18 @@ class UNICHARSET {
 
   // Return the UNICHAR_ID of a given unichar representation within the
   // UNICHARSET.
-  const UNICHAR_ID unichar_to_id(const wchar_t* const unichar_repr) const;
+  const UNICHAR_ID unichar_to_id(const char* const unichar_repr) const;
 
   // Return the UNICHAR_ID of a given unichar representation within the
   // UNICHARSET. Only the first length characters from unichar_repr are used.
-  const UNICHAR_ID unichar_to_id(const wchar_t* const unichar_repr,
+  const UNICHAR_ID unichar_to_id(const char* const unichar_repr,
                                  int length) const;
 
   // Return the minimum number of bytes that matches a legal UNICHAR_ID,
   // while leaving a legal UNICHAR_ID afterwards. In other words, if there
   // is both a short and a long match to the string, return the length that
   // ensures there is a legal match after it.
-  int step(const wchar_t* str) const;
+  int step(const char* str) const;
 
   // Return the unichar representation corresponding to the given UNICHAR_ID
   // within the UNICHARSET.
@@ -59,11 +59,11 @@ class UNICHARSET {
   STRING debug_str(UNICHAR_ID id) const;
 
   // Add a unichar representation to the set.
-  void unichar_insert(const wchar_t* const unichar_repr);
+  void unichar_insert(const char* const unichar_repr);
 
   // Return true if the given unichar representation exists within the set.
-  bool contains_unichar(const wchar_t* const unichar_repr);
-  bool contains_unichar(const wchar_t* const unichar_repr, int length);
+  bool contains_unichar(const char* const unichar_repr);
+  bool contains_unichar(const char* const unichar_repr, int length);
 
   // Return true if the given unichar representation corresponds to the given
   // UNICHAR_ID within the set.
@@ -109,7 +109,7 @@ class UNICHARSET {
   // Each list is a string of utf8 character strings. Boundaries between
   // unicharset units are worked out automatically, and characters not in
   // the unicharset are silently ignored.
-  void set_black_and_whitelist(const wchar_t* blacklist, const wchar_t* whitelist);
+  void set_black_and_whitelist(const char* blacklist, const char* whitelist);
 
   // Set the isalpha property of the given unichar to the given value.
   void set_isalpha(UNICHAR_ID unichar_id, bool value) {
@@ -165,56 +165,56 @@ class UNICHARSET {
   }
 
   // Return the isalpha property of the given unichar representation.
-  bool get_isalpha(const wchar_t* const unichar_repr) const {
+  bool get_isalpha(const char* const unichar_repr) const {
     return get_isalpha(unichar_to_id(unichar_repr));
   }
 
   // Return the islower property of the given unichar representation.
-  bool get_islower(const wchar_t* const unichar_repr) const {
+  bool get_islower(const char* const unichar_repr) const {
     return get_islower(unichar_to_id(unichar_repr));
   }
 
   // Return the isupper property of the given unichar representation.
-  bool get_isupper(const wchar_t* const unichar_repr) const {
+  bool get_isupper(const char* const unichar_repr) const {
     return get_isupper(unichar_to_id(unichar_repr));
   }
 
   // Return the isdigit property of the given unichar representation.
-  bool get_isdigit(const wchar_t* const unichar_repr) const {
+  bool get_isdigit(const char* const unichar_repr) const {
     return get_isdigit(unichar_to_id(unichar_repr));
   }
 
   // Return the script name of the given unichar representation.
   // The returned pointer will always be the same for the same script, it's
   // managed by unicharset and thus MUST NOT be deleted
-  const char* get_script(const wchar_t* const unichar_repr) const {
+  const char* get_script(const char* const unichar_repr) const {
     return get_script(unichar_to_id(unichar_repr));
   }
 
   // Return the isalpha property of the given unichar representation.
   // Only the first length characters from unichar_repr are used.
-  bool get_isalpha(const wchar_t* const unichar_repr,
+  bool get_isalpha(const char* const unichar_repr,
                int length) const {
     return get_isalpha(unichar_to_id(unichar_repr, length));
   }
 
   // Return the islower property of the given unichar representation.
   // Only the first length characters from unichar_repr are used.
-  bool get_islower(const wchar_t* const unichar_repr,
+  bool get_islower(const char* const unichar_repr,
                int length) const {
     return get_islower(unichar_to_id(unichar_repr, length));
   }
 
   // Return the isupper property of the given unichar representation.
   // Only the first length characters from unichar_repr are used.
-  bool get_isupper(const wchar_t* const unichar_repr,
+  bool get_isupper(const char* const unichar_repr,
                int length) const {
     return get_isupper(unichar_to_id(unichar_repr, length));
   }
 
   // Return the isdigit property of the given unichar representation.
   // Only the first length characters from unichar_repr are used.
-  bool get_isdigit(const wchar_t* const unichar_repr,
+  bool get_isdigit(const char* const unichar_repr,
                int length) const {
     return get_isdigit(unichar_to_id(unichar_repr, length));
   }
@@ -223,7 +223,7 @@ class UNICHARSET {
   // Only the first length characters from unichar_repr are used.
   // The returned pointer will always be the same for the same script, it's
   // managed by unicharset and thus MUST NOT be deleted
-  const char* get_script(const wchar_t* const unichar_repr,
+  const char* get_script(const char* const unichar_repr,
                int length) const {
     return get_script(unichar_to_id(unichar_repr, length));
   }

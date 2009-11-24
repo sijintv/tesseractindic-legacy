@@ -317,7 +317,7 @@ if (dopasses==0 || dopasses==1)
       else {
         const STRING* wordstr = &(page_res_it.word ()->best_choice->string ());
         /* Override rejection mechanisms for this word */
-        const wchar_t* text = wordstr->string ();
+        const char* text = wordstr->string ();
         for (i = 0; text[i] != '\0'; i++) {
           if ((text[i] != ' ')
             && page_res_it.word ()->reject_map[i].rejected ())
@@ -1127,8 +1127,8 @@ void fix_rep_char(                //Repeated char word
 // Utility function for fix_quotes
 // Return true if the next character in the string (given the UTF8 length in
 // bytes) is a quote character.
-static int is_simple_quote(const wchar_t* signed_str, int length) {
-  const unsigned wchar_t* str = reinterpret_cast<const unsigned wchar_t*>(signed_str);
+static int is_simple_quote(const char* signed_str, int length) {
+  const unsigned char* str = reinterpret_cast<const unsigned char*>(signed_str);
    //standard 1 byte quotes
   return (length == 1 && (*str == '\'' || *str == '`')) ||
       //utf8 3 bytes curved quotes
@@ -1172,7 +1172,7 @@ void fix_quotes(               //make double quotes
               str + offset + choice->lengths()[i] +
               choice->lengths()[i + 1]); //shuffle up
       choice->lengths()[i] = 1;
-      strcpy ((wchar_t*) choice->lengths().string() + i + 1,
+      strcpy ((char*) choice->lengths().string() + i + 1,
               choice->lengths().string() + i + 2);
       merge_blobs (blob_it.data (), blob_it.data_relative (1));
       blob_it.forward ();
@@ -1227,7 +1227,7 @@ void fix_hyphens(               //crunch double hyphens
       strcpy (str + offset + choice->lengths()[i],
               str + offset + choice->lengths()[i] +
               choice->lengths()[i + 1]); //shuffle up
-      strcpy ((wchar_t*) choice->lengths().string() + i + 1,
+      strcpy ((char*) choice->lengths().string() + i + 1,
               choice->lengths().string() + i + 2);
       merge_blobs (blob_it.data (), blob_it.data_relative (1));
       blob_it.forward ();
@@ -1370,7 +1370,7 @@ ACCEPTABLE_WERD_TYPE acceptable_word_string(const char *s,
   if (strlen (lengths) > 20)
     return word_type;
 
-  /* Single Leading punctuation wchar_t*/
+  /* Single Leading punctuation char*/
 
   if ((s[offset] != '\0') && (STRING (chs_leading_punct).contains (s[offset])))
     offset += lengths[i++];

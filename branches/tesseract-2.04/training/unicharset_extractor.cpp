@@ -43,13 +43,13 @@
 #include "boxread.h"
 #include "tessopt.h"
 
-static const wchar_t* const kUnicharsetFileName = "unicharset";
+static const char* const kUnicharsetFileName = "unicharset";
 
 // Set character properties using wctype if we have it.
 // Contributed by piggy@gmail.com.
 // Modified by Ray to use UNICHAR for unicode conversion
 // and to check for wctype using autoconf/presence of windows.
-void set_properties(UNICHARSET *unicharset, const wchar_t* const c_string) {
+void set_properties(UNICHARSET *unicharset, const char* const c_string) {
 #ifdef USING_WCTYPE
   UNICHAR_ID id;
   int wc;
@@ -78,9 +78,9 @@ void set_properties(UNICHARSET *unicharset, const wchar_t* const c_string) {
 #endif
 }
 
-int main(int argc, wchar_t** argv) {
+int main(int argc, char** argv) {
   int option;
-  const wchar_t* output_directory = ".";
+  const char* output_directory = ".";
   STRING unicharset_file_name;
   UNICHARSET unicharset;
 

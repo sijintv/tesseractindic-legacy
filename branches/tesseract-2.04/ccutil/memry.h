@@ -31,7 +31,7 @@
 #define NEWDELETE										/*replace new & delete*/\
 	void					*operator new(				/*fast allocator*/\
 	size_t					size,						/*size of object*/\
-	const wchar_t*				file=NULL,					/*filename*/\
+	const char*				file=NULL,					/*filename*/\
 	inT32					line=0)						/*line number*/\
 	{\
 		return alloc_struct(size);						/*simple to do*/\
@@ -47,7 +47,7 @@
 #define NEWDELETE2(name)								/*replace new & delete*/\
 	void					*operator new(				/*fast allocator*/\
 	size_t					size,						/*size of object*/\
-	const wchar_t*				file=NULL,					/*filename*/\
+	const char*				file=NULL,					/*filename*/\
 	inT32					line=0)						/*line number*/\
 	{\
 		return alloc_struct(size,#name);				/*simple to do*/\

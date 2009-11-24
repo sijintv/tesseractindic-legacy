@@ -47,7 +47,7 @@ class UNICHAR {
   // Construct from a utf8 string. If len<0 then the string is null terminated.
   // If the string is too long to fit in the UNICHAR then it takes only what
   // will fit.
-  UNICHAR(const wchar_t* utf8_str, int len);
+  UNICHAR(const char* utf8_str, int len);
 
   // Construct from a single UCS4 character.
   explicit UNICHAR(int unicode);
@@ -64,15 +64,15 @@ class UNICHAR {
   }
 
   // Get a UTF8 string, but NOT NULL terminated.
-  const wchar_t* utf8() const {
-    return (wchar_t*)chars;
+  const char* utf8() const {
+    return chars;
   }
 
   // Get a terminated UTF8 string: Must delete[] it after use.
-  wchar_t* utf8_str() const;
+  char* utf8_str() const;
 
   // Get the number of bytes in the first character of the given utf8 string.
-  static int utf8_step(const wchar_t* utf8_str);
+  static int utf8_step(const char* utf8_str);
 
  private:
   // A UTF-8 representation of 1 or more Unicode characters.

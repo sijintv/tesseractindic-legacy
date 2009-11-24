@@ -82,7 +82,7 @@ char						*arglist[]					/*output args*/\
 }\
 \
 inT32						global_exit_code;\
-inT32						real_main(inT32,const wchar_t**);\
+inT32						real_main(inT32,const char**);\
 \
 inT32						run_main(					/*the main thread*/\
 CWinApp*					theapp						/*arguments*/\
@@ -97,7 +97,7 @@ CWinApp*					theapp						/*arguments*/\
 	argsin[1]=strdup(theapp->m_lpCmdLine);\
 /*allocate memory for the args. There can never be more than half*/\
 /*the total number of characters in the arguments.*/\
-	argv=(wchar_t**)malloc(((strlen(argsin[0])+strlen(argsin[1]))/2+1)*sizeof(wchar_t*));\
+	argv=(char**)malloc(((strlen(argsin[0])+strlen(argsin[1]))/2+1)*sizeof(char*));\
 \
 /*now construct argv as it should be for C.*/\
 	argc=parse_args(2,argsin,argv);\
@@ -116,7 +116,7 @@ CWinApp*					theapp						/*arguments*/\
 	return exit_code;\
 }\
 \
-inT32						real_main(inT32 ARGC,const wchar_t* ARGV[])\
+inT32						real_main(inT32 ARGC,const char* ARGV[])\
 
 #else
 
@@ -167,7 +167,7 @@ char						*arglist[]					/*output args*/\
 	return argcount;									/*new number of args*/\
 }\
 \
-inT32						main(inT32 ARGC,const wchar_t* ARGV[])\
+inT32						main(inT32 ARGC,const char* ARGV[])\
 
 #endif
 

@@ -98,7 +98,7 @@ uinT32 EvidenceMultMask;
 
 static inT16 LocalMatcherMultiplier;
 
-make_int_var (ClassPrunerThreshold, 200, MakeClassPrunerThreshold,
+make_int_var (ClassPrunerThreshold, 229, MakeClassPrunerThreshold,
 16, 20, SetClassPrunerThreshold,
 "Class Pruner Threshold 0-255:        ");
 

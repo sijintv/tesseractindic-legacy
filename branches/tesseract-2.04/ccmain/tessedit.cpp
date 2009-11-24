@@ -119,7 +119,6 @@ void init_tesseract_lang_data(const char *arg0,
                    const char *const *configv) {
   FILE *var_file;
   static char c_path[MAX_PATH];  //path for c code
-  cprintf("\nsaa\n");
 
   // Set the basename, compute the data directory and read C++ configs.
   main_setup(arg0, textbase, configc, configv);
@@ -138,9 +137,8 @@ void init_tesseract_lang_data(const char *arg0,
 
   // Set the language data path prefix
   language_data_path_prefix = datadir;
-  if (language != NULL){
+  if (language != NULL)
     language_data_path_prefix += language;
-    cprintf("\nlanguage=%s\n",language);}
   else
     language_data_path_prefix += "eng";
   language_data_path_prefix += ".";
@@ -173,7 +171,6 @@ int init_tesseract(const char *arg0,
   start_recog(configfile, textbase);
 
   set_tess_tweak_vars();
-  cprintf("\nree\n");
 
   if (tessedit_use_nn)           //phils nn stuff
     init_net();
@@ -191,7 +188,6 @@ int init_tesseract_lm(const char *arg0,
     configfile, configc, configv);
 
   init_permute();
-  cprintf("\ngaa\n");
 
   return 0;                      //Normal exit
 }

@@ -135,15 +135,9 @@ bool add_new_edge(EDGE_ARRAY dawg,
                   inT32 reserved_edges);
 
 void add_word_to_dawg(EDGE_ARRAY dawg,
-                      const wchar_t *string,
-                      inT32 max_num_edges,
-                      inT32 reserved_edges);
-
-void add_word_to_dawg(EDGE_ARRAY dawg,
                       const char *string,
                       inT32 max_num_edges,
                       inT32 reserved_edges);
-
 
 void initialize_dawg(EDGE_ARRAY dawg, inT32 max_num_edges);
 
@@ -158,8 +152,6 @@ NODE_REF new_dawg_node(EDGE_ARRAY dawg,
                        inT32 reserved_edges);
 
 void print_dawg_map (EDGE_ARRAY dawg, inT32 max_num_edges);
-
-wchar_t* utf2wchar(const char*);
 
 void read_full_dawg (const char *filename,
                      EDGE_ARRAY dawg,

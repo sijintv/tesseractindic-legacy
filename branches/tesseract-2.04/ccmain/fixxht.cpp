@@ -581,11 +581,11 @@ void check_block_occ(WERD_RES *word_res) {
  * Return 0 for reject, or (possibly case shifted) confirmed char
  *************************************************************************/
 
-void check_blob_occ(wchar_t* proposed_char,
+void check_blob_occ(char* proposed_char,
                     inT16 blob_ht_above_baseline,
                     float x_ht,
                     float caps_ht,
-                    wchar_t* confirmed_char) {
+                    char* confirmed_char) {
   BOOL8 blob_definite_x_ht;
   BOOL8 blob_definite_caps_ht;
   float acceptable_variation;

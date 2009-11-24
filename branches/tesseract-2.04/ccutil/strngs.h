@@ -40,7 +40,6 @@ class DLLSYM STRING
     STRING();
     STRING(const STRING &string);
     STRING(const char *string);
-    STRING(const wchar_t *string);
     ~STRING ();
 
     BOOL8 contains(const char c) const;

@@ -42,16 +42,16 @@ int case_ok(const char *word, const char *lengths);
 
 void write_choice_line();
 
-typedef double (*PROBABILITY_IN_CONTEXT_FUNCTION)(const wchar_t* context,
+typedef double (*PROBABILITY_IN_CONTEXT_FUNCTION)(const char* context,
                                                   int context_bytes,
-                                                  const wchar_t* character,
+                                                  const char* character,
                                                   int character_bytes);
 
 extern PROBABILITY_IN_CONTEXT_FUNCTION probability_in_context;
 
-extern double def_probability_in_context(const wchar_t* context,
+extern double def_probability_in_context(const char* context,
                                          int context_bytes,
-                                         const wchar_t* character,
+                                         const char* character,
                                          int character_bytes);
 
 /*

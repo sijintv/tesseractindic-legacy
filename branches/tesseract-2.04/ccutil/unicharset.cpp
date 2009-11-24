@@ -24,8 +24,6 @@
 
 #include "unichar.h"
 #include "unicharset.h"
-#include <wchar.h>
-//#include "../dict/dawg.h"
 
 static const int ISALPHA_MASK = 0x1;
 static const int ISLOWER_MASK = 0x2;
@@ -67,12 +65,12 @@ void UNICHARSET::reserve(int unichars_number) {
 }
 
 const UNICHAR_ID
-UNICHARSET::unichar_to_id(const wchar_t* const unichar_repr) const {
+UNICHARSET::unichar_to_id(const char* const unichar_repr) const {
   assert(ids.contains(unichar_repr));
   return ids.unichar_to_id(unichar_repr);
 }
 
-const UNICHAR_ID UNICHARSET::unichar_to_id(const wchar_t* const unichar_repr,
+const UNICHAR_ID UNICHARSET::unichar_to_id(const char* const unichar_repr,
                                            int length) const {
   assert(length > 0 && length <= UNICHAR_LEN);
   assert(ids.contains(unichar_repr, length));
@@ -83,7 +81,7 @@ const UNICHAR_ID UNICHARSET::unichar_to_id(const wchar_t* const unichar_repr,
 // while leaving a legal UNICHAR_ID afterwards. In other words, if there
 // is both a short and a long match to the string, return the length that
 // ensures there is a legal match after it.
-int UNICHARSET::step(const wchar_t* str) const {
+int UNICHARSET::step(const char* str) const {
   // Find the length of the first matching unicharset member.
   int minlength = ids.minmatch(str);
   if (minlength == 0)
@@ -146,7 +144,7 @@ STRING UNICHARSET::debug_str(UNICHAR_ID id) const {
   return result;
 }
 
-void UNICHARSET::unichar_insert(const wchar_t* const unichar_repr) {
+void UNICHARSET::unichar_insert(const char* const unichar_repr) {
   if (!ids.contains(unichar_repr)) {
     if (size_used == size_reserved) {
       if (size_used == 0)
@@ -154,9 +152,8 @@ void UNICHARSET::unichar_insert(const wchar_t* const unichar_repr) {
       else
         reserve(2 * size_used);
     }
-        
 
-    wcscpy((wchar_t*)unichars[size_used].representation, unichar_repr);
+    strcpy(unichars[size_used].representation, unichar_repr);
     this->set_isalpha(size_used, false);
     this->set_islower(size_used, false);
     this->set_isupper(size_used, false);
@@ -168,11 +165,11 @@ void UNICHARSET::unichar_insert(const wchar_t* const unichar_repr) {
   }
 }
 
-bool UNICHARSET::contains_unichar(const wchar_t* const unichar_repr) {
+bool UNICHARSET::contains_unichar(const char* const unichar_repr) {
   return ids.contains(unichar_repr);
 }
 
-bool UNICHARSET::contains_unichar(const wchar_t* const unichar_repr, int length) {
+bool UNICHARSET::contains_unichar(const char* const unichar_repr, int length) {
   return ids.contains(unichar_repr, length);
 }
 
@@ -225,7 +222,7 @@ bool UNICHARSET::load_from_file(const char* filename) {
   }
   this->reserve(unicharset_size);
   for (UNICHAR_ID id = 0; id < unicharset_size; ++id) {
-    wchar_t unichar[256];
+    char unichar[256];
     unsigned int properties;
     char script[64];
 
@@ -236,8 +233,8 @@ bool UNICHARSET::load_from_file(const char* filename) {
       fclose(file);
       return false;
     }
-    if (wcscmp(unichar, L"NULL") == 0)
-      this->unichar_insert(L" ");
+    if (strcmp(unichar, "NULL") == 0)
+      this->unichar_insert(" ");
     else
       this->unichar_insert(unichar);
 
@@ -255,9 +252,9 @@ bool UNICHARSET::load_from_file(const char* filename) {
 // Set a whitelist and/or blacklist of characters to recognize.
 // An empty or NULL whitelist enables everything (minus any blacklist).
 // An empty or NULL blacklist disables nothing.
-void UNICHARSET::set_black_and_whitelist(const wchar_t* blacklist,
-                                         const wchar_t* whitelist) {
-  bool def_enabled = whitelist == NULL || whitelist[0] == L'\0';
+void UNICHARSET::set_black_and_whitelist(const char* blacklist,
+                                         const char* whitelist) {
+  bool def_enabled = whitelist == NULL || whitelist[0] == '\0';
   // Set everything to default
   for (int ch = 0; ch < size_used; ++ch)
     unichars[ch].properties.enabled = def_enabled;

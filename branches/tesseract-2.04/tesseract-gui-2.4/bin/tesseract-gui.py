@@ -27,9 +27,8 @@ import pango
 import sys
 import subprocess
 import string
-import imp
-import shutil
 
+import reorder_ban
 import tesseractTrainer
 
 
@@ -624,10 +623,6 @@ class Whc:
 ### Functions-------------------------------------------------------------------
 	### Importatnt Functions ---------------------------------------------------
 	def f_train(self,a):
-		exec_string="tesseract "+self.imageName+" "+self.imageName.rsplit(".",1)[0] + " -l "+self.lang+" batch.nochop makebox"
-		runBash(exec_string)
-		exec_string="mv "+self.imageName.rsplit(".",1)[0]+".txt"+" "+self.imageName.rsplit(".",1)[0]+".box"
-		runBash(exec_string)
 		tesseractTrainer.mod(self.imageName)
 		print a
 		print self
@@ -900,8 +895,9 @@ class Whc:
 					runBash("tesseract '" + self.imageName + "' '" + self.FolderOut  \
 									+ "temp" + "' -l " + self.lang  + " ;")
 				
-					self.reorder(self.FolderOut+"temp.txt",self.FolderOut+NameOut)	
-					
+					reorder_ban.readwrite(self.FolderOut+"temp.txt",self.FolderOut+NameOut)	
+					runBash("gedit "+self.FolderOut+NameOut)					
+
 					print "Recognition: "+self.FolderOut+NameOut+"' Language: "+self.lang
 #					runBash("rm " + Processtif  + " ;")
 
@@ -909,7 +905,6 @@ class Whc:
 					self.ProcessedFiles.sort()
 					print self.ProcessedFiles
 					self.dialogInfo.change("info",self.LCprocessend,"show")
-					runBash("gedit "+self.FolderOut+NameOut)
 	# f_process_img END
 
 
@@ -1225,7 +1220,6 @@ class Whc:
 					self.LCgerman:"deu",\
 					self.LCfrench:"fra",\
 					self.LCbangla:"ban",\
-					self.LCmalayalam:"mal",\
 					self.LChindi:"hin",\
 					self.LCenglish:"eng"}
 		self.ListLanguages={}
@@ -1235,7 +1229,6 @@ class Whc:
 			LangExist = runBash("ls /usr/local/share/tessdata/" \
 						+ (Languages.values()[nn]) + ".unicharset 2> /dev/null")
 			if LangExist :
-				print Languages.values()[nn]
 				self.ListLanguages[Languages.keys()[nn]]=Languages.values()[nn]
 				self.cmbLang.append_text(Languages.keys()[nn])
 				if self.ConfVars["Language"] == Languages.values()[nn]:
@@ -1418,19 +1411,6 @@ class Whc:
 			print Action
 			runBash(Action + " > " + self.FolderOut + Nombre + ".txt;")
 	# f_concat_files END
-	
-	def reorder(self,infile,outfile):
-		
-		reorder_path="vowel_reorder/reorder_"+self.lang+".py"
-		if os.path.exists(reorder_path):
-			fp, pathname, desc = imp.find_module(reorder_path.rsplit('.',1)[0])
-			reorder_module=imp.load_module(reorder_path.rsplit('.',1)[0],fp,pathname,desc)
-			reorder_module.readwrite(infile,outfile)
-		else:
-			print "No reodering data available for "+self.lang
-			shutil.copyfile(infile,outfile)
-			
-
 
 	def f_fronend_lang(self):
 		LFE = os.environ['LANG']
@@ -1480,7 +1460,6 @@ class Whc:
 			self.LCportuguese="Portugués"
 			self.LCbangla="Bangla"
 			self.LChindi="Hindi"
-			self.LCmalayalam="Malayalam"
 		# elif Lang == "de":
 		# elif Lang == "fr":
 		# elif Lang == "pt":
@@ -1529,7 +1508,6 @@ class Whc:
 			self.LCportuguese="Portuguese"
 			self.LCbangla="Bangla"
                         self.LChindi="Hindi"
-			self.LCmalayalam="Malayalam"
 
 
 	# f_frontend_lang END

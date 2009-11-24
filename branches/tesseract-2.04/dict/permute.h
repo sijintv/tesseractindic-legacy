@@ -80,7 +80,7 @@ A_CHOICE *permute_top_choice(CHOICES_LIST character_choices,
                              A_CHOICE *raw_choice,
                              BOOL8 *any_alpha);
 
-const wchar_t* choose_il1(const char *first_char,   //first choice
+const char* choose_il1(const char *first_char,   //first choice
                        const char *second_char,  //second choice
                        const char *third_char,   //third choice
                        const char *prev_char,    //prev in word
