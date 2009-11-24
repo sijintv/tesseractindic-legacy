@@ -29,21 +29,6 @@
 #include "globals.h"
 #include "danerror.h"
 #include "host.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include "permute.h"
-#include "globals.h"
-#include "permdawg.h"
-#include "debug.h"
-#include "tordvars.h"
-#include "hyphen.h"
-#include "stopper.h"
-#include "trie.h"
-#include "context.h"
-#include "permnum.h"
-#include "freelist.h"
-#include "callcpp.h"
-#include "permngram.h"
 
 /*----------------------------------------------------------------------
             Variables
@@ -83,7 +68,7 @@ CHOICES append_choice(CHOICES ratings,
                       float rating,
                       float certainty,
                       inT8 config,
-                      const wchar_t* script) {
+                      const char* script) {
   A_CHOICE *this_choice;
 
   this_choice = new_choice (string, lengths, rating, certainty, config,
@@ -157,7 +142,7 @@ A_CHOICE *new_choice(const char *string,
                      float rating,
                      float certainty,
                      inT8 config,
-                     const wchar_t* script,
+                     const char* script,
                      char permuter) {
   A_CHOICE *this_choice;
 
@@ -180,12 +165,12 @@ A_CHOICE *new_choice(const char *string,
  **********************************************************************/
 void print_choices(const char *label,
                    CHOICES rating) {   // List of (A_CHOICE*).
-  cprintf("%s\n", label);
+  tprintf("%s\n", label);
   if (rating == NIL)
-    cprintf(" No rating ");
+    tprintf(" No rating ");
 
   iterate(rating) {
-    cprintf("%.2f %.2f", best_probability(rating), best_certainty(rating));
+    tprintf("%.2f %.2f", best_probability(rating), best_certainty(rating));
     print_word_string(best_string(rating));
   }
   tprintf("\n");
@@ -199,11 +184,11 @@ void print_choices(const char *label,
 void print_word_choice(const char *label, A_CHOICE* choice) {
   tprintf("%s : ", label);
   if (choice == NULL) {
-    cprintf("No rating\n");
+    tprintf("No rating\n");
   } else {
-    cprintf("%.2f %.2f", class_probability(choice), class_certainty(choice));
+    tprintf("%.2f %.2f", class_probability(choice), class_certainty(choice));
     print_word_string(class_string(choice));
-    cprintf("\n");
+    tprintf("\n");
   }
 }
 
@@ -213,13 +198,13 @@ void print_word_choice(const char *label, A_CHOICE* choice) {
  * Print the string in a human-readable format.
  * The output is not newline terminated.
  **********************************************************************/
-void print_word_string(const wchar_t* str) {
+void print_word_string(const char* str) {
   int step = 1;
   for (int i = 0; str[i] != '\0'; i += step) {
     step = unicharset.step(str + i);
     int unichar_id = unicharset.unichar_to_id(str + i, step);
     STRING ch_str = unicharset.debug_str(unichar_id);
-    cprintf(" : %s ", ch_str.string());
+    tprintf(" : %s ", ch_str.string());
   }
 }
 
