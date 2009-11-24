@@ -31,12 +31,7 @@ choices.o: choices.cpp choices.h /usr/include/stdio.h \
  /usr/include/setjmp.h /usr/include/bits/setjmp.h ../cutil/tordvars.h \
  ../cutil/globals.h ../cutil/const.h ../ccutil/unicharset.h \
  ../ccutil/unichar.h /usr/include/memory.h ../ccutil/unicharmap.h \
- ../ccutil/strngs.h ../cutil/danerror.h permute.h choicearr.h \
- ../cutil/tessarray.h permdawg.h dawg.h /usr/include/ctype.h \
- ../cutil/general.h ../cutil/debug.h ../cutil/variables.h \
- ../cutil/callcpp.h ../ccutil/varable.h ../ccutil/unichar.h hyphen.h \
- ../cutil/emalloc.h stopper.h states.h trie.h ../cutil/cutil.h context.h \
- permnum.h ../cutil/freelist.h ../cutil/callcpp.h permngram.h
+ ../ccutil/strngs.h ../cutil/danerror.h
 
 choices.h:
 
@@ -191,49 +186,3 @@ choices.h:
 ../ccutil/strngs.h:
 
 ../cutil/danerror.h:
-
-permute.h:
-
-choicearr.h:
-
-../cutil/tessarray.h:
-
-permdawg.h:
-
-dawg.h:
-
-/usr/include/ctype.h:
-
-../cutil/general.h:
-
-../cutil/debug.h:
-
-../cutil/variables.h:
-
-../cutil/callcpp.h:
-
-../ccutil/varable.h:
-
-../ccutil/unichar.h:
-
-hyphen.h:
-
-../cutil/emalloc.h:
-
-stopper.h:
-
-states.h:
-
-trie.h:
-
-../cutil/cutil.h:
-
-context.h:
-
-permnum.h:
-
-../cutil/freelist.h:
-
-../cutil/callcpp.h:
-
-permngram.h:
