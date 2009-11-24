@@ -28,14 +28,7 @@ trie.o: trie.cpp trie.h dawg.h /usr/include/ctype.h \
  ../ccutil/serialis.h ../ccutil/memry.h ../ccutil/errcode.h \
  ../ccutil/fileerr.h ../ccutil/lsterr.h ../ccutil/strngs.h \
  ../cutil/callcpp.h ../ccutil/varable.h ../ccutil/unichar.h \
-<<<<<<< .mine
- /usr/include/memory.h /usr/include/assert.h /usr/include/bits/wchar.h \
- /usr/include/bits/wchar2.h /usr/include/locale.h \
- /usr/include/bits/locale.h
-=======
- /usr/include/memory.h /usr/include/assert.h /usr/include/bits/wchar.h \
- /usr/include/bits/wchar2.h
->>>>>>> .r74
+ /usr/include/memory.h /usr/include/assert.h
 
 trie.h:
 
@@ -172,18 +165,3 @@ dawg.h:
 /usr/include/memory.h:
 
 /usr/include/assert.h:
-<<<<<<< .mine
-
-/usr/include/bits/wchar.h:
-
-/usr/include/bits/wchar2.h:
-
-/usr/include/locale.h:
-
-/usr/include/bits/locale.h:
-=======
-
-/usr/include/bits/wchar.h:
-
-/usr/include/bits/wchar2.h:
->>>>>>> .r74

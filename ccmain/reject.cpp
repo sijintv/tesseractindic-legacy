@@ -1763,13 +1763,13 @@ void flip_0O(WERD_RES *word) {
 }
 
 
-BOOL8 non_O_upper(const wchar_t* str, int length) {
+BOOL8 non_O_upper(const char* str, int length) {
   return unicharset.get_isupper (str, length) &&
       (!unicharset.eq(unicharset.unichar_to_id(str, length), "O"));
 }
 
 
-BOOL8 non_0_digit(const wchar_t* str, int length) {
+BOOL8 non_0_digit(const char* str, int length) {
   return unicharset.get_isdigit (str, length) &&
       (!unicharset.eq(unicharset.unichar_to_id(str, length), "0"));
 }

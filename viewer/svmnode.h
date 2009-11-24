@@ -40,21 +40,21 @@ class SVMenuNode {
 
   // Create a new sub menu node with just a caption.  This is used to create
   // nodes which act as parent nodes to other nodes (e.g. submenus).
-  SVMenuNode* AddChild(const wchar_t* txt);
+  SVMenuNode* AddChild(const char* txt);
 
   // Create a "normal" menu node which is associated with a command event.
-  void AddChild(const wchar_t* txt, int command_event);
+  void AddChild(const char* txt, int command_event);
   
   // Create a flag menu node.
-  void AddChild(const wchar_t* txt, int command_event, int tv);
+  void AddChild(const char* txt, int command_event, int tv);
 
   // Create a menu node with an associated value (which might be changed
   // through the gui).
-  void AddChild(const wchar_t* txt, int command_event, const wchar_t* val);
+  void AddChild(const char* txt, int command_event, const char* val);
 
   // Create a menu node with an associated value and description_.
-  void AddChild(const wchar_t* txt, int command_event,
-                const wchar_t* val, const wchar_t* desc);
+  void AddChild(const char* txt, int command_event,
+                const char* val, const char* desc);
 
   // Build a menu structure for the server and send the necessary messages.
   // Should be called on the root node. If menu_bar is true, a menu_bar menu
@@ -64,8 +64,8 @@ class SVMenuNode {
 
  private:
   // Constructor holding the actual node data.
-  SVMenuNode(int command_event, const wchar_t* txt, int tv,
-              bool check_box_entry, const wchar_t* val, const wchar_t* desc);
+  SVMenuNode(int command_event, const char* txt, int tv,
+              bool check_box_entry, const char* val, const char* desc);
 
   // Adds a new menu node to the current node.
   void AddChild(SVMenuNode* svmn);
@@ -82,13 +82,13 @@ class SVMenuNode {
   // The command event associated with a specific menu node. Should be unique.
   int cmd_event_;
   // The caption associated with a specific menu node.
-  wchar_t* text_;
+  char* text_;
   // The value of the flag (if this menu node is a flag).
   bool toggle_value_;
   // The value of the menu node. (optional)
-  const wchar_t* value_;
+  const char* value_;
   // A description_ of the value. (optional)
-  const wchar_t* description_;
+  const char* description_;
 };
 
 #endif  // TESSERACT_VIEWER_SVMNODE_H__

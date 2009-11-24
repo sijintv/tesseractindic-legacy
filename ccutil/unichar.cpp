@@ -142,4 +142,3 @@ int UNICHAR::utf8_step(const char* utf8_str) {
 
   return utf8_bytes[static_cast<unsigned char>(*utf8_str)];
 }
-

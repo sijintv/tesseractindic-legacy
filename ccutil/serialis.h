@@ -69,7 +69,7 @@ void            serialise(                                                     \
     memmove( shallow_copy, this, sizeof( *this ) );                            \
                                                                                \
   shallow_copy->prep_serialise();                                              \
-    if (fwrite( (wchar_t*) shallow_copy, sizeof( *shallow_copy ), 1, f ) != 1)    \
+    if (fwrite( (char*) shallow_copy, sizeof( *shallow_copy ), 1, f ) != 1)    \
     WRITEFAILED.error( QUOTE_IT( CLASSNAME::serialise ),                       \
                   ABORT, NULL );                                               \
                                                                                \
@@ -83,7 +83,7 @@ void            serialise(                                                     \
   CLASSNAME*      restored;                                                    \
                                                                                \
     restored = (CLASSNAME*) alloc_struct( sizeof( CLASSNAME ) );               \
-    if (fread( (wchar_t*) restored, sizeof( CLASSNAME ), 1, f ) != 1)             \
+    if (fread( (char*) restored, sizeof( CLASSNAME ), 1, f ) != 1)             \
     READFAILED.error( QUOTE_IT( CLASSNAME::de_serialise ),                     \
                   ABORT, NULL );                                               \
                                                                                \

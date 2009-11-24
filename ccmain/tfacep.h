@@ -51,7 +51,7 @@ extern int display_ratings;
 #if 0
 #define strsave(s)    \
 	((s) ?  \
-	((wchar_t*) strcpy ((wchar_t*)alloc_string (strlen(s)+1), s))  :  \
+	((char*) strcpy ((char*)alloc_string (strlen(s)+1), s))  :  \
 	(NULL))
 #endif
 

@@ -33,7 +33,7 @@
 // space or tab between fields.
 // utf8_str must be at least kBoxReadBufSize in length.
 // If there are page numbers in the file, it reads them all.
-bool read_next_box(FILE* box_file, wchar_t* utf8_str,
+bool read_next_box(FILE* box_file, char* utf8_str,
                    int* x_min, int* y_min, int* x_max, int* y_max) {
   return read_next_box(-1, box_file, utf8_str,
                        x_min, y_min, x_max, y_max);
@@ -42,7 +42,7 @@ bool read_next_box(FILE* box_file, wchar_t* utf8_str,
 // As read_next_box above, but get a specific page number. (0-based)
 // Use -1 to read any page number. Files without page number all
 // read as if they are page 0.
-bool read_next_box(int target_page, FILE* box_file, wchar_t* utf8_str,
+bool read_next_box(int target_page, FILE* box_file, char* utf8_str,
                    int* x_min, int* y_min, int* x_max, int* y_max) {
   static int line = 0;
   int count = 0;
@@ -55,7 +55,7 @@ bool read_next_box(int target_page, FILE* box_file, wchar_t* utf8_str,
     line++;
 
     buffptr = buff;
-    const unsigned char *ubuf = reinterpret_cast<const unsigned wchar_t*>(buffptr);
+    const unsigned char *ubuf = reinterpret_cast<const unsigned char*>(buffptr);
     if (ubuf[0] == 0xef && ubuf[1] == 0xbb && ubuf[2] == 0xbf)
       buffptr += 3;  // Skip unicode file designation.
     /* Check for blank lines in box file */

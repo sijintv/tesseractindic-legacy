@@ -37,14 +37,14 @@ class TessBaseAPI {
   // Returns false if the name lookup failed.
   // For most variables, it is wise to set them before calling Init.
   // Eg TessBaseAPI::SetVariable("tessedit_char_blacklist", "xyz");
-  static bool SetVariable(const wchar_t* variable, const wchar_t* value);
+  static bool SetVariable(const char* variable, const char* value);
 
   // Start tesseract.
   // TODO(???): Make tesseract thread-safe, and then the init functions will
   // return an instance of tesseract, and most of the other methods will become
   // regular methods.
-  static void SimpleInit(const wchar_t* datapath,  // Path to tessdata-no ending /.
-                         const wchar_t* language,  // ISO 639-3 string or NULL.
+  static void SimpleInit(const char* datapath,  // Path to tessdata-no ending /.
+                         const char* language,  // ISO 639-3 string or NULL.
                          bool numeric_mode);
 
   // The datapath must be the name of the data directory or some other file
@@ -59,26 +59,26 @@ class TessBaseAPI {
   // providing config files for debug/display purposes.
   // TODO(rays) get the facts straight. Is it OK to call
   // it more than once? Make it properly check for errors and return them.
-  static int Init(const wchar_t* datapath, const wchar_t* outputbase,
-        const wchar_t* configfile, bool numeric_mode,
-        int argc, wchar_t* argv[]);
+  static int Init(const char* datapath, const char* outputbase,
+        const char* configfile, bool numeric_mode,
+        int argc, char* argv[]);
 
   // Start tesseract.
   // Similar to Init() except that it is possible to specify the language.
   // Language is the code of the language for which the data will be loaded.
   // (Codes follow ISO 639-3.) If it is NULL, english (eng) will be loaded.
-  static int InitWithLanguage(const wchar_t* datapath, const wchar_t* outputbase,
-        const wchar_t* language, const wchar_t* configfile,
-        bool numeric_mode, int argc, wchar_t* argv[]);
+  static int InitWithLanguage(const char* datapath, const char* outputbase,
+        const char* language, const char* configfile,
+        bool numeric_mode, int argc, char* argv[]);
 
   // Init only the lang model component of Tesseract
-  static int InitLangMod(const wchar_t* datapath, const wchar_t* outputbase,
-        const wchar_t* language, const wchar_t* configfile,
-        bool numeric_mode, int argc, wchar_t* argv[]);
+  static int InitLangMod(const char* datapath, const char* outputbase,
+        const char* language, const char* configfile,
+        bool numeric_mode, int argc, char* argv[]);
 
   // Set the name of the input file. Needed only for training and
   // reading a UNLV zone file.
-  static void SetInputName(const wchar_t* name);
+  static void SetInputName(const char* name);
 
   // Recognize a rectangle from an image and return the result as a string.
   // May be called many times for a single Init.
@@ -89,22 +89,22 @@ class TessBaseAPI {
   // Binary images of 1 bit per pixel may also be given but they must be
   // byte packed with the MSB of the first byte being the first pixel, and a
   // 1 represents WHITE. For binary images set bytes_per_pixel=0.
-  // The recognized text is returned as a wchar_t* which (in future will be coded
+  // The recognized text is returned as a char* which (in future will be coded
   // as UTF8 and) must be freed with the delete [] operator.
-  static wchar_t* TesseractRect(const unsigned wchar_t* imagedata,
+  static char* TesseractRect(const unsigned char* imagedata,
                              int bytes_per_pixel,
                              int bytes_per_line,
                              int left, int top, int width, int height);
   // As TesseractRect but produces a box file as output.
   // Image height is needed as well as rect height, since output y-coords
   // will be relative to the bottom of the image.
-  static wchar_t* TesseractRectBoxes(const unsigned wchar_t* imagedata,
+  static char* TesseractRectBoxes(const unsigned char* imagedata,
                                   int bytes_per_pixel,
                                   int bytes_per_line,
                                   int left, int top, int width, int height,
                                   int imageheight);
   // As TesseractRect but produces UNLV-style output.
-  static wchar_t* TesseractRectUNLV(const unsigned wchar_t* imagedata,
+  static char* TesseractRectUNLV(const unsigned char* imagedata,
                                  int bytes_per_pixel,
                                  int bytes_per_line,
                                  int left, int top, int width, int height);
@@ -117,7 +117,7 @@ class TessBaseAPI {
   static void End();
 
   // Dump the internal binary image to a PGM file.
-  static void DumpPGM(const wchar_t* filename);
+  static void DumpPGM(const char* filename);
 
   // Get a copy of the thresholded global image from Tesseract.
   // Caller takes ownership of the Pix and must pixDestroy it.
@@ -138,7 +138,7 @@ class TessBaseAPI {
  protected:
   // Copy the given image rectangle to Tesseract, with adaptive thresholding
   // if the image is not already binary.
-  static void CopyImageToTesseract(const unsigned wchar_t* imagedata,
+  static void CopyImageToTesseract(const unsigned char* imagedata,
                                    int bytes_per_pixel,
                                    int bytes_per_line,
                                    int left, int top, int width, int height);
@@ -150,7 +150,7 @@ class TessBaseAPI {
   // hi_values[channel] is 0 or background if 1. A hi_value of -1 indicates
   // that there is no apparent foreground. At least one hi_value will not be -1.
   // thresholds and hi_values are assumed to be of bytes_per_pixel size.
-  static void OtsuThreshold(const unsigned wchar_t* imagedata,
+  static void OtsuThreshold(const unsigned char* imagedata,
                            int bytes_per_pixel,
                            int bytes_per_line,
                            int left, int top, int right, int bottom,
@@ -164,7 +164,7 @@ class TessBaseAPI {
   // counted with this call in a multi-channel (pixel-major) image.
   // Histogram is always a 256 element array to count occurrences of
   // each pixel value.
-  static void HistogramRect(const unsigned wchar_t* imagedata,
+  static void HistogramRect(const unsigned char* imagedata,
                             int bytes_per_pixel,
                             int bytes_per_line,
                             int left, int top, int right, int bottom,
@@ -180,7 +180,7 @@ class TessBaseAPI {
   // Threshold the given grey or color image into the tesseract global
   // image ready for recognition. Requires thresholds and hi_value
   // produced by OtsuThreshold above.
-  static void ThresholdRect(const unsigned wchar_t* imagedata,
+  static void ThresholdRect(const unsigned char* imagedata,
                             int bytes_per_pixel,
                             int bytes_per_line,
                             int left, int top,
@@ -190,13 +190,13 @@ class TessBaseAPI {
 
   // Cut out the requested rectangle of the binary image to the
   // tesseract global image ready for recognition.
-  static void CopyBinaryRect(const unsigned wchar_t* imagedata,
+  static void CopyBinaryRect(const unsigned char* imagedata,
                              int bytes_per_line,
                              int left, int top,
                              int width, int height);
 
   // Low-level function to recognize the current global image to a string.
-  static wchar_t* RecognizeToString();
+  static char* RecognizeToString();
 
   // Find lines from the image making the BLOCK_LIST.
   static void FindLines(BLOCK_LIST* block_list);
@@ -215,15 +215,15 @@ class TessBaseAPI {
   // by -1.  The calling function must delete [] after use.
   static int* AllTextConfidences(PAGE_RES* page_res);
   // Convert (and free) the internal data structures into a text string.
-  static wchar_t* TesseractToText(PAGE_RES* page_res);
+  static char* TesseractToText(PAGE_RES* page_res);
   // Make a text string from the internal data structures.
   // The input page_res is deleted.
   // The text string takes the form of a box file as needed for training.
-  static wchar_t* TesseractToBoxText(PAGE_RES* page_res, int left, int bottom);
+  static char* TesseractToBoxText(PAGE_RES* page_res, int left, int bottom);
   // Make a text string from the internal data structures.
   // The input page_res is deleted. The text string is converted
   // to UNLV-format: Latin-1 with specific reject and suspect codes.
-  static wchar_t* TesseractToUNLV(PAGE_RES* page_res);
+  static char* TesseractToUNLV(PAGE_RES* page_res);
 
   // __________________________   ocropus add-ons   ___________________________
 
@@ -250,7 +250,7 @@ class TessBaseAPI {
 
   // Extract the OCR results, costs (penalty points for uncertainty),
   // and the bounding boxes of the characters.
-  static int TesseractExtractResult(wchar_t** string,
+  static int TesseractExtractResult(char** string,
                                     int** lengths,
                                     float** costs,
                                     int** x0,

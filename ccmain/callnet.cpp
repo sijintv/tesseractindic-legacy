@@ -28,12 +28,12 @@ const ERRCODE NETINIT = "NN init error";
 
 //extern "C"
 //{
-//extern wchar_t*                          demodir;                                        /* where program lives */
+//extern char*                          demodir;                                        /* where program lives */
 
 void init_net() {  /* Initialise net */
 #ifdef ASPIRIN_INCLUDED
   char wts_filename[256];
-  cprintf("\ninit net\n");
+
   if (nmatch_init_network () != 0) {
     NETINIT.error ("Init_net", EXIT, "Errcode %s", nmatch_error_string ());
   }

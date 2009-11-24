@@ -176,6 +176,6 @@ BOOL8 repeated_ch_string(const char *rep_ch_str,
 inT16 safe_dict_word(const char *s);
 void flip_hyphens(WERD_RES *word);
 void flip_0O(WERD_RES *word);
-BOOL8 non_O_upper(const wchar_t* str, int length);
-BOOL8 non_0_digit(const wchar_t* str, int length);
+BOOL8 non_O_upper(const char* str, int length);
+BOOL8 non_0_digit(const char* str, int length);
 #endif

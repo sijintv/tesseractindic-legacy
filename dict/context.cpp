@@ -31,7 +31,6 @@
 #include <ctype.h>
 #include <string.h>
 #include <math.h>
-#include "dawg.h"
 
 // Initialize probability_in_context to point to a default implementation (a
 // main program can override this).
@@ -90,7 +89,7 @@ void fix_quotes(char *str) {
  *
  * Check a string to see if it matches a set of punctuation rules.
  **********************************************************************/
-int punctuation_ok(const wchar_t *word, const char *lengths) {
+int punctuation_ok(const char *word, const char *lengths) {
   int punctuation_types[5];
   int trailing = 0;
   int num_puncts = 0;

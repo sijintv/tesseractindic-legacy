@@ -83,7 +83,7 @@ SVEvent* SVEvent::copy() {
 // It is run from a different thread and synchronizes via SVSync.
 void* ScrollView::MessageReceiver(void* a) {
   int counter_event_id = 0;  // ongoing counter
-  wchar_t* message = NULL;
+  char* message = NULL;
   // Wait until a new message appears in the input stream_.
   do {
     message = ScrollView::GetStream()->Receive();
@@ -104,7 +104,7 @@ void* ScrollView::MessageReceiver(void* a) {
       // Fill the new SVEvent properly.
       sscanf(message, "%d,%d,%d,%d,%d,%d,%d,%n", &window_id, &ev_type, &cur->x,
              &cur->y, &cur->x_size, &cur->y_size, &cur->command_id, &n);
-      wchar_t* p = (message + n);
+      char* p = (message + n);
 
       cur->window = svmap[window_id];
 
@@ -228,14 +228,14 @@ SVNetwork* ScrollView::stream_ = NULL;
 int ScrollView::nr_created_windows_ = 0;
 
 // Calls Initialize with all arguments given.
-ScrollView::ScrollView(const wchar_t* name, int x_pos, int y_pos, int x_size,
+ScrollView::ScrollView(const char* name, int x_pos, int y_pos, int x_size,
                        int y_size, int x_canvas_size, int y_canvas_size,
-                       bool y_axis_reversed, const wchar_t* server_name) {
+                       bool y_axis_reversed, const char* server_name) {
   Initialize(name, x_pos, y_pos, x_size, y_size, x_canvas_size, y_canvas_size,
              y_axis_reversed, server_name);}
 
 // Calls Initialize with default argument for server_name_.
-ScrollView::ScrollView(const wchar_t* name, int x_pos, int y_pos, int x_size,
+ScrollView::ScrollView(const char* name, int x_pos, int y_pos, int x_size,
                        int y_size, int x_canvas_size, int y_canvas_size,
                        bool y_axis_reversed) {
   Initialize(name, x_pos, y_pos, x_size, y_size, x_canvas_size, y_canvas_size,
@@ -243,16 +243,16 @@ ScrollView::ScrollView(const wchar_t* name, int x_pos, int y_pos, int x_size,
 }
 
 // Calls Initialize with default argument for server_name_ & y_axis_reversed.
-ScrollView::ScrollView(const wchar_t* name, int x_pos, int y_pos, int x_size,
+ScrollView::ScrollView(const char* name, int x_pos, int y_pos, int x_size,
                        int y_size, int x_canvas_size, int y_canvas_size) {
   Initialize(name, x_pos, y_pos, x_size, y_size, x_canvas_size, y_canvas_size,
              false, "localhost");
 }
 
 // Sets up a ScrollView window, depending on the constructor variables.
-void ScrollView::Initialize(const wchar_t* name, int x_pos, int y_pos, int x_size,
+void ScrollView::Initialize(const char* name, int x_pos, int y_pos, int x_size,
                             int y_size, int x_canvas_size, int y_canvas_size,
-                            bool y_axis_reversed, const wchar_t* server_name) {
+                            bool y_axis_reversed, const char* server_name) {
   // If this is the first ScrollView Window which gets created, there is no
   // network connection yet and we have to set it up in a different thread.
   if (stream_ == NULL) {
@@ -347,7 +347,7 @@ ScrollView::~ScrollView() {
 }
 
 // Send a message to the server, attaching the window id.
-void ScrollView::SendMsg(const wchar_t* format, ...) {
+void ScrollView::SendMsg(const char* format, ...) {
   if (!points_->empty)
     SendPolygon();
   va_list args;
@@ -365,7 +365,7 @@ void ScrollView::SendMsg(const wchar_t* format, ...) {
 
 // Send a message to the server without a
 // window id. Used for global events like exit().
-void ScrollView::SendRawMessage(const wchar_t* msg) {
+void ScrollView::SendRawMessage(const char* msg) {
   stream_->Send(msg);
 }
 
@@ -518,7 +518,7 @@ void ScrollView::AlwaysOnTop(bool b) {
 }
 
 // Adds a message entry to the message box.
-void ScrollView::AddMessage(const wchar_t* format, ...) {
+void ScrollView::AddMessage(const char* format, ...) {
   va_list args;
   char message[kMaxMsgSize];
   char form[kMaxMsgSize];
@@ -529,7 +529,7 @@ void ScrollView::AddMessage(const wchar_t* format, ...) {
 
   snprintf(form, kMaxMsgSize, "w%u:%s", window_id_, message);
 
-  wchar_t* esc = AddEscapeChars(form);
+  char* esc = AddEscapeChars(form);
   SendMsg("addMessage(\"%s\")", esc);
   delete[] esc;
 }
@@ -590,11 +590,11 @@ void ScrollView::Brush(int red, int green, int blue, int alpha) {
 }
 
 // Set the attributes for future Text(..) calls.
-void ScrollView::TextAttributes(const wchar_t* font, int pixel_size,
+void ScrollView::TextAttributes(const char* font, int pixel_size,
                                 bool bold, bool italic, bool underlined) {
-  const wchar_t* b;
-  const wchar_t* i;
-  const wchar_t* u;
+  const char* b;
+  const char* i;
+  const char* u;
 
   if (bold) { b = "true";
   } else { b = "false"; }
@@ -607,19 +607,19 @@ void ScrollView::TextAttributes(const wchar_t* font, int pixel_size,
 }
 
 // Draw text at the given coordinates.
-void ScrollView::Text(int x, int y, const wchar_t* mystring) {
+void ScrollView::Text(int x, int y, const char* mystring) {
   SendMsg("drawText(%d,%d,'%s')", x, TranslateYCoordinate(y), mystring);
 }
 
 // Open and draw an image given a name at (x,y).
-void ScrollView::Image(const wchar_t* image, int x_pos, int y_pos) {
+void ScrollView::Image(const char* image, int x_pos, int y_pos) {
   SendMsg("openImage('%s')", image);
   SendMsg("drawImage('%s',%d,%d)",
                 image, x_pos, TranslateYCoordinate(y_pos));
 }
 
 // Add new checkboxmenuentry to menubar.
-void ScrollView::MenuItem(const wchar_t* parent, const wchar_t* name,
+void ScrollView::MenuItem(const char* parent, const char* name,
                           int cmdEvent, bool flag) {
   if (parent == NULL) { parent = ""; }
   if (flag) { SendMsg("addMenuBarItem('%s','%s',%d,true)",
@@ -629,29 +629,29 @@ void ScrollView::MenuItem(const wchar_t* parent, const wchar_t* name,
 }
 
 // Add new menuentry to menubar.
-void ScrollView::MenuItem(const wchar_t* parent, const wchar_t* name, int cmdEvent) {
+void ScrollView::MenuItem(const char* parent, const char* name, int cmdEvent) {
   if (parent == NULL) { parent = ""; }
   SendMsg("addMenuBarItem('%s','%s',%d)", parent, name, cmdEvent);
 }
 
 // Add new submenu to menubar.
-void ScrollView::MenuItem(const wchar_t* parent, const wchar_t* name) {
+void ScrollView::MenuItem(const char* parent, const char* name) {
   if (parent == NULL) { parent = ""; }
   SendMsg("addMenuBarItem('%s','%s')", parent, name);
 }
 
 // Add new submenu to popupmenu.
-void ScrollView::PopupItem(const wchar_t* parent, const wchar_t* name) {
+void ScrollView::PopupItem(const char* parent, const char* name) {
   if (parent == NULL) { parent = ""; }
   SendMsg("addPopupMenuItem('%s','%s')", parent, name);
 }
 
 // Add new submenuentry to popupmenu.
-void ScrollView::PopupItem(const wchar_t* parent, const wchar_t* name,
-                           int cmdEvent, const wchar_t* value, const wchar_t* desc) {
+void ScrollView::PopupItem(const char* parent, const char* name,
+                           int cmdEvent, const char* value, const char* desc) {
   if (parent == NULL) { parent = ""; }
-  wchar_t* esc = AddEscapeChars(value);
-  wchar_t* esc2 = AddEscapeChars(desc);
+  char* esc = AddEscapeChars(value);
+  char* esc2 = AddEscapeChars(desc);
   SendMsg("addPopupMenuItem('%s','%s',%d,'%s','%s')", parent, name,
           cmdEvent, esc, esc2);
   delete[] esc;
@@ -687,12 +687,12 @@ void ScrollView::Brush(Color color) {
 }
 
 // Shows a modal Input Dialog which can return any kind of String
-wchar_t* ScrollView::ShowInputDialog(const wchar_t* msg) {
+char* ScrollView::ShowInputDialog(const char* msg) {
   SendMsg("showInputDialog(\"%s\")", msg);
   SVEvent* ev;
   // wait till an input event (all others are thrown away)
   ev = AwaitEvent(SVET_INPUT);
-  wchar_t* p = new char[strlen(ev->parameter) + 1];
+  char* p = new char[strlen(ev->parameter) + 1];
   strncpy(p, ev->parameter, strlen(ev->parameter));
   p[strlen(ev->parameter)] = '\0';
   delete ev;
@@ -700,7 +700,7 @@ wchar_t* ScrollView::ShowInputDialog(const wchar_t* msg) {
 }
 
 // Shows a modal Yes/No Dialog which will return 'y' or 'n'
-int ScrollView::ShowYesNoDialog(const wchar_t* msg) {
+int ScrollView::ShowYesNoDialog(const char* msg) {
   SendMsg("showYesNoDialog(\"%s\")", msg);
   SVEvent* ev;
   // Wait till an input event (all others are thrown away)
@@ -745,7 +745,7 @@ void ScrollView::Transfer32bppImage(PIX* image) {
   int h = pixGetHeight(image);
   int wpl = pixGetWpl(image);
   int transfer_size= ppL * 7 + 2;
-  wchar_t* pixel_data = new char[transfer_size];
+  char* pixel_data = new char[transfer_size];
   for (int y = 0; y < h; ++y) {
     l_uint32* data = pixGetData(image) + y*wpl;
     for (int x = 0; x < ppL; ++x, ++data) {
@@ -763,7 +763,7 @@ void ScrollView::Transfer32bppImage(PIX* image) {
 
 // Sends for each pixel either '1' or '0'.
 void ScrollView::TransferGrayImage(PIX* image) {
-  wchar_t* pixel_data = new char[image->w * 2 + 2];
+  char* pixel_data = new char[image->w * 2 + 2];
   for (int y = 0; y < image->h; y++) {
     l_uint32* data = pixGetData(image) + y * pixGetWpl(image);
     for (int x = 0; x < image->w; x++) {
@@ -778,7 +778,7 @@ void ScrollView::TransferGrayImage(PIX* image) {
 
 // Sends for each pixel either '1' or '0'.
 void ScrollView::TransferBinaryImage(PIX* image) {
-  wchar_t* pixel_data = new char[image->w + 2];
+  char* pixel_data = new char[image->w + 2];
   for (int y = 0; y < image->h; y++) {
     l_uint32* data = pixGetData(image) + y * pixGetWpl(image);
     for (int x = 0; x < image->w; x++) {
@@ -797,10 +797,10 @@ void ScrollView::TransferBinaryImage(PIX* image) {
 
 // Escapes the ' character with a \, so it can be processed by LUA.
 // Note: The caller will have to make sure he deletes the newly allocated item.
-wchar_t* ScrollView::AddEscapeChars(const wchar_t* input) {
-  const wchar_t* nextptr = strchr(input, '\'');
-  const wchar_t* lastptr = input;
-  wchar_t* message = new char[kMaxMsgSize];
+char* ScrollView::AddEscapeChars(const char* input) {
+  const char* nextptr = strchr(input, '\'');
+  const char* lastptr = input;
+  char* message = new char[kMaxMsgSize];
   int pos = 0;
   while (nextptr != NULL) {
     strncpy(message+pos, lastptr, nextptr-lastptr);

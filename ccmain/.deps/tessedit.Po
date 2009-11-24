@@ -73,7 +73,9 @@ tessedit.o: tessedit.cpp ../ccutil/mfcpch.h tfacep.h ../ccutil/hosthplb.h \
  ../ccutil/ocrclass.h ../dict/permdawg.h ../dict/permnum.h \
  ../classify/intmatcher.h ../cutil/debug.h ../cutil/variables.h \
  ../classify/cutoffs.h ../cutil/efio.h ../cutil/danerror.h \
- ../cutil/globals.h ../cutil/const.h ../config_auto.h callnet.h
+ ../cutil/globals.h ../cutil/const.h ../config_auto.h \
+ /usr/include/tiffio.h /usr/include/tiff.h /usr/include/tiffconf.h \
+ /usr/include/tiffvers.h callnet.h
 
 ../ccutil/mfcpch.h:
 
@@ -492,5 +494,13 @@ tessedit.h:
 ../cutil/const.h:
 
 ../config_auto.h:
+
+/usr/include/tiffio.h:
+
+/usr/include/tiff.h:
+
+/usr/include/tiffconf.h:
+
+/usr/include/tiffvers.h:
 
 callnet.h:

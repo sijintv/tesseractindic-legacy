@@ -156,7 +156,7 @@ void PDBLK::plot(                //draw outline
     #else
     ultoa (serial, temp_buff, 10);
     #endif
-    window->Text(startpt.x (), startpt.y (), (wchar_t*)temp_buff);
+    window->Text(startpt.x (), startpt.y (), temp_buff);
 
     window->SetCursor(startpt.x (), startpt.y ());
     do {

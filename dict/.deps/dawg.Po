@@ -36,7 +36,7 @@ dawg.o: dawg.cpp /usr/include/arpa/inet.h /usr/include/features.h \
  ../ccutil/strngs.h ../cutil/freelist.h context.h choices.h \
  ../cutil/oldlist.h ../cutil/cutil.h ../ccutil/strngs.h \
  ../cutil/emalloc.h ../cutil/callcpp.h ../ccutil/varable.h \
- ../ccutil/unichar.h /usr/include/memory.h /usr/include/bits/wchar2.h
+ ../ccutil/unichar.h /usr/include/memory.h
 
 /usr/include/arpa/inet.h:
 
@@ -209,5 +209,3 @@ choices.h:
 ../ccutil/unichar.h:
 
 /usr/include/memory.h:
-
-/usr/include/bits/wchar2.h:

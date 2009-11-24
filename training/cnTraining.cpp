@@ -111,7 +111,7 @@ PARAMDESC *ConvertToPARAMDESC(
 void AddToNormProtosList(
 	LIST* NormProtoList,
 	LIST ProtoList,
-	wchar_t* CharName);
+	char* CharName);
 
 void WriteProtos(
      FILE	*File,
@@ -512,8 +512,8 @@ LABELEDLIST NewLabeledList (
 {
 	LABELEDLIST	LabeledList;
 
-	LabeledList = (LABELEDLIST) (wchar_t*)Emalloc (sizeof (LABELEDLISTNODE));
-	LabeledList->Label = (wchar_t*)Emalloc (strlen (Label)+1);
+	LabeledList = (LABELEDLIST) (char*)Emalloc (sizeof (LABELEDLISTNODE));
+	LabeledList->Label = (char*)Emalloc (strlen (Label)+1);
 	strcpy (LabeledList->Label, Label);
 	LabeledList->List = NIL;
     LabeledList->SampleCount = 0;
@@ -801,7 +801,7 @@ CLUSTERER *SetUpForClustering(
 void AddToNormProtosList(
 	LIST* NormProtoList,
 	LIST ProtoList,
-	wchar_t* CharName)
+	char* CharName)
 {
 	PROTOTYPE* Proto;
 	LABELEDLIST LabeledProtoList;
