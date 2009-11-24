@@ -33,7 +33,7 @@ const ERRCODE NETINIT = "NN init error";
 void init_net() {  /* Initialise net */
 #ifdef ASPIRIN_INCLUDED
   char wts_filename[256];
-
+  cprintf("\ninit net\n");
   if (nmatch_init_network () != 0) {
     NETINIT.error ("Init_net", EXIT, "Errcode %s", nmatch_error_string ());
   }

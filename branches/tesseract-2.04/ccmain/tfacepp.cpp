@@ -100,12 +100,12 @@ WERD_CHOICE *recog_word(                           //recog one owrd
     if ((perm_type != SYSTEM_DAWG_PERM) &&
     (perm_type != FREQ_DAWG_PERM) && (perm_type != USER_DAWG_PERM)) {
       real_dict_perm_type = dict_word (word_choice->string ().string ());
-      if (((real_dict_perm_type == SYSTEM_DAWG_PERM) ||
+    if (((real_dict_perm_type == SYSTEM_DAWG_PERM) ||
         (real_dict_perm_type == FREQ_DAWG_PERM) ||
-        (real_dict_perm_type == USER_DAWG_PERM)) &&
-        (alpha_count (word_choice->string ().string (),
-                      word_choice->lengths ().string ()) > 0))
-        word_choice->set_permuter (real_dict_perm_type);
+        (real_dict_perm_type == USER_DAWG_PERM)) /*&&
+        alpha_count (word_choice->string ().string (),
+                      word_choice->lengths ().string ()) > 0)*/){
+        word_choice->set_permuter (real_dict_perm_type);}
       //Use dict perm
     }
     if (tessedit_rejection_debug && perm_type != word_choice->permuter ()) {

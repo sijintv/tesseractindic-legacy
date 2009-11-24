@@ -29,6 +29,21 @@
 #include "globals.h"
 #include "danerror.h"
 #include "host.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include "permute.h"
+#include "globals.h"
+#include "permdawg.h"
+#include "debug.h"
+#include "tordvars.h"
+#include "hyphen.h"
+#include "stopper.h"
+#include "trie.h"
+#include "context.h"
+#include "permnum.h"
+#include "freelist.h"
+#include "callcpp.h"
+#include "permngram.h"
 
 /*----------------------------------------------------------------------
             Variables
@@ -165,12 +180,12 @@ A_CHOICE *new_choice(const char *string,
  **********************************************************************/
 void print_choices(const char *label,
                    CHOICES rating) {   // List of (A_CHOICE*).
-  tprintf("%s\n", label);
+  cprintf("%s\n", label);
   if (rating == NIL)
-    tprintf(" No rating ");
+    cprintf(" No rating ");
 
   iterate(rating) {
-    tprintf("%.2f %.2f", best_probability(rating), best_certainty(rating));
+    cprintf("%.2f %.2f", best_probability(rating), best_certainty(rating));
     print_word_string(best_string(rating));
   }
   tprintf("\n");
@@ -184,11 +199,11 @@ void print_choices(const char *label,
 void print_word_choice(const char *label, A_CHOICE* choice) {
   tprintf("%s : ", label);
   if (choice == NULL) {
-    tprintf("No rating\n");
+    cprintf("No rating\n");
   } else {
-    tprintf("%.2f %.2f", class_probability(choice), class_certainty(choice));
+    cprintf("%.2f %.2f", class_probability(choice), class_certainty(choice));
     print_word_string(class_string(choice));
-    tprintf("\n");
+    cprintf("\n");
   }
 }
 
@@ -204,7 +219,7 @@ void print_word_string(const wchar_t* str) {
     step = unicharset.step(str + i);
     int unichar_id = unicharset.unichar_to_id(str + i, step);
     STRING ch_str = unicharset.debug_str(unichar_id);
-    tprintf(" : %s ", ch_str.string());
+    cprintf(" : %s ", ch_str.string());
   }
 }
 

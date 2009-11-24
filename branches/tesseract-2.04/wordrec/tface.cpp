@@ -91,6 +91,7 @@ void program_editup(const char *configfile) {
   program_init();
   mfeature_init();
   init_permute();
+  cprintf("\ninit permute\n");
   setup_cp_maps();
 }
 
@@ -264,9 +265,10 @@ CHOICES_LIST cc_recog(TWERD *tessword,
  * DAWG_PERM values if found, according to the dictionary.
  **********************************************************************/
 int dict_word(const char *word) {
-
-  if (test_freq_words (word))
-    return FREQ_DAWG_PERM;
-  else
-    return valid_word (word);
+  cprintf("\nWORD=%s\n",word);
+  if (test_freq_words (word)){
+    return FREQ_DAWG_PERM;}
+  else{
+    cprintf("\nVALIDWORD=%d\n",valid_word (word));
+    return valid_word (word);}
 }
