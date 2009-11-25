@@ -58,7 +58,7 @@ EDGE_REF edge_char_of(EDGE_ARRAY dawg,
                       int word_end) {
   EDGE_REF   edge = node;
 
-  //if (! case_sensative) character = tolower (character);
+  if (! case_sensative) character = tolower (character);
   if (edge_occupied (dawg, edge)) {
     do {
        // cprintf("\n(dawg)[edge]=%d -- edge=%d\n",(dawg)[edge],edge );
