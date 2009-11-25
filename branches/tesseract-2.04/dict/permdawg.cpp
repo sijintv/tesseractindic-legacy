@@ -222,7 +222,7 @@ void append_next_choice(  /*previous option */
                            sub_offset == unichar_lengths[char_index]-1)){cprintf("\nNODE=%d\n",node);
       ++sub_offset;}
       //++sub_offset;
-    cprintf("\nsub_offset=%d -- unichar_lengths[char_index]=%d",sub_offset,unichar_lengths[char_index]);
+    cprintf("\nsub_offset=%d -- unichar_lengths[char_index]=%d -- char_index=%d",sub_offset,unichar_lengths[char_index],char_index);
     if (sub_offset == unichar_lengths[char_index]) {
       /* Add a new word choice */
     cprintf("\nWORDENGING=%d\n",word_ending);
@@ -314,7 +314,7 @@ CHOICES dawg_permute(EDGE_ARRAY dawg,
   /* Check for EOW */
   if (1+ char_index == array_count (choices) + hyphen_base_size ()){
     word_ending = TRUE;cprintf("\nWORD_ENDING iS NOW TRUE=%d\n",word_ending);}
-  cprintf("\nchar_index-->%d --  array_count (choices) + hyphen_base_size ()-->%d\n",char_index,array_count (choices) + hyphen_base_size ());
+  cprintf("\nchar_index-->%d --  array_count (choices)-->%d -- hyphen_base_size ()-->%d\n",char_index,array_count (choices), hyphen_base_size ());
   if (char_index < array_count (choices) + hyphen_base_size ()) {
     prevchar = NULL;
   cprintf("\nWORDENIND=%d\n",word_ending);
