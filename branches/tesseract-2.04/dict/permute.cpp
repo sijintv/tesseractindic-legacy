@@ -53,8 +53,8 @@ int permutation_count;           // Used in metrics.cpp.
 #define MAX_USER_EDGES         50000
 #define USER_RESERVED_EDGES    2000
                                  /* Weights for adjustment */
-#define NON_WERD               5
-#define GARBAGE_STRING         5
+#define NON_WERD               1.5
+#define GARBAGE_STRING         1.5
 #define MAX_PERM_LENGTH         128
 
 EDGE_ARRAY pending_words;
@@ -1534,12 +1534,12 @@ A_CHOICE *permute_top_choice(CHOICES_LIST character_choices,
 
   best_choice = new_choice (word, word_lengths,
                             rating, certainty, -1, TOP_CHOICE_PERM);
-  //adjust_non_word(best_choice, certainties);
+  adjust_non_word(best_choice, certainties);
 
   other_choice = new_choice (lower_word, lower_word_lengths,
                              lower_rating, lower_certainty,
                              -1, LOWER_CASE_PERM);
-  //adjust_non_word(other_choice, lower_certainties);
+  adjust_non_word(other_choice, lower_certainties);
   if (class_probability (best_choice) > class_probability (other_choice)) {
     clone_choice(best_choice, other_choice);
   }
@@ -1548,7 +1548,7 @@ A_CHOICE *permute_top_choice(CHOICES_LIST character_choices,
   other_choice = new_choice (capital_word, capital_word_lengths,
                              upper_rating, upper_certainty,
                              -1, UPPER_CASE_PERM);
-  //adjust_non_word(other_choice, upper_certainties);
+  adjust_non_word(other_choice, upper_certainties);
   if (class_probability (best_choice) > class_probability (other_choice)) {
     clone_choice(best_choice, other_choice);
   }
