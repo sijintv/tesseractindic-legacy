@@ -111,5 +111,6 @@ ARRAY array_push(ARRAY array, void *value) {
   }
   array_count (array)++;
   array_top (array) = value;
+  //cprintf("\nPUSHED-->%d\n",value);fflush(stdout);
   return (array);
 }
