@@ -13,7 +13,8 @@ def reorderUnicode(input_text):
         index = 0
         while index < len(input_text):
                 curr = input_text[index:index+3]
-                #print "current="+curr
+                p=len(out_text)
+		print p
                 if(index != len(input_text)-1):
                         next = input_text[index+3:index+6]
 		else: 
@@ -23,24 +24,29 @@ def reorderUnicode(input_text):
 			next2next = input_text[index+6:index+9]
                 else:
                         next2next = ""
-#               print "next="+next
-
-		if (curr == "ে" and next2next == "া"):
-			#print "one"
-			curr = next + "ো"
-			index = index+6
-		elif (curr == "ে"):
-			#print "two"
-			curr = next + "ে"
-			index = index+3
-
+ 		entry=0
+		if (curr == "ে"):
+			entry=1
+			curr = "ে"+prev
+			out_text=out_text[:p-3]+curr
+			print out_text
+                        #index = index+3	
 		if (curr == "ৈ"):
-  			#print "three"
-			curr = next + "ৈ"
-			index = index+3
-		
-		out_text+=curr 
-		#print index
+  			entry=1
+ 			#print curr
+			curr = "ৈ"+prev
+			out_text=out_text[:p-3]+curr
+			print out_text
+			#index = index+3
+		if (curr == "ি"):
+                        entry=1
+			curr = "ি"+prev
+                        out_text=out_text[:p-3]+curr
+			print out_text
+                        #index = index+3 
+		if (entry == 0):
+			out_text+=curr 
+			prev = input_text[index:index+3]
         	index = index+3
         try:
         	out_text1=unicode(out_text,"utf-8")
@@ -62,7 +68,7 @@ def readwrite(infile,outfile):
                 words = ts.split(' ')
                 for w in words:
 			output+=reorderUnicode(w)
-                        output+=' '
+                        #output+=' '
                         wno+=1          
         print wno
         f=codecs.open(outfile,"w","utf-8")
