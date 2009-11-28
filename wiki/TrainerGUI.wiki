@@ -12,8 +12,8 @@
   # PyGtk should be installed
   # Install Tesseract 2.03 <Download from http://tesseract-ocr.googlecode.com/files/tesseract-2.03.tar.gz>. Version 2.04 has a bug in the mftraining/cntraining executables that makes it crash.
 
-Usage
----------
+*Usage*
+
 
 1) Create 3 files for your script.
 	* consonants_conjuncts -> This file contains all the consonants and conjuncts/ligatures for your language
@@ -28,14 +28,4 @@ Usage
 
 IMPORTANT: Only add those vowels to the post_vowels file that overlap on a vertical axis with the consonant they are being joined with. 
 There may be consonant+vowel combinations that fit in a rectangular box, like কু <means ku in bengali>. Now কু = ক + ু . 
-We can not train ু separately because we will not find this symbol in an image isolated. Hence we need to train all consonants + ু . Hence what I need from you is to tell me cases like these where consonant + vowel produces a glyph that overlaps vertically. To make myself more clear কা <ka> has a consonent + vowel too, but ক and া do not overlap on a vertical axis, and can be trained separately, but for কি <ki> ক and ি overlaps vertically and needs to be trained as a single symbol, together. The thing is that the Tesseract segmenter is built for english and it only boxes rectangles.
-
-
-
-
-= Details =
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+We can not train ু separately because we will not find this symbol in an image isolated. Hence we need to train all consonants + ু . Hence what I need from you is to tell me cases like these where consonant + vowel produces a glyph that overlaps vertically. To make myself more clear কা <ka> has a consonant + vowel too, but ক and া do not overlap on a vertical axis, and can be trained separately, but for কি <ki> ক and ি overlaps vertically and needs to be trained as a single symbol, together. The thing is that the Tesseract segmenter is built for english and it only boxes rectangles.
