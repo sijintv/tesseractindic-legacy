@@ -1,16 +1,16 @@
 #summary How to use the TesseractIndic Trainer GUI
-= Introduction =
-TesseractIndic Trainer GUI Ver 0.1
-==========================
-Author: Debayan Banerjee <debayanin@gmail.com>
+
+==TesseractIndic Trainer GUI Ver 0.1==
+
+=Author: Debayan Banerjee <debayanin@gmail.com>=
 
 
-Pre-requisites
---------------------
+*Pre-requisites*
 
-0) Go through http://code.google.com/p/tesseract-ocr/wiki/TrainingTesseract to learn about the manual method. Read once atleast.
-1) PyGtk should be installed
-2) Install Tesseract 2.03 <Download from http://tesseract-ocr.googlecode.com/files/tesseract-2.03.tar.gz>. Version 2.04 has a bug in the mftraining/cntraining executables that makes it crash.
+
+  # Go through http://code.google.com/p/tesseract-ocr/wiki/TrainingTesseract to learn about the manual method. Read once atleast.
+  # PyGtk should be installed
+  # Install Tesseract 2.03 <Download from http://tesseract-ocr.googlecode.com/files/tesseract-2.03.tar.gz>. Version 2.04 has a bug in the mftraining/cntraining executables that makes it crash.
 
 Usage
 ---------
