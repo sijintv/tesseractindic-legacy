@@ -2,7 +2,7 @@
 
 ==TesseractIndic Trainer GUI Ver 0.1==
 
-=Author: Debayan Banerjee <debayanin@gmail.com>=
+===Author: Debayan Banerjee <debayanin@gmail.com>===
 
 
 *Pre-requisites*
@@ -28,4 +28,4 @@
 
 IMPORTANT: Only add those vowels to the post_vowels file that overlap on a vertical axis with the consonant they are being joined with. 
 There may be consonant+vowel combinations that fit in a rectangular box, like কু <means ku in bengali>. Now কু = ক + ু . 
-We can not train ু separately because we will not find this symbol in an image isolated. Hence we need to train all consonants + ু . Hence what I need from you is to tell me cases like these where consonant + vowel produces a glyph that overlaps vertically. To make myself more clear কা <ka> has a consonant + vowel too, but ক and া do not overlap on a vertical axis, and can be trained separately, but for কি <ki> ক and ি overlaps vertically and needs to be trained as a single symbol, together. The thing is that the Tesseract segmenter is built for english and it only boxes rectangles.
+We can not train ু separately because we will not find this symbol in an image isolated. Hence we need to train all consonants + ু . Hence what I need from you is to tell me cases like these where consonant + vowel produces a glyph that overlaps vertically. To make myself more clear কা (ka) has a consonant + vowel too, but ক and া do not overlap on a vertical axis, and can be trained separately, but for কি (ki) ক and ি overlaps vertically and needs to be trained as a single symbol, together. The thing is that the Tesseract segmenter is built for english and it only boxes rectangles.
