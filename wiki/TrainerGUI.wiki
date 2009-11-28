@@ -4,6 +4,8 @@
 
 ===Author: Debayan Banerjee <debayanin@gmail.com>===
 
+*NOTE*: The GUI does not include any features to generate the dictionary/DAWG (http://code.google.com/p/tesseract-ocr/wiki/TrainingTesseract) files yet. It will be available in the next release.
+
 
 *Pre-requisites*
 
