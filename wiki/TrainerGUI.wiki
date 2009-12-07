@@ -16,6 +16,11 @@
 
 *Usage*
 
+0) Fire up the TesseractIndic trainer GUI by doing the following:
+        
+                     chmod +x trainer_gui.py
+                     ./trainer_gui.py
+
 
 1) Create 3 files for your script.
 	* consonants_conjuncts -> This file contains all the consonants and conjuncts/ligatures for your language
