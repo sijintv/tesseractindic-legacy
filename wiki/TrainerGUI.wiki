@@ -13,6 +13,7 @@
   # Go through http://code.google.com/p/tesseract-ocr/wiki/TrainingTesseract to learn about the manual method. Read once atleast.
   # PyGtk should be installed
   # Install Tesseract 2.03 <Download from http://tesseract-ocr.googlecode.com/files/tesseract-2.03.tar.gz>. Version 2.04 has a bug in the mftraining/cntraining executables that makes it crash.
+  # Download http://tesseractindic.googlecode.com/files/TesseractIndic-Trainer-GUI-0.1.3.tar.gz . Untar and follow the instructions below.
 
 *Usage*
 
