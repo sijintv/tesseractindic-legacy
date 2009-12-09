@@ -20,6 +20,7 @@
 0) Fire up the TesseractIndic trainer GUI by doing the following:
         
                      chmod +x trainer_gui.py
+
                      ./trainer_gui.py
 
 
