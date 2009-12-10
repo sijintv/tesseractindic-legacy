@@ -29,6 +29,8 @@
 	* post_vowels -> This file contains all the vowel signs for your language
 	* rest -> Allt the symbols that do not fit into the 2 categories above, eg, punctuations, independent symbols such as aa, ee etc.
 
+*If you are training for a language like english, you do not need the first 2 files. Simply put all the characters in the third file 'rest'  and proceed. *
+
 2) Select Langauge, Font, Style (not working yet), Output Folder and Folder with the 3 files above, and click on the 'Train' Button.
 
 3) Rename the 5 files that have been generated,eg, rename intproto to hin.intproto.
